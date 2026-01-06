@@ -1,0 +1,29 @@
+
+================================================================================
+MZDAYCARE & MANNAZENTRUM ECOSYSTEM - COMPREHENSIVE MASTER BLUEPRINT
+================================================================================
+VERSION: 6.3.0 (Visual Sync Standard - Restore Point: 06Apha20)
+OWNER: PT. Elrafa Terang Sejahtera
+
+1. CLOUD INFRASTRUCTURE (CORE)
+   - DATABASE: Firestore Real-time Sync (Registrations, Reports, CMS, Menus).
+   - STORAGE: Firebase Media Engine (Signatures, Activity Photos, PDF Assets).
+   - SYNC LOGIC: App-level onSnapshot listeners for multi-device consistency.
+
+2. VISUAL STANDARDS (06Apha20)
+   - STAFF UI: Dark Brown headers (#42210b), Floating card shadows, Table-driven admin control.
+   - PARENT UI: Mobile-app style layout, Status pills (Temp/Arrival), Daily milestone cards.
+   - BRANDING: High-fidelity logo SVG with watercolor effects.
+
+3. BUSINESS CONTROL CENTER
+   - CMS BLOCK: Firestore-backed website content manager.
+   - SECURITY: Cloud-side approval queue. No local state dependency for Auth.
+   - AUDIT TRAIL: Centralized logging for administrative accountability.
+
+4. PORTAL FEATURES
+   - PARENT: Detailed daily logs (Food, Nap, Bath, Skills) via cloud sync.
+   - STAFF: Sub-module management for Curriculum, Menus, and active students.
+
+================================================================================
+END OF MASTER BLUEPRINT - CHECKPOINT 06Apha20 SECURED
+================================================================================

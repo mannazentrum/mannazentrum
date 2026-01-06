@@ -1,0 +1,27 @@
+
+===========================================================
+MZDAYCARE SYSTEM BLUEPRINT - RESTORE POINT: 1JanJam18
+===========================================================
+
+1. RECENT UPDATES
+   - MODULE REMOVAL: Inventory Management system purged.
+   - OPTIMIZATION: Streamlined StaffDashboard for core pedagogical tasks.
+   - ARCHIVAL: Implemented 1JanJam18 stable restore point.
+
+2. CORE MODULES (StaffDashboard.tsx)
+   - MANAGEMENT: 10 active sub-modules for Admin.
+   - PERSISTENCE: Dedicated localStorage keys for PDF archival.
+   - MEDIA: Gallery system with timestamping preserved.
+
+3. TECH STACK
+   - React 19, ES6 Modules, Tailwind CSS.
+   - Polymorphic ViewMode routing.
+
+4. USER ROLES
+   - ADMIN: Master control and approval queue.
+   - PARENT: Progress tracking and PDF reports.
+   - STAFF: Daily reporting and personal payroll.
+
+===========================================================
+END OF BLUEPRINT - MZDAYCARE CONNECT (v3.8.0)
+===========================================================
