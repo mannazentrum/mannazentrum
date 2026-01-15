@@ -1,0 +1,10 @@
+{
+  "name": "MZdaycare - 06Apha20",
+  "version": "6.3.0",
+  "restorePoint": "UI_VisualSync_6Jan",
+  "description": "High-fidelity UI sync based on PDF/Screenshot references. Fully integrated with Firebase Cloud.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

@@ -1,0 +1,22 @@
+
+================================================================================
+MZDAYCARE & MANNAZENTRUM ECOSYSTEM - MASTER BLUEPRINT (REF: VersiTerbaik23On31Des25)
+================================================================================
+
+1. LOGIC ENHANCEMENTS
+   - Inventory Engine: Month-over-month stock continuity ensured by checkAndCarryOver().
+   - Alert Logic: useMemo-driven notifications for inventory health.
+   - PDF Integrity: Unified state management for administrative document deletions.
+
+2. UI/UX REFINEMENTS
+   - Notifications: Animated bounce-in toasts for system alerts.
+   - Printing: Specialized high-fidelity print layouts for parent reports.
+   - Layout: Responsive grid systems for large-scale administrative tables.
+
+3. DATABASE ARCHITECTURE (Simulated)
+   - Inventory Logs: Indexed by YYYY-MM.
+   - Admin Files: Indexed by category (menu, curriculum, payroll, billing).
+
+================================================================================
+END OF BLUEPRINT - PT. ELRAFA TERANG SEJAHTERA (C) 2025
+================================================================================
