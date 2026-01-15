@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  /* Mengecilkan skala jarak antar elemen sebesar 20% */
-  --spacing-scale: 0.8;
+  /* Mengecilkan skala jarak antar elemen sebesar 30% */
+  --spacing-scale: 0.7;
 }
 
 html {
   /* Mengecilkan basis ukuran semua elemen yang menggunakan rem */
-  font-size: 14px;
+  font-size: 12px;
 }
 
 body {
