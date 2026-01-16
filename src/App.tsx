@@ -39,6 +39,22 @@ const App: React.FC = () => {
   const [scheduledMenus, setScheduledMenus] = useState<any[]>([]);
   const [scheduledCurriculums, setScheduledCurriculums] = useState<any[]>([]);
 
+  // Conditional Styling
+  useEffect(() => {
+    const isPortal = user && (user.role === 'ADMIN' || user.role === 'TEACHER' || user.role === 'COORDINATOR');
+    const portalStylesheet = document.getElementById('portal-styles');
+
+    if (isPortal && !portalStylesheet) {
+      const link = document.createElement('link');
+      link.id = 'portal-styles';
+      link.rel = 'stylesheet';
+      link.href = '/src/portal.css';
+      document.head.appendChild(link);
+    } else if (!isPortal && portalStylesheet) {
+      portalStylesheet.remove();
+    }
+  }, [user]);
+
   // SMART THEME ENGINE
   useEffect(() => {
     const root = document.documentElement;
@@ -118,7 +134,7 @@ const App: React.FC = () => {
         let role = UserRole.TEACHER;
         if (found.type === 'Orang Tua') role = UserRole.PARENT;
         if (found.type === 'Coordinator') role = UserRole.COORDINATOR;
-        setUser({ id: found.id, name: found.personalData.nama, role });
+        setUser({ id: found.id, name:.personalData.nama, role });
       } else {
         alert('Akun Anda belum aktif. Mohon hubungi Admin.');
       }
