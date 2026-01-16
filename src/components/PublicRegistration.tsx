@@ -18,24 +18,24 @@ const PublicRegistration: React.FC<PublicRegistrationProps> = ({ onBack, website
       case 0:
         return (
           <div className="text-center">
-            <h1 className="text-4xl font-bold mb-12" style={{ color: '#4D4D4D' }}>DAFTAR AKUN BARU</h1>
+            <h1 className="text-4xl font-bold mb-12 text-[var(--primary-color)]">DAFTAR AKUN BARU</h1>
             <div className="flex justify-center gap-8">
               <div 
-                className="bg-white rounded-2xl p-8 cursor-pointer border-2 border-transparent hover:border-[#42210b] transition-all"
+                className="bg-white rounded-2xl p-8 cursor-pointer border-2 border-transparent hover:border-[var(--primary-color)] transition-all"
                 onClick={() => setStep(1)}
               >
                 <p className="text-6xl">👨‍👩‍👧</p>
-                <p className="mt-4 font-bold" style={{ color: '#4D4D4D' }}>AKUN ORANG TUA</p>
+                <p className="mt-4 font-bold text-[var(--primary-color)]">AKUN ORANG TUA</p>
               </div>
               <div 
-                className="bg-white rounded-2xl p-8 cursor-pointer border-2 border-transparent hover:border-[#42210b] transition-all"
+                className="bg-white rounded-2xl p-8 cursor-pointer border-2 border-transparent hover:border-[var(--primary-color)] transition-all"
                 onClick={() => setStep(1)} // This should ideally lead to a different flow
               >
                 <p className="text-6xl">👩‍🏫</p>
-                <p className="mt-4 font-bold" style={{ color: '#4D4D4D' }}>AKUN GURU</p>
+                <p className="mt-4 font-bold text-[var(--primary-color)]">AKUN GURU</p>
               </div>
             </div>
-            <button onClick={onBack} className="mt-12 underline" style={{ color: '#4D4D4D' }}>BATALKAN</button>
+            <button onClick={onBack} className="mt-12 underline text-[var(--primary-color)]">BATALKAN</button>
           </div>
         );
       case 1:
@@ -46,7 +46,7 @@ const PublicRegistration: React.FC<PublicRegistrationProps> = ({ onBack, website
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#F9F4E8' }}>
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[var(--bg-app)]">
       {renderContent()}
     </div>
   );
@@ -58,7 +58,7 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
   const fatherSigRef = useRef<SignatureCanvas>(null);
   const motherSigRef = useRef<SignatureCanvas>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -83,30 +83,30 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
     try {
       await addDoc(collection(db, 'parentRegistrations'), formData);
       alert('Registrasi berhasil!');
-      onBack(); // Kembali ke halaman utama setelah sukses
+      onBack();
     } catch (error) {
       console.error('Error adding document: ', error);
       alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
     }
   };
 
-  const inputClass = "p-2 rounded-lg border-2 border-[#42210b] text-[#42210b] placeholder:text-[#42210b] placeholder:opacity-60 bg-transparent w-full";
-  const primaryBtnClass = "w-full bg-[#42210b] text-white p-3 rounded-full mt-6 font-bold uppercase tracking-wider shadow-md hover:bg-black transition-all active:scale-95 border-b-4 border-black/30";
-  const secondaryBtnClass = "w-1/2 bg-white text-[#42210b] border-2 border-[#42210b] p-3 rounded-full font-bold uppercase tracking-wider shadow-md hover:bg-gray-100 transition-all active:scale-95";
+  const inputClass = "p-2 rounded-lg border-2 border-[var(--primary-color)] text-[var(--primary-color)] placeholder:text-[var(--primary-color)] placeholder:opacity-60 bg-transparent w-full";
+  const primaryBtnClass = "w-full bg-[var(--primary-color)] text-white p-3 rounded-full mt-6 font-bold uppercase tracking-wider shadow-md hover:bg-black transition-all active:scale-95 border-b-4 border-black/30";
+  const secondaryBtnClass = "w-1/2 bg-white text-[var(--primary-color)] border-2 border-[var(--primary-color)] p-3 rounded-full font-bold uppercase tracking-wider shadow-md hover:bg-gray-100 transition-all active:scale-95";
 
   return (
     <div className="bg-white rounded-2xl p-8 max-w-2xl w-full">
       <div className="flex justify-between items-center mb-4">
-        <button onClick={formStep === 1 ? onBack : prevStep} className="text-2xl text-[#42210b]">←</button>
-        <h2 className="text-2xl font-bold" style={{ color: '#4D4D4D' }}>FORMULIR ORANG TUA</h2>
-        <div className="text-white px-4 py-1 rounded-full" style={{ backgroundColor: '#4D4D4D' }}>
+        <button onClick={formStep === 1 ? onBack : prevStep} className="text-2xl text-[var(--primary-color)]">←</button>
+        <h2 className="text-2xl font-bold text-gray-700">FORMULIR ORANG TUA</h2>
+        <div className="text-white px-4 py-1 rounded-full bg-gray-700">
           PROGRESS
         </div>
       </div>
       
       {formStep === 1 && (
         <div>
-          <h3 className="font-bold mb-4 text-left" style={{ color: '#4D4D4D' }}>LANGKAH 1: IDENTITAS ANAK</h3>
+          <h3 className="font-bold mb-4 text-left text-gray-700">LANGKAH 1: IDENTITAS ANAK</h3>
           <div className="grid grid-cols-2 gap-4">
             <input name="childName" value={formData.childName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP ANAK" className={inputClass} />
             <input name="childNickname" value={formData.childNickname || ''} onChange={handleChange} type="text" placeholder="NAMA PANGGILAN" className={inputClass} />
@@ -117,7 +117,7 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
             <input name="childNik" value={formData.childNik || ''} onChange={handleChange} type="text" placeholder="NIK ANAK (OPSIONAL)" className={inputClass} />
             <input name="childBirthPlace" value={formData.childBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TANGGAL LAHIR" className={inputClass} />
             <input name="childReligion" value={formData.childReligion || ''} onChange={handleChange} type="text" placeholder="AGAMA" className={inputClass} />
-            <input name="childAddress" value={formData.childAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT LENGKAP DOMISILI ANAK" className={`${inputClass} col-span-2`} />
+            <textarea name="childAddress" value={formData.childAddress || ''} onChange={handleChange} placeholder="ALAMAT LENGKAP DOMISILI ANAK" className={`${inputClass} col-span-2`} />
           </div>
           <button onClick={nextStep} className={primaryBtnClass}>LANJUTKAN</button>
         </div>
@@ -125,26 +125,26 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
 
       {formStep === 2 && (
         <div>
-          <h3 className="font-bold mb-4 text-left" style={{ color: '#4D4D4D' }}>LANGKAH 2: DATA WALI / ORANG TUA</h3>
+          <h3 className="font-bold mb-4 text-left text-gray-700">LANGKAH 2: DATA WALI / ORANG TUA</h3>
           <div className="space-y-4">
-            <p className="text-left font-bold" style={{color: '#4D4D4D'}}>1. WALI: AYAH</p>
+            <p className="text-left font-bold text-gray-700">1. WALI: AYAH</p>
             <input name="fatherName" value={formData.fatherName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP" className={inputClass} />
             <input name="fatherNik" value={formData.fatherNik || ''} onChange={handleChange} type="text" placeholder="NIK KTP" className={inputClass} />
             <input name="fatherBirthPlace" value={formData.fatherBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TGL LAHIR" className={inputClass} />
             <input name="fatherJob" value={formData.fatherJob || ''} onChange={handleChange} type="text" placeholder="PEKERJAAN" className={inputClass} />
             <input name="fatherPhone" value={formData.fatherPhone || ''} onChange={handleChange} type="text" placeholder="NO. HANDPHONE (WHATSAPP)" className={inputClass} />
             <input name="fatherEmail" value={formData.fatherEmail || ''} onChange={handleChange} type="email" placeholder="ALAMAT EMAIL" className={inputClass} />
-            <input name="fatherAddress" value={formData.fatherAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT DOMISILI" className={inputClass} />
+            <textarea name="fatherAddress" value={formData.fatherAddress || ''} onChange={handleChange} placeholder="ALAMAT DOMISILI" className={inputClass} />
           </div>
           <div className="space-y-4 mt-6">
-            <p className="text-left font-bold" style={{color: '#4D4D4D'}}>2. WALI: BUNDA</p>
+            <p className="text-left font-bold text-gray-700">2. WALI: BUNDA</p>
             <input name="motherName" value={formData.motherName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP" className={inputClass} />
             <input name="motherNik" value={formData.motherNik || ''} onChange={handleChange} type="text" placeholder="NIK KTP" className={inputClass} />
             <input name="motherBirthPlace" value={formData.motherBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TGL LAHIR" className={inputClass} />
             <input name="motherJob" value={formData.motherJob || ''} onChange={handleChange} type="text" placeholder="PEKERJAAN" className={inputClass} />
             <input name="motherPhone" value={formData.motherPhone || ''} onChange={handleChange} type="text" placeholder="NO. HANDPHONE (WHATSAPP)" className={inputClass} />
             <input name="motherEmail" value={formData.motherEmail || ''} onChange={handleChange} type="email" placeholder="ALAMAT EMAIL" className={inputClass} />
-            <input name="motherAddress" value={formData.motherAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT DOMISILI" className={inputClass} />
+            <textarea name="motherAddress" value={formData.motherAddress || ''} onChange={handleChange} placeholder="ALAMAT DOMISILI" className={inputClass} />
           </div>
           <div className="flex gap-4 mt-6">
             <button onClick={prevStep} className={secondaryBtnClass}>KEMBALI</button>
@@ -155,13 +155,13 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
       
       {formStep === 3 && (
         <div>
-          <h3 className="font-bold mb-4 text-left" style={{ color: '#4D4D4D' }}>LANGKAH 3: RIWAYAT & KEBIASAAN</h3>
-          <p className="text-sm text-left mb-4" style={{ color: '#4D4D4D' }}>INFORMASI PENTING UNTUK KENYAMANAN ANAK DI DAYCARE</p>
+          <h3 className="font-bold mb-4 text-left text-gray-700">LANGKAH 3: RIWAYAT & KEBIASAAN</h3>
+          <p className="text-sm text-left mb-4 text-gray-700">INFORMASI PENTING UNTUK KENYAMANAN ANAK DI DAYCARE</p>
           <div className="space-y-4">
-            <input name="healthHistory" value={formData.healthHistory || ''} onChange={handleChange} type="text" placeholder="RIWAYAT PENYAKIT" className={inputClass} />
-            <input name="allergies" value={formData.allergies || ''} onChange={handleChange} type="text" placeholder="ALERGI" className={inputClass} />
-            <input name="favoriteFoodAndToy" value={formData.favoriteFoodAndToy || ''} onChange={handleChange} type="text" placeholder="KESUKAAN" className={inputClass} />
-            <input name="sleepAndTantrumHabits" value={formData.sleepAndTantrumHabits || ''} onChange={handleChange} type="text" placeholder="KEBIASAAN" className={inputClass} />
+            <textarea name="healthHistory" value={formData.healthHistory || ''} onChange={handleChange} placeholder="RIWAYAT PENYAKIT" className={inputClass} />
+            <textarea name="allergies" value={formData.allergies || ''} onChange={handleChange} placeholder="ALERGI" className={inputClass} />
+            <textarea name="favoriteFoodAndToy" value={formData.favoriteFoodAndToy || ''} onChange={handleChange} placeholder="KESUKAAN" className={inputClass} />
+            <textarea name="sleepAndTantrumHabits" value={formData.sleepAndTantrumHabits || ''} onChange={handleChange} placeholder="KEBIASAAN" className={inputClass} />
           </div>
           <div className="flex gap-4 mt-6">
             <button onClick={prevStep} className={secondaryBtnClass}>KEMBALI</button>
@@ -172,8 +172,8 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
 
       {formStep === 4 && (
         <div>
-          <h3 className="font-bold mb-4 text-left" style={{ color: '#4D4D4D' }}>LANGKAH 4: KESEPAKATAN & TATA TERTIB</h3>
-          <div className="p-4 rounded-lg space-y-2 border-2 border-[#42210b] text-[#42210b]">
+          <h3 className="font-bold mb-4 text-left text-gray-700">LANGKAH 4: KESEPAKATAN & TATA TERTIB</h3>
+          <div className="p-4 rounded-lg space-y-2 border-2 border-[var(--primary-color)] text-[var(--primary-color)]">
             <p className="font-bold text-red-500">POIN 1: KEHADIRAN</p>
             <p className="font-bold text-red-500">POIN 2: ADMINISTRASI</p>
             <p className="font-bold text-red-500">POIN 3: KESEHATAN</p>
@@ -187,30 +187,30 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
 
       {formStep === 5 && (
         <div>
-          <h3 className="font-bold mb-4 text-left" style={{ color: '#4D4D4D' }}>LANGKAH 5: VALIDASI TANDA TANGAN</h3>
+          <h3 className="font-bold mb-4 text-left text-gray-700">LANGKAH 5: VALIDASI TANDA TANGAN</h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-center" style={{ color: '#4D4D4D' }}>AYAH / WALI</label>
-              <div className="h-32 rounded-lg mt-2 relative border-2 border-[#42210b]">
+              <label className="block text-center text-gray-700">AYAH / WALI</label>
+              <div className="h-32 rounded-lg mt-2 relative border-2 border-[var(--primary-color)]">
                 <SignatureCanvas 
                   ref={fatherSigRef} 
-                  penColor='#42210b' 
+                  penColor='var(--primary-color)' 
                   canvasProps={{className: 'w-full h-full'}}
                   onEnd={() => handleSignatureEnd('fatherSignature', fatherSigRef)}
                 />
-                <button onClick={() => clearSignature('fatherSignature', fatherSigRef)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-[#42210b] text-[#42210b] hover:bg-gray-100 transition-all">RESET</button>
+                <button onClick={() => clearSignature('fatherSignature', fatherSigRef)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-[var(--primary-color)] text-[var(--primary-color)] hover:bg-gray-100 transition-all">RESET</button>
               </div>
             </div>
             <div>
-              <label className="block text-center" style={{ color: '#4D4D4D' }}>BUNDA / WALI</label>
-              <div className="h-32 rounded-lg mt-2 relative border-2 border-[#42210b]">
+              <label className="block text-center text-gray-700">BUNDA / WALI</label>
+              <div className="h-32 rounded-lg mt-2 relative border-2 border-[var(--primary-color)]">
                 <SignatureCanvas 
                   ref={motherSigRef} 
-                  penColor='#42210b' 
+                  penColor='var(--primary-color)' 
                   canvasProps={{className: 'w-full h-full'}} 
                   onEnd={() => handleSignatureEnd('motherSignature', motherSigRef)}
                 />
-                <button onClick={() => clearSignature('motherSignature', motherSigRef)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-[#42210b] text-[#42210b] hover:bg-gray-100 transition-all">RESET</button>
+                <button onClick={() => clearSignature('motherSignature', motherSigRef)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-[var(--primary-color)] text-[var(--primary-color)] hover:bg-gray-100 transition-all">RESET</button>
               </div>
             </div>
           </div>
