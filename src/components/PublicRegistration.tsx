@@ -90,6 +90,10 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
     }
   };
 
+  const inputStyles = {
+    color: '#42210b'
+  }
+
   return (
     <div className="bg-white rounded-2xl p-8 max-w-2xl w-full">
       <div className="flex justify-between items-center mb-4">
@@ -104,16 +108,16 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
         <div>
           <h3 className="font-bold mb-4 text-left" style={{ color: '#4D4D4D' }}>LANGKAH 1: IDENTITAS ANAK</h3>
           <div className="grid grid-cols-2 gap-4">
-            <input name="childName" value={formData.childName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP ANAK" className="p-2 rounded-lg border" />
-            <input name="childNickname" value={formData.childNickname || ''} onChange={handleChange} type="text" placeholder="NAMA PANGGILAN" className="p-2 rounded-lg border" />
-            <select name="childGender" value={formData.childGender || ''} onChange={handleChange} className="p-2 rounded-lg border">
+            <input name="childName" value={formData.childName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP ANAK" className="p-2 rounded-lg border" style={inputStyles} />
+            <input name="childNickname" value={formData.childNickname || ''} onChange={handleChange} type="text" placeholder="NAMA PANGGILAN" className="p-2 rounded-lg border" style={inputStyles} />
+            <select name="childGender" value={formData.childGender || ''} onChange={handleChange} className="p-2 rounded-lg border" style={inputStyles}>
               <option>Laki-laki</option>
               <option>Perempuan</option>
             </select>
-            <input name="childNik" value={formData.childNik || ''} onChange={handleChange} type="text" placeholder="NIK ANAK (OPSIONAL)" className="p-2 rounded-lg border" />
-            <input name="childBirthPlace" value={formData.childBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TANGGAL LAHIR" className="p-2 rounded-lg border" />
-            <input name="childReligion" value={formData.childReligion || ''} onChange={handleChange} type="text" placeholder="AGAMA" className="p-2 rounded-lg border" />
-            <input name="childAddress" value={formData.childAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT LENGKAP DOMISILI ANAK" className="col-span-2 p-2 rounded-lg border" />
+            <input name="childNik" value={formData.childNik || ''} onChange={handleChange} type="text" placeholder="NIK ANAK (OPSIONAL)" className="p-2 rounded-lg border" style={inputStyles} />
+            <input name="childBirthPlace" value={formData.childBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TANGGAL LAHIR" className="p-2 rounded-lg border" style={inputStyles} />
+            <input name="childReligion" value={formData.childReligion || ''} onChange={handleChange} type="text" placeholder="AGAMA" className="p-2 rounded-lg border" style={inputStyles} />
+            <input name="childAddress" value={formData.childAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT LENGKAP DOMISILI ANAK" className="col-span-2 p-2 rounded-lg border" style={inputStyles} />
           </div>
           <button onClick={nextStep} className="w-full text-white p-3 rounded-full mt-6 font-bold" style={{ backgroundColor: '#4D4D4D' }}>LANJUTKAN</button>
         </div>
@@ -124,23 +128,23 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
           <h3 className="font-bold mb-4 text-left" style={{ color: '#4D4D4D' }}>LANGKAH 2: DATA WALI / ORANG TUA</h3>
           <div className="space-y-4">
             <p className="text-left font-bold" style={{color: '#4D4D4D'}}>1. WALI: AYAH</p>
-            <input name="fatherName" value={formData.fatherName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP" className="w-full p-2 rounded-lg border" />
-            <input name="fatherNik" value={formData.fatherNik || ''} onChange={handleChange} type="text" placeholder="NIK KTP" className="w-full p-2 rounded-lg border" />
-            <input name="fatherBirthPlace" value={formData.fatherBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TGL LAHIR" className="w-full p-2 rounded-lg border" />
-            <input name="fatherJob" value={formData.fatherJob || ''} onChange={handleChange} type="text" placeholder="PEKERJAAN" className="w-full p-2 rounded-lg border" />
-            <input name="fatherPhone" value={formData.fatherPhone || ''} onChange={handleChange} type="text" placeholder="NO. HANDPHONE (WHATSAPP)" className="w-full p-2 rounded-lg border" />
-            <input name="fatherEmail" value={formData.fatherEmail || ''} onChange={handleChange} type="email" placeholder="ALAMAT EMAIL" className="w-full p-2 rounded-lg border" />
-            <input name="fatherAddress" value={formData.fatherAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT DOMISILI" className="w-full p-2 rounded-lg border" />
+            <input name="fatherName" value={formData.fatherName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="fatherNik" value={formData.fatherNik || ''} onChange={handleChange} type="text" placeholder="NIK KTP" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="fatherBirthPlace" value={formData.fatherBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TGL LAHIR" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="fatherJob" value={formData.fatherJob || ''} onChange={handleChange} type="text" placeholder="PEKERJAAN" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="fatherPhone" value={formData.fatherPhone || ''} onChange={handleChange} type="text" placeholder="NO. HANDPHONE (WHATSAPP)" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="fatherEmail" value={formData.fatherEmail || ''} onChange={handleChange} type="email" placeholder="ALAMAT EMAIL" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="fatherAddress" value={formData.fatherAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT DOMISILI" className="w-full p-2 rounded-lg border" style={inputStyles} />
           </div>
           <div className="space-y-4 mt-6">
             <p className="text-left font-bold" style={{color: '#4D4D4D'}}>2. WALI: BUNDA</p>
-            <input name="motherName" value={formData.motherName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP" className="w-full p-2 rounded-lg border" />
-            <input name="motherNik" value={formData.motherNik || ''} onChange={handleChange} type="text" placeholder="NIK KTP" className="w-full p-2 rounded-lg border" />
-            <input name="motherBirthPlace" value={formData.motherBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TGL LAHIR" className="w-full p-2 rounded-lg border" />
-            <input name="motherJob" value={formData.motherJob || ''} onChange={handleChange} type="text" placeholder="PEKERJAAN" className="w-full p-2 rounded-lg border" />
-            <input name="motherPhone" value={formData.motherPhone || ''} onChange={handleChange} type="text" placeholder="NO. HANDPHONE (WHATSAPP)" className="w-full p-2 rounded-lg border" />
-            <input name="motherEmail" value={formData.motherEmail || ''} onChange={handleChange} type="email" placeholder="ALAMAT EMAIL" className="w-full p-2 rounded-lg border" />
-            <input name="motherAddress" value={formData.motherAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT DOMISILI" className="w-full p-2 rounded-lg border" />
+            <input name="motherName" value={formData.motherName || ''} onChange={handleChange} type="text" placeholder="NAMA LENGKAP" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="motherNik" value={formData.motherNik || ''} onChange={handleChange} type="text" placeholder="NIK KTP" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="motherBirthPlace" value={formData.motherBirthPlace || ''} onChange={handleChange} type="text" placeholder="TEMPAT, TGL LAHIR" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="motherJob" value={formData.motherJob || ''} onChange={handleChange} type="text" placeholder="PEKERJAAN" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="motherPhone" value={formData.motherPhone || ''} onChange={handleChange} type="text" placeholder="NO. HANDPHONE (WHATSAPP)" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="motherEmail" value={formData.motherEmail || ''} onChange={handleChange} type="email" placeholder="ALAMAT EMAIL" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="motherAddress" value={formData.motherAddress || ''} onChange={handleChange} type="text" placeholder="ALAMAT DOMISILI" className="w-full p-2 rounded-lg border" style={inputStyles} />
           </div>
           <div className="flex gap-4 mt-6">
             <button onClick={prevStep} className="w-1/2 border-2 p-3 rounded-full font-bold" style={{ borderColor: '#4D4D4D', color: '#4D4D4D' }}>KEMBALI</button>
@@ -154,10 +158,10 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
           <h3 className="font-bold mb-4 text-left" style={{ color: '#4D4D4D' }}>LANGKAH 3: RIWAYAT & KEBIASAAN</h3>
           <p className="text-sm text-left mb-4" style={{ color: '#4D4D4D' }}>INFORMASI PENTING UNTUK KENYAMANAN ANAK DI DAYCARE</p>
           <div className="space-y-4">
-            <input name="healthHistory" value={formData.healthHistory || ''} onChange={handleChange} type="text" placeholder="RIWAYAT PENYAKIT" className="w-full p-2 rounded-lg border" />
-            <input name="allergies" value={formData.allergies || ''} onChange={handleChange} type="text" placeholder="ALERGI" className="w-full p-2 rounded-lg border" />
-            <input name="favoriteFoodAndToy" value={formData.favoriteFoodAndToy || ''} onChange={handleChange} type="text" placeholder="KESUKAAN" className="w-full p-2 rounded-lg border" />
-            <input name="sleepAndTantrumHabits" value={formData.sleepAndTantrumHabits || ''} onChange={handleChange} type="text" placeholder="KEBIASAAN" className="w-full p-2 rounded-lg border" />
+            <input name="healthHistory" value={formData.healthHistory || ''} onChange={handleChange} type="text" placeholder="RIWAYAT PENYAKIT" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="allergies" value={formData.allergies || ''} onChange={handleChange} type="text" placeholder="ALERGI" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="favoriteFoodAndToy" value={formData.favoriteFoodAndToy || ''} onChange={handleChange} type="text" placeholder="KESUKAAN" className="w-full p-2 rounded-lg border" style={inputStyles} />
+            <input name="sleepAndTantrumHabits" value={formData.sleepAndTantrumHabits || ''} onChange={handleChange} type="text" placeholder="KEBIASAAN" className="w-full p-2 rounded-lg border" style={inputStyles} />
           </div>
           <div className="flex gap-4 mt-6">
             <button onClick={prevStep} className="w-1/2 border-2 p-3 rounded-full font-bold" style={{ borderColor: '#4D4D4D', color: '#4D4D4D' }}>KEMBALI</button>
