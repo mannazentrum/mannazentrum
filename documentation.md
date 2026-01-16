@@ -1,7 +1,7 @@
 
 # MZdaycare - Comprehensive System Documentation
 **Version:** 6.3.0-visual-production
-**Standard Restore Point:** 06Apha20
+**Standard Restore Point:** 16JanJam15
 **Owner:** PT. Elrafa Terang Sejahtera
 
 ---
@@ -24,9 +24,9 @@ Sistem telah bermigrasi sepenuhnya dari penyimpanan lokal ke **Firebase Cloud In
   - Reset password dan penghapusan user kini berdampak langsung pada database pusat.
 
 ## 4. Technical Specs
-- **React 19**: Core framework.
+- **React 18**: Core framework.
 - **Firebase SDK**: Digunakan untuk koneksi Firestore dan Storage.
 - **Gemini API**: Menenagai "Malika AI Advisor" dengan konteks perusahaan yang dinamis.
 
 ---
-*Checkpoint Created: 06Apha20 - Visual Consistency Achieved*
+*Checkpoint Created: 16JanJam15 - Stable Dependencies & Font Fix*
