@@ -1,4 +1,24 @@
 
+export type UserRole = 'admin' | 'guru' | 'orangtua';
+
+export interface User {
+  id: string;
+  email: string;
+  role: UserRole;
+}
+
+export interface RegistrationEntry {
+  id: string;
+  childName: string;
+  parentName: string;
+  entryDate: string;
+}
+
+export interface WebsiteContent {
+  id: string;
+  // Define other properties of WebsiteContent here
+}
+
 export interface ParentRegistrationData {
   childName: string;
   childNickname: string;
