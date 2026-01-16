@@ -17,18 +17,18 @@ const PublicRegistration: React.FC<PublicRegistrationProps> = ({ onBack, website
     switch (step) {
       case 0:
         return (
-          <div className="text-center text-[#42210b]">
+          <div className="text-center text-brand-brown">
             <h1 className="text-4xl font-bold mb-12">DAFTAR AKUN BARU</h1>
             <div className="flex justify-center gap-8">
               <div 
-                className="bg-white rounded-2xl p-8 cursor-pointer border-2 border-transparent hover:border-[#42210b] transition-all"
+                className="bg-white rounded-2xl p-8 cursor-pointer border-2 border-transparent hover:border-brand-brown transition-all"
                 onClick={() => setStep(1)}
               >
                 <p className="text-6xl">👨‍👩‍👧</p>
                 <p className="mt-4 font-bold">AKUN ORANG TUA</p>
               </div>
               <div 
-                className="bg-white rounded-2xl p-8 cursor-pointer border-2 border-transparent hover:border-[#42210b] transition-all"
+                className="bg-white rounded-2xl p-8 cursor-pointer border-2 border-transparent hover:border-brand-brown transition-all"
                 onClick={() => setStep(1)} // This should ideally lead to a different flow
               >
                 <p className="text-6xl">👩‍🏫</p>
@@ -46,7 +46,7 @@ const PublicRegistration: React.FC<PublicRegistrationProps> = ({ onBack, website
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-[#F9F4E8]">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-brand-cream">
       {renderContent()}
     </div>
   );
@@ -90,12 +90,12 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
     }
   };
 
-  const inputClass = "p-2 rounded-lg border-2 border-[#42210b] text-[#42210b] placeholder:text-[#42210b] placeholder:opacity-60 bg-transparent w-full";
-  const primaryBtnClass = "w-full bg-[#42210b] text-white p-3 rounded-full mt-6 font-bold uppercase tracking-wider shadow-md hover:bg-black transition-all active:scale-95 border-b-4 border-black/30";
-  const secondaryBtnClass = "w-1/2 bg-white text-[#42210b] border-2 border-[#42210b] p-3 rounded-full font-bold uppercase tracking-wider shadow-md hover:bg-gray-100 transition-all active:scale-95";
+  const inputClass = "p-2 rounded-lg border-2 border-brand-brown text-brand-brown placeholder:text-brand-brown placeholder:opacity-60 bg-transparent w-full";
+  const primaryBtnClass = "w-full bg-brand-brown text-white p-3 rounded-full mt-6 font-bold uppercase tracking-wider shadow-md hover:bg-black transition-all active:scale-95 border-b-4 border-black/30";
+  const secondaryBtnClass = "w-1/2 bg-white text-brand-brown border-2 border-brand-brown p-3 rounded-full font-bold uppercase tracking-wider shadow-md hover:bg-gray-100 transition-all active:scale-95";
 
   return (
-    <div className="bg-white rounded-2xl p-8 max-w-2xl w-full text-[#42210b]">
+    <div className="bg-white rounded-2xl p-8 max-w-2xl w-full text-brand-brown">
       <div className="flex justify-between items-center mb-4">
         <button onClick={formStep === 1 ? onBack : prevStep} className="text-2xl">←</button>
         <h2 className="text-2xl font-bold">FORMULIR ORANG TUA</h2>
@@ -173,7 +173,7 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
       {formStep === 4 && (
         <div>
           <h3 className="font-bold mb-4 text-left">LANGKAH 4: KESEPAKATAN & TATA TERTIB</h3>
-          <div className="p-4 rounded-lg space-y-2 border-2 border-[#42210b]">
+          <div className="p-4 rounded-lg space-y-2 border-2 border-brand-brown">
             <p className="font-bold text-red-500">POIN 1: KEHADIRAN</p>
             <p className="font-bold text-red-500">POIN 2: ADMINISTRASI</p>
             <p className="font-bold text-red-500">POIN 3: KESEHATAN</p>
@@ -191,26 +191,26 @@ const ParentRegistrationForm: React.FC<{ onBack: () => void }> = ({ onBack }) =>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-center">AYAH / WALI</label>
-              <div className="h-32 rounded-lg mt-2 relative border-2 border-[#42210b]">
+              <div className="h-32 rounded-lg mt-2 relative border-2 border-brand-brown">
                 <SignatureCanvas 
                   ref={fatherSigRef} 
                   penColor='#42210b'
                   canvasProps={{className: 'w-full h-full'}}
                   onEnd={() => handleSignatureEnd('fatherSignature', fatherSigRef)}
                 />
-                <button onClick={() => clearSignature('fatherSignature', fatherSigRef)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-[#42210b] text-[#42210b] hover:bg-gray-100 transition-all">RESET</button>
+                <button onClick={() => clearSignature('fatherSignature', fatherSigRef)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-brand-brown text-brand-brown hover:bg-gray-100 transition-all">RESET</button>
               </div>
             </div>
             <div>
               <label className="block text-center">BUNDA / WALI</label>
-              <div className="h-32 rounded-lg mt-2 relative border-2 border-[#42210b]">
+              <div className="h-32 rounded-lg mt-2 relative border-2 border-brand-brown">
                 <SignatureCanvas 
                   ref={motherSigRef} 
                   penColor='#42210b' 
                   canvasProps={{className: 'w-full h-full'}} 
                   onEnd={() => handleSignatureEnd('motherSignature', motherSigRef)}
                 />
-                <button onClick={() => clearSignature('motherSignature', motherSigRef)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-[#42210b] text-[#42210b] hover:bg-gray-100 transition-all">RESET</button>
+                <button onClick={() => clearSignature('motherSignature', motherSigRef)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-brand-brown text-brand-brown hover:bg-gray-100 transition-all">RESET</button>
               </div>
             </div>
           </div>
