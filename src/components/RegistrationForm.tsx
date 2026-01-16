@@ -12,9 +12,10 @@ interface RegistrationFormProps {
 
 type RegType = 'parent' | 'teacher' | null;
 
-const inputClass = "w-full p-4 rounded-xl bg-pdf-brown text-white font-bold border border-pdf-brown/20 focus:ring-2 ring-pdf-yellow/50 outline-none placeholder:text-white/30 transition-all";
+const inputClass = "p-2 rounded-lg border-2 border-pdf-brown text-pdf-brown placeholder:text-pdf-brown placeholder:opacity-60 bg-transparent w-full";
+const primaryBtnClass = "w-full bg-pdf-brown text-white p-3 rounded-full mt-6 font-bold uppercase tracking-wider shadow-md hover:bg-black transition-all active:scale-95 border-b-4 border-black/30";
+const secondaryBtnClass = "w-1/2 bg-white text-pdf-brown border-2 border-pdf-brown p-3 rounded-full font-bold uppercase tracking-wider shadow-md hover:bg-gray-100 transition-all active:scale-95";
 const labelClass = "text-xs font-black uppercase text-pdf-brown/60 mb-2 block tracking-widest ml-1";
-const selectGenderClass = "w-full p-4 rounded-xl bg-pdf-brown text-white font-bold border border-pdf-brown/20 focus:ring-2 ring-pdf-yellow/50 outline-none";
 
 const GuardianInputGroup = React.memo(({ 
   title, 
@@ -89,7 +90,7 @@ const GuardianInputGroup = React.memo(({
       <div className="space-y-1">
         <label className={labelClass}>Alamat Domisili</label>
         <textarea 
-          className={inputClass + " h-24"} 
+          className={`${inputClass} h-24`} 
           value={data.alamat} 
           onChange={e => onFieldChange('alamat', e.target.value)}
         ></textarea>
@@ -217,7 +218,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
         let drawing = false;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
-        ctx.strokeStyle = '#0000FF'; 
+        ctx.strokeStyle = '#42210b'; 
         ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         const getPos = (e: any) => {
@@ -252,12 +253,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-1"><label className={labelClass}>Nama Lengkap Anak</label><input type="text" className={inputClass} value={childInfo.fullName} onChange={e => setChildInfo({...childInfo, fullName: e.target.value})} /></div>
               <div className="space-y-1"><label className={labelClass}>Nama Panggilan</label><input type="text" className={inputClass} value={childInfo.nickname} onChange={e => setChildInfo({...childInfo, nickname: e.target.value})} /></div>
-              <div className="space-y-1"><label className={labelClass}>Jenis Kelamin</label><select className={selectGenderClass} value={childInfo.gender} onChange={e => setChildInfo({...childInfo, gender: e.target.value as Gender})}><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select></div>
+              <div className="space-y-1"><label className={labelClass}>Jenis Kelamin</label><select className={inputClass} value={childInfo.gender} onChange={e => setChildInfo({...childInfo, gender: e.target.value as Gender})}><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select></div>
               <div className="space-y-1"><label className={labelClass}>NIK Anak (Opsional)</label><input type="text" className={inputClass} value={childInfo.nik} onChange={e => setChildInfo({...childInfo, nik: e.target.value})} /></div>
               <div className="space-y-1"><label className={labelClass}>Tempat, Tanggal Lahir</label><input type="text" className={inputClass} value={childInfo.ttl} onChange={e => setChildInfo({...childInfo, ttl: e.target.value})} /></div>
               <div className="space-y-1"><label className={labelClass}>Agama</label><input type="text" className={inputClass} value={childInfo.agama} onChange={e => setChildInfo({...childInfo, agama: e.target.value})} /></div>
             </div>
-            <div className="space-y-1"><label className={labelClass}>Alamat Lengkap Domisili Anak</label><textarea className={inputClass + " h-24"} value={childInfo.alamat} onChange={e => setChildInfo({...childInfo, alamat: e.target.value})}></textarea></div>
+            <div className="space-y-1"><label className={labelClass}>Alamat Lengkap Domisili Anak</label><textarea className={`${inputClass} h-24`} value={childInfo.alamat} onChange={e => setChildInfo({...childInfo, alamat: e.target.value})}></textarea></div>
           </div>
         );
       case 2: 
@@ -278,10 +279,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
           <div className="space-y-8 animate-fadeIn">
             <div><h3 className="text-2xl font-black font-rounded text-pdf-brown uppercase tracking-tight leading-none mb-2">Langkah 3: Riwayat & Kebiasaan</h3><p className="text-xs font-bold text-pdf-brown/40 uppercase tracking-widest">Informasi penting untuk kenyamanan anak di daycare</p></div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-3"><label className={labelClass}>🏥 Riwayat Penyakit</label><textarea className={inputClass + " h-32 text-sm"} value={healthInfo.penyakit} onChange={e => setHealthInfo({...healthInfo, penyakit: e.target.value})}></textarea></div>
-              <div className="space-y-3"><label className={labelClass}>🚫 Alergi</label><textarea className={inputClass + " h-32 text-sm"} value={healthInfo.alergi} onChange={e => setHealthInfo({...healthInfo, alergi: e.target.value})}></textarea></div>
-              <div className="space-y-3"><label className={labelClass}>🧸 Kesukaan</label><textarea className={inputClass + " h-32 text-sm"} value={healthInfo.kesukaan} onChange={e => setHealthInfo({...healthInfo, kesukaan: e.target.value})}></textarea></div>
-              <div className="space-y-3"><label className={labelClass}>💤 Kebiasaan</label><textarea className={inputClass + " h-32 text-sm"} value={healthInfo.kebiasaan} onChange={e => setHealthInfo({...healthInfo, kebiasaan: e.target.value})}></textarea></div>
+              <div className="space-y-3"><label className={labelClass}>🏥 Riwayat Penyakit</label><textarea className={`${inputClass} h-32 text-sm`} value={healthInfo.penyakit} onChange={e => setHealthInfo({...healthInfo, penyakit: e.target.value})}></textarea></div>
+              <div className="space-y-3"><label className={labelClass}>🚫 Alergi</label><textarea className={`${inputClass} h-32 text-sm`} value={healthInfo.alergi} onChange={e => setHealthInfo({...healthInfo, alergi: e.target.value})}></textarea></div>
+              <div className="space-y-3"><label className={labelClass}>🧸 Kesukaan</label><textarea className={`${inputClass} h-32 text-sm`} value={healthInfo.kesukaan} onChange={e => setHealthInfo({...healthInfo, kesukaan: e.target.value})}></textarea></div>
+              <div className="space-y-3"><label className={labelClass}>💤 Kebiasaan</label><textarea className={`${inputClass} h-32 text-sm`} value={healthInfo.kebiasaan} onChange={e => setHealthInfo({...healthInfo, kebiasaan: e.target.value})}></textarea></div>
             </div>
           </div>
         );
@@ -301,8 +302,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
           <div className="space-y-8 animate-fadeIn">
             <div><h3 className="text-2xl font-black font-rounded text-pdf-brown uppercase tracking-tight leading-none mb-2">Langkah 5: Validasi Tanda Tangan</h3></div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-4"><span className="text-sm font-black text-pdf-brown uppercase tracking-widest block text-center">Ayah / Wali</span><div className="relative border-4 border-pdf-brown rounded-[30px] bg-white overflow-hidden shadow-inner"><canvas ref={canvasRefAyah} width={400} height={200} className="w-full h-48 cursor-crosshair touch-none"></canvas><button type="button" onClick={() => clearCanvas(canvasRefAyah)} className="absolute top-4 right-4 text-[10px] font-black bg-pdf-brown/10 text-pdf-brown px-4 py-2 rounded-full uppercase hover:bg-pdf-brown/20">Reset</button></div></div>
-              <div className="space-y-4"><span className="text-sm font-black text-pdf-brown uppercase tracking-widest block text-center">Bunda / Wali</span><div className="relative border-4 border-pdf-brown rounded-[30px] bg-white overflow-hidden shadow-inner"><canvas ref={canvasRefIbu} width={400} height={200} className="w-full h-48 cursor-crosshair touch-none"></canvas><button type="button" onClick={() => clearCanvas(canvasRefIbu)} className="absolute top-4 right-4 text-[10px] font-black bg-pdf-brown/10 text-pdf-brown px-4 py-2 rounded-full uppercase hover:bg-pdf-brown/20">Reset</button></div></div>
+              <div className="space-y-4"><span className="text-sm font-black text-pdf-brown uppercase tracking-widest block text-center">Ayah / Wali</span><div className="relative border-2 border-pdf-brown rounded-lg bg-white overflow-hidden shadow-inner"><canvas ref={canvasRefAyah} width={400} height={200} className="w-full h-48 cursor-crosshair touch-none"></canvas><button type="button" onClick={() => clearCanvas(canvasRefAyah)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-pdf-brown text-pdf-brown hover:bg-gray-100 transition-all">Reset</button></div></div>
+              <div className="space-y-4"><span className="text-sm font-black text-pdf-brown uppercase tracking-widest block text-center">Bunda / Wali</span><div className="relative border-2 border-pdf-brown rounded-lg bg-white overflow-hidden shadow-inner"><canvas ref={canvasRefIbu} width={400} height={200} className="w-full h-48 cursor-crosshair touch-none"></canvas><button type="button" onClick={() => clearCanvas(canvasRefIbu)} className="absolute top-1 right-1 px-2 text-sm rounded border-2 border-pdf-brown text-pdf-brown hover:bg-gray-100 transition-all">Reset</button></div></div>
             </div>
           </div>
          );
@@ -328,7 +329,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
           <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center text-5xl mx-auto mb-10 border-2 border-green-200">✨</div>
           <h3 className="text-4xl font-black font-rounded text-pdf-brown mb-6 uppercase tracking-tighter">Pendaftaran Selesai!</h3>
           <p className="text-lg text-pdf-brown/60 mb-10 font-bold">Data pendaftaran telah diarsipkan ke Cloud. Admin akan mereview dalam 1x24 jam.</p>
-          <button onClick={onBack} className="w-full bg-pdf-brown text-white py-5 rounded-[30px] font-black uppercase tracking-widest shadow-2xl">Ke Halaman Login</button>
+          <button onClick={onBack} className={primaryBtnClass}>Ke Halaman Login</button>
         </div>
       </div>
     );
@@ -361,7 +362,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
               <div className="space-y-1">
                 <label className={labelClass}>Role Pengguna</label>
                 <select 
-                  className={selectGenderClass} 
+                  className={inputClass} 
                   value={staffRole} 
                   onChange={e => setStaffRole(e.target.value as 'Guru' | 'Coordinator')}
                 >
@@ -373,7 +374,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
               <div className="space-y-1"><label className={labelClass}>NIK KTP</label><input type="text" className={inputClass} value={personalData.nik} onChange={e => setPersonalData({...personalData, nik: e.target.value})} /></div>
               <div className="space-y-1"><label className={labelClass}>No. Handphone</label><input type="text" className={inputClass} value={personalData.hp} onChange={e => setPersonalData({...personalData, hp: e.target.value})} /></div>
               <div className="grid grid-cols-2 gap-8 pt-4"><div className="space-y-1"><label className={labelClass}>Username Login</label><input type="text" className={inputClass} value={accountData.username} onChange={e => setAccountData({...accountData, username: e.target.value})} /></div><div className="space-y-1"><label className={labelClass}>Password</label><input type="password" className={inputClass} value={accountData.password} onChange={e => setAccountData({...accountData, password: e.target.value})} /></div></div>
-              <button disabled={uploading} onClick={handleFinalSubmit} className="w-full bg-pdf-brown text-white py-6 rounded-[30px] font-black text-2xl shadow-2xl mt-10 uppercase tracking-widest disabled:opacity-50">
+              <button disabled={uploading} onClick={handleFinalSubmit} className={`${primaryBtnClass} text-2xl`}>
                 {uploading ? 'Menyimpan ke Cloud...' : 'Kirim Pendaftaran'}
               </button>
            </div>
@@ -381,12 +382,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
         
         {regType === 'parent' && (
           <div className="mt-24 flex gap-8">
-            {step > 1 && <button onClick={() => setStep(step - 1)} className="flex-1 border-4 border-pdf-brown text-pdf-brown py-6 rounded-[35px] font-black text-xl uppercase">Kembali</button>}
+            {step > 1 && <button onClick={() => setStep(step - 1)} className={`${secondaryBtnClass} flex-1`}>Kembali</button>}
             <button disabled={uploading} onClick={() => {
               if (step === 5) captureSignaturesAndContinue();
               else if (step < 6) setStep(step + 1);
               else handleFinalSubmit();
-            }} className="flex-[2] bg-pdf-brown text-white py-6 rounded-[35px] font-black text-xl shadow-2xl uppercase disabled:opacity-50">
+            }} className={`${primaryBtnClass} flex-[2]`}>
               {uploading ? '⌛ Tunggu...' : (step === 6 ? 'Selesaikan' : 'Lanjutkan')}
             </button>
           </div>
