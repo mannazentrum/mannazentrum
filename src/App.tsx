@@ -17,14 +17,11 @@ import BusinessUnits from './components/BusinessUnits';
 import PublicRegistration from './components/PublicRegistration';
 import DaycareAbout from './components/DaycareAbout';
 import DaycareProgram from './components/DaycareProgram';
-import IsolatedForm from './components/IsolatedForm';
 
 const App: React.FC = () => {
-  return <IsolatedForm />;
-  
   const [loading, setLoading] = useState(true);
   const [dbSyncing, setDbSyncing] = useState(false);
-  const [viewMode, setViewMode] = useState<'CORPORATE' | 'DAYCARE_LANDING' | 'APP' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS' | 'PUBLIC_REGISTRATION' | 'DAYCARE_ABOUT' | 'DAYCARE_PROGRAM'>('CORPORATE'); 
+  const [viewMode, setViewMode] = useState<'CORPORATE' | 'DAYCARE_LANDING' | 'APP' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS' | 'PUBLIC_REGISTRATION' | 'DAYCARE_ABOUT' | 'DAYcare_PROGRAM'>('CORPORATE'); 
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -126,6 +123,25 @@ const App: React.FC = () => {
     };
   }, []);
 
+  const handleLogin = (username: string, pass: string) => {
+    if (username === 'admin' && pass === 'password') {
+      setUser({ id: 'admin', name: 'Staff Mannazentrum', role: UserRole.ADMIN });
+      return;
+    }
+    const found = registrations.find(r => r.username === username && r.password === pass);
+    if (found) {
+      if (found.status === 'Approved') {
+        let role = UserRole.TEACHER;
+        if (found.type === 'Orang Tua') role = UserRole.PARENT;
+        if (found.type === 'Coordinator') role = UserRole.COORDINATOR;
+        setUser({ id: found.id, name: found.personalData.nama, role });
+      } else {
+        alert('Akun Anda belum aktif. Mohon hubungi Admin.');
+      }
+    } else {
+      alert('Login gagal. Periksa kembali username/password.');
+    }
+  };
 
   if (loading) return <SplashScreen />;
 
