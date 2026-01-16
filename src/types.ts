@@ -1,22 +1,34 @@
 
-export type UserRole = 'admin' | 'guru' | 'orangtua';
+export enum UserRole {
+  ADMIN = 'admin',
+  TEACHER = 'guru',
+  PARENT = 'orangtua',
+  COORDINATOR = 'coordinator',
+}
 
 export interface User {
   id: string;
-  email: string;
+  name: string;
   role: UserRole;
 }
 
 export interface RegistrationEntry {
   id: string;
-  childName: string;
-  parentName: string;
+  username: string;
+  password?: string;
+  type: 'Orang Tua' | 'Guru' | 'Coordinator';
+  status: 'Pending' | 'Approved' | 'Rejected';
+  personalData: any; 
   entryDate: string;
 }
 
 export interface WebsiteContent {
-  id: string;
-  // Define other properties of WebsiteContent here
+  heroTitle: string;
+  heroSubtitle: string;
+  announcementActive: boolean;
+  announcementText: string;
+  whatsappNumber: string;
+  tagline: string;
 }
 
 export interface ParentRegistrationData {
