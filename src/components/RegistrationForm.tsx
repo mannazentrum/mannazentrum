@@ -324,7 +324,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-brand-light-brown p-6 flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-brand-cream p-6 flex flex-col items-center justify-center">
         <div className="max-w-xl w-full bg-white rounded-[60px] shadow-2xl p-16 text-center border-4 border-brand-brown animate-fadeIn">
           <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center text-5xl mx-auto mb-10 border-2 border-green-200">✨</div>
           <h3 className="text-4xl font-black font-rounded text-brand-brown mb-6 uppercase tracking-tighter">Pendaftaran Selesai!</h3>
@@ -337,7 +337,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
 
   if (!regType) {
     return (
-      <div className="min-h-screen bg-brand-light-brown p-6 flex flex-col items-center justify-center animate-fadeIn">
+      <div className="min-h-screen bg-brand-cream p-6 flex flex-col items-center justify-center animate-fadeIn">
         <h2 className="text-5xl font-black font-rounded text-brand-brown mb-20 uppercase tracking-tighter text-center">Daftar Akun Baru</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-5xl">
           <button onClick={() => setRegType('parent')} className="bg-white p-16 rounded-[80px] shadow-2xl border-4 border-transparent hover:border-brand-brown transition-all group flex flex-col items-center transform hover:-translate-y-4"><span className="text-7xl mb-10">👨‍👩‍👧</span><span className="text-3xl font-black text-brand-brown uppercase text-center">Registrasi <br/> Orang Tua</span></button>
@@ -349,10 +349,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onBack, onBackToLan
   }
 
   return (
-    <div className="min-h-screen bg-brand-light-brown p-6 flex flex-col items-center overflow-y-auto">
+    <div className="min-h-screen bg-brand-cream p-6 flex flex-col items-center overflow-y-auto">
       <div className="w-full max-w-5xl bg-white rounded-[70px] shadow-2xl p-10 md:p-20 border-2 border-brand-brown/5 my-10 relative">
         <div className="flex items-center justify-between mb-16">
-          <button onClick={() => setRegType(null)} className="w-14 h-14 bg-brand-light-brown text-brand-brown rounded-full flex items-center justify-center text-3xl hover:scale-110">←</button>
+          <button onClick={() => setRegType(null)} className="w-14 h-14 bg-brand-cream text-brand-brown rounded-full flex items-center justify-center text-3xl hover:scale-110">←</button>
           <div className="text-center"><h2 className="text-3xl font-black font-rounded text-brand-brown uppercase tracking-tighter">{regType === 'parent' ? 'Formulir Orang Tua' : 'Formulir Staf/Guru'}</h2><p className="text-[10px] font-black text-brand-brown/40 uppercase tracking-[0.4em] mt-2">Mannazentrum Cloud Sync</p></div>
           {regType === 'parent' && <div className="flex flex-col items-end"><span className="text-[10px] font-black uppercase text-brand-brown/30">Progress</span><span className="bg-brand-brown text-white px-6 py-2 rounded-full text-xs font-black uppercase shadow-lg mt-1">{step} / 6</span></div>}
         </div>

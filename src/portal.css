@@ -1,8 +1,13 @@
-      @tailwind base;
-      @tailwind components;
-      @tailwind utilities;
-      
-      @theme {
-        /* Mengecilkan skala jarak antar elemen sebesar 50% */
-        --spacing-scale: 0.5;
-      }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  /* Mengecilkan skala jarak antar elemen sebesar 50% */
+  --spacing-scale: 0.5;
+}
+
+html {
+  /* Mengecilkan basis ukuran semua elemen yang menggunakan rem */
+  font-size: 8px;
+}
