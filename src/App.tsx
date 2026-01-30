@@ -1,7 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { collection, onSnapshot, doc, setDoc, query } from "firebase/firestore";
-import { db } from "./firebase";
 import { User, UserRole, RegistrationEntry, WebsiteContent } from './types';
 import Login from './components/Login';
 import SplashScreen from './components/SplashScreen';
@@ -21,7 +19,7 @@ import DaycareProgram from './components/DaycareProgram';
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [dbSyncing, setDbSyncing] = useState(false);
-  const [viewMode, setViewMode] = useState<'CORPORATE' | 'DAYCARE_LANDING' | 'APP' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS' | 'PUBLIC_REGISTRATION' | 'DAYCARE_ABOUT' | 'DAYcare_PROGRAM'>('CORPORATE'); 
+  const [viewMode, setViewMode] = useState<'CORPORATE' | 'DAYCARE_LANDING' | 'APP' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS' | 'PUBLIC_REGISTRATION' | 'DAYCARE_ABOUT' | 'DAYCARE_PROGRAM'>('CORPORATE'); 
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -80,7 +78,7 @@ const App: React.FC = () => {
   const syncToCloud = async (collectionName: string, docId: string, data: any) => {
     setDbSyncing(true);
     try {
-      await setDoc(doc(db, collectionName, docId), data, { merge: true });
+      console.log(`Simulating cloud sync for ${collectionName}: ${docId}`, data);
     } catch (e) {
       console.error(`Cloud Sync Error [${collectionName}]:`, e);
     } finally {
@@ -89,38 +87,8 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const unsubRegs = onSnapshot(query(collection(db, "registrations")), (snap) => {
-      const data: RegistrationEntry[] = [];
-      snap.forEach(doc => data.push(doc.data() as RegistrationEntry));
-      setRegistrations(data);
-      setLoading(false);
-    });
-
-    const unsubReports = onSnapshot(query(collection(db, "daily_reports")), (snap) => {
-      const reports: Record<string, any> = {};
-      snap.forEach(doc => reports[doc.id] = doc.data());
-      setDailyReports(reports);
-    });
-
-    const unsubCms = onSnapshot(doc(db, "settings", "website_cms"), (doc) => {
-      if (doc.exists()) setWebsiteContent(doc.data() as WebsiteContent);
-    });
-
-    const unsubMenus = onSnapshot(query(collection(db, "scheduled_menus")), (snap) => {
-      const data: any[] = [];
-      snap.forEach(doc => data.push(doc.data()));
-      setScheduledMenus(data);
-    });
-
-    const unsubCurrs = onSnapshot(query(collection(db, "scheduled_curriculums")), (snap) => {
-      const data: any[] = [];
-      snap.forEach(doc => data.push(doc.data()));
-      setScheduledCurriculums(data);
-    });
-
-    return () => {
-      unsubRegs(); unsubReports(); unsubCms(); unsubMenus(); unsubCurrs();
-    };
+    // MOCK DATA and remove firebase listeners
+    setLoading(false);
   }, []);
 
   const handleLogin = (username: string, pass: string) => {
@@ -128,19 +96,12 @@ const App: React.FC = () => {
       setUser({ id: 'admin', name: 'Staff Mannazentrum', role: UserRole.ADMIN });
       return;
     }
-    const found = registrations.find(r => r.username === username && r.password === pass);
-    if (found) {
-      if (found.status === 'Approved') {
-        let role = UserRole.TEACHER;
-        if (found.type === 'Orang Tua') role = UserRole.PARENT;
-        if (found.type === 'Coordinator') role = UserRole.COORDINATOR;
-        setUser({ id: found.id, name: found.personalData.nama, role });
-      } else {
-        alert('Akun Anda belum aktif. Mohon hubungi Admin.');
-      }
-    } else {
-      alert('Login gagal. Periksa kembali username/password.');
+    // Hardcoded user for demonstration without firebase
+    if (username === 'parent' && pass === 'password') {
+        setUser({ id: 'parent1', name: 'Orang Tua Murid', role: UserRole.PARENT });
+        return;
     }
+    alert('Login gagal. Periksa kembali username/password.');
   };
 
   if (loading) return <SplashScreen />;
