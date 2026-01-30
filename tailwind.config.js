@@ -9,6 +9,7 @@ export default {
       colors: {
         'brand-brown': '#42210b',
         'brand-cream': '#F9F4E8',
+        'brand-light-brown': '#A9886E',
       },
     },
   },
