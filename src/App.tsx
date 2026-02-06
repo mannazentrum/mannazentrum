@@ -12,7 +12,6 @@ const CompanyProfile = lazy(() => import('./components/CompanyProfile'));
 const BusinessUnits = lazy(() => import('./components/BusinessUnits'));
 
 const App: React.FC = () => {
-  const [loading, setLoading] = useState(true);
   const [dbSyncing, setDbSyncing] = useState(false);
   const [viewMode, setViewMode] = useState<'CORPORATE' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS'>('CORPORATE');
   const [user, setUser] = useState<User | null>(null);
@@ -62,15 +61,12 @@ const App: React.FC = () => {
       if (doc.exists()) {
         setWebsiteContent(doc.data() as WebsiteContent);
       }
-      setLoading(false); // Set loading to false after fetching CMS content
     });
 
     return () => {
       unsubCms();
     };
   }, []);
-
-  if (loading) return <SplashScreen />;
 
   return (
     <Suspense fallback={<SplashScreen />}>
@@ -81,7 +77,6 @@ const App: React.FC = () => {
           onNavigateToMMStore={() => setViewMode('MM_STORE')}
           onNavigateToProfile={() => setViewMode('COMPANY_PROFILE')}
           onNavigateToBusinessUnits={() => setViewMode('BUSINESS_UNITS')}
-          onNavigateToApp={() => alert('The app is currently under reconstruction.')}
         />
       )}
 
@@ -92,7 +87,6 @@ const App: React.FC = () => {
           onBack={() => setViewMode('CORPORATE')}
           onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
           onNavigateToMMStore={() => setViewMode('MM_STORE')}
-          onNavigateToApp={() => alert('The app is currently under reconstruction.')}
         />
       )}
 

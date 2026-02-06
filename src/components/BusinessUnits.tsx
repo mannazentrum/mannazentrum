@@ -5,14 +5,12 @@ interface BusinessUnitsProps {
   onBack: () => void;
   onNavigateToDaycare: () => void;
   onNavigateToMMStore: () => void;
-  onNavigateToApp: () => void;
 }
 
 const BusinessUnits: React.FC<BusinessUnitsProps> = ({ 
   onBack, 
   onNavigateToDaycare, 
   onNavigateToMMStore,
-  onNavigateToApp
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,12 +29,6 @@ const BusinessUnits: React.FC<BusinessUnitsProps> = ({
             </div>
           </div>
           <div className="flex items-center gap-6">
-            <button 
-              onClick={onNavigateToApp} 
-              className="bg-white border border-slate-200 text-[#42210b] px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-lg flex items-center gap-2"
-            >
-              🔐 Login Portal
-            </button>
             <button 
               onClick={onBack}
               className="text-slate-600 hover:text-slate-900 font-medium text-sm flex items-center gap-2 group"

@@ -7,7 +7,6 @@ interface CorporateLandingProps {
   onNavigateToMMStore: () => void;
   onNavigateToProfile: () => void;
   onNavigateToBusinessUnits: () => void;
-  onNavigateToApp: () => void;
 }
 
 const CorporateLanding: React.FC<CorporateLandingProps> = ({ 
@@ -15,7 +14,6 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
   onNavigateToMMStore, 
   onNavigateToProfile,
   onNavigateToBusinessUnits,
-  onNavigateToApp
 }) => {
   const [showCareerNotice, setShowCareerNotice] = useState(false);
 
@@ -112,13 +110,6 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
             <button onClick={onNavigateToBusinessUnits} className="hover:text-slate-900 transition flex items-center">Unit Bisnis</button>
             <button onClick={handleCareerClick} className="hover:text-slate-900 transition flex items-center">Karir</button>
             <button onClick={() => scrollToSection('kontak')} className="hover:text-slate-900 transition flex items-center font-bold text-orange-600">Kontak</button>
-            {/* BUTTON PORTAL LOGIN TERPASANG KEMBALI DENGAN FONT COKLAT TUA */}
-            <button 
-              onClick={onNavigateToApp} 
-              className="bg-white border border-slate-200 text-[#42210b] px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition shadow-lg flex items-center gap-2"
-            >
-              <span>🔐</span> Portal App
-            </button>
           </div>
         </div>
       </nav>
