@@ -4,9 +4,9 @@ import { collection, onSnapshot, doc, setDoc, query, where, getDocs } from "fire
 import { db } from "./firebase";
 import { User, UserRole, WebsiteContent } from './types';
 import SplashScreen from './components/SplashScreen';
+import CorporateLanding from './components/CorporateLanding';
 
 // Lazy load components
-const CorporateLanding = lazy(() => import('./components/CorporateLanding'));
 const MMStoreLanding = lazy(() => import('./components/MMStoreLanding'));
 const CompanyProfile = lazy(() => import('./components/CompanyProfile'));
 const BusinessUnits = lazy(() => import('./components/BusinessUnits'));
