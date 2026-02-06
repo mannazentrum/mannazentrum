@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { MMProvider, useMM } from './mm/MMContext';
-import MMGeminiWidget from './mm/MMGeminiWidget';
 import { MMNavbar, Hero, Footer } from './mm';
 
 const MMAppContent: React.FC<{ onBackToCorporate: () => void }> = ({ onBackToCorporate }) => {
@@ -25,7 +24,6 @@ const MMAppContent: React.FC<{ onBackToCorporate: () => void }> = ({ onBackToCor
                 </>
             )}
             <Footer />
-            <MMGeminiWidget />
         </div>
     );
 };
