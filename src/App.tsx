@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { collection, onSnapshot, doc, setDoc, query } from "firebase/firestore";
+import { collection, onSnapshot, doc, setDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import { User, UserRole, RegistrationEntry, WebsiteContent } from './types';
 import Login from './components/Login';
@@ -89,47 +89,64 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const unsubRegs = onSnapshot(query(collection(db, "registrations")), (snap) => {
-      const data: RegistrationEntry[] = [];
-      snap.forEach(doc => data.push(doc.data() as RegistrationEntry));
-      setRegistrations(data);
-      setLoading(false);
-    });
-
-    const unsubReports = onSnapshot(query(collection(db, "daily_reports")), (snap) => {
-      const reports: Record<string, any> = {};
-      snap.forEach(doc => reports[doc.id] = doc.data());
-      setDailyReports(reports);
-    });
-
+    // Fetch essential data for landing pages first
     const unsubCms = onSnapshot(doc(db, "settings", "website_cms"), (doc) => {
-      if (doc.exists()) setWebsiteContent(doc.data() as WebsiteContent);
-    });
-
-    const unsubMenus = onSnapshot(query(collection(db, "scheduled_menus")), (snap) => {
-      const data: any[] = [];
-      snap.forEach(doc => data.push(doc.data()));
-      setScheduledMenus(data);
-    });
-
-    const unsubCurrs = onSnapshot(query(collection(db, "scheduled_curriculums")), (snap) => {
-      const data: any[] = [];
-      snap.forEach(doc => data.push(doc.data()));
-      setScheduledCurriculums(data);
+      if (doc.exists()) {
+        setWebsiteContent(doc.data() as WebsiteContent);
+      }
+      setLoading(false); // Set loading to false after fetching CMS content
     });
 
     return () => {
-      unsubRegs(); unsubReports(); unsubCms(); unsubMenus(); unsubCurrs();
+      unsubCms();
     };
   }, []);
 
-  const handleLogin = (username: string, pass: string) => {
+  useEffect(() => {
+    // Fetch other data only when a user is logged in
+    if (user) {
+      const unsubRegs = onSnapshot(query(collection(db, "registrations")), (snap) => {
+        const data: RegistrationEntry[] = [];
+        snap.forEach(doc => data.push(doc.data() as RegistrationEntry));
+        setRegistrations(data);
+      });
+
+      const unsubReports = onSnapshot(query(collection(db, "daily_reports")), (snap) => {
+        const reports: Record<string, any> = {};
+        snap.forEach(doc => reports[doc.id] = doc.data());
+        setDailyReports(reports);
+      });
+
+      const unsubMenus = onSnapshot(query(collection(db, "scheduled_menus")), (snap) => {
+        const data: any[] = [];
+        snap.forEach(doc => data.push(doc.data()));
+        setScheduledMenus(data);
+      });
+
+      const unsubCurrs = onSnapshot(query(collection(db, "scheduled_curriculums")), (snap) => {
+        const data: any[] = [];
+        snap.forEach(doc => data.push(doc.data()));
+        setScheduledCurriculums(data);
+      });
+
+      return () => {
+        unsubRegs(); unsubReports(); unsubMenus(); unsubCurrs();
+      };
+    }
+  }, [user]);
+
+  const handleLogin = async (username: string, pass: string) => {
     if (username === 'admin' && pass === 'password') {
       setUser({ id: 'admin', name: 'Staff Mannazentrum', role: UserRole.ADMIN });
       return;
     }
-    const found = registrations.find(r => r.username === username && r.password === pass);
-    if (found) {
+    // Fetch registrations from Firestore to authenticate user
+    const q = query(collection(db, "registrations"), where("username", "==", username), where("password", "==", pass));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      alert('Login gagal. Periksa kembali username/password.');
+    } else {
+      const found = querySnapshot.docs[0].data() as RegistrationEntry;
       if (found.status === 'Approved') {
         let role = UserRole.TEACHER;
         if (found.type === 'Orang Tua') role = UserRole.PARENT;
@@ -138,8 +155,6 @@ const App: React.FC = () => {
       } else {
         alert('Akun Anda belum aktif. Mohon hubungi Admin.');
       }
-    } else {
-      alert('Login gagal. Periksa kembali username/password.');
     }
   };
 

@@ -7,9 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        'brand-brown': '#42210b',
-        'brand-cream': '#F9F4E8',
+        'primary': '#42210b',
+        'cream': '#F9F4E8',
+        'accent': '#f3b524',
       },
+      fontFamily: {
+        'sans': ['Mulish', 'sans-serif'],
+        'serif': ['Playfair Display', 'serif'],
+      }
     },
   },
   plugins: [],
