@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { careerList } from '../data/careers';
 
 interface CorporateLandingProps {
   onNavigateToDaycare: () => void;
@@ -32,14 +33,6 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const careerList = [
-    { title: "Guru dan Suster", unit: "Mannazentrum Daycare", icon: "🧸" },
-    { title: "Shadow Teacher", unit: "Mannazentrum Preschool", icon: "🏫" },
-    { title: "Guru Bimbingan Belajar", unit: "Mannazentrum Edu", icon: "📚" },
-    { title: "Therapist ABK", unit: "Mannazentrum \"Aerily Valiant\"", icon: "🧩" },
-    { title: "Karyawan Toko Online", unit: "Malika Maliaki", icon: "🎨" },
-  ];
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800 relative">

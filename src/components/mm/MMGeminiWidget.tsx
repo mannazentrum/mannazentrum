@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
+// Correct import for the new SDK
+import { GoogleGenerativeAI, ChatSession } from "@google/generative-ai";
 
 const MMGeminiWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,8 +12,8 @@ const MMGeminiWidget: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // Keep chat session state
-  const [chat, setChat] = useState<Chat | null>(null);
+  // State for the chat session, typed with the new SDK's ChatSession
+  const [chat, setChat] = useState<ChatSession | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -24,25 +25,34 @@ const MMGeminiWidget: React.FC = () => {
   useEffect(() => {
     if (isOpen && !chat) {
       try {
-        // Fix: Use the correct named parameter for apiKey and select a modern model.
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-        const newChat = ai.chats.create({
-          model: 'gemini-3-flash-preview',
-          config: {
-            systemInstruction: "Anda adalah AI Advisor untuk 'Malika Maliaki', sebuah brand lifestyle keluarga holistik. Gaya bicara Anda: Ramah, Islami (universal), bijaksana, dan menenangkan. Fokus topik: Parenting, pendidikan anak fitrah, produk herbal/alami, dan manajemen rumah tangga. Jika ditanya harga spesifik produk, arahkan ke katalog. Jawab dengan ringkas.",
-          },
+        // Use the new SDK and the correct environment variable for Vite
+        const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+        if (!apiKey) {
+            throw new Error("VITE_GEMINI_API_KEY is not set.");
+        }
+        const genAI = new GoogleGenerativeAI(apiKey);
+
+        // Get the model with system instruction
+        const model = genAI.getGenerativeModel({
+          model: 'gemini-pro', // Using a stable, recommended model
+          systemInstruction: "Anda adalah AI Advisor untuk 'Malika Maliaki', sebuah brand lifestyle keluarga holistik. Gaya bicara Anda: Ramah, Islami (universal), bijaksana, dan menenangkan. Fokus topik: Parenting, pendidikan anak fitrah, produk herbal/alami, dan manajemen rumah tangga. Jika ditanya harga spesifik produk, arahkan ke katalog. Jawab dengan ringkas.",
         });
+
+        // Start a new chat session
+        const newChat = model.startChat();
         setChat(newChat);
       } catch (e) {
         console.error("Failed to init chat", e);
+        // Inform the user about the setup issue
+        setMessages(prev => [...prev, { role: 'model', text: 'Maaf, fitur AI sedang dalam perbaikan. Kunci API perlu dikonfigurasi di Vercel (VITE_GEMINI_API_KEY).' }]);
       }
     }
-  }, [isOpen]);
+  }, [isOpen, chat]);
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isLoading) return;
     if (!chat) {
-      setMessages(prev => [...prev, { role: 'user', text: input }, { role: 'model', text: 'Maaf, koneksi AI belum siap. Coba refresh.' }]);
+      setMessages(prev => [...prev, { role: 'user', text: input }, { role: 'model', text: 'Maaf, koneksi AI belum siap. Coba buka kembali widget ini.' }]);
       return;
     }
 
@@ -52,13 +62,14 @@ const MMGeminiWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Fix: Access .text property instead of calling .text() on the response.
-      const response: GenerateContentResponse = await chat.sendMessage({ message: userMsg });
-      const text = response.text;
+      // Send message and get the response using the new SDK's methods
+      const result = await chat.sendMessage(userMsg);
+      const response = result.response;
+      const text = response.text();
       setMessages(prev => [...prev, { role: 'model', text: text || '...' }]);
     } catch (error) {
-      console.error(error);
-      setMessages(prev => [...prev, { role: 'model', text: 'Mohon maaf, ada gangguan koneksi.' }]);
+      console.error("Gemini request failed:", error);
+      setMessages(prev => [...prev, { role: 'model', text: 'Mohon maaf, ada gangguan pada layanan AI. Silakan coba lagi nanti.' }]);
     } finally {
       setIsLoading(false);
     }
@@ -118,6 +129,7 @@ const MMGeminiWidget: React.FC = () => {
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Tanya tips parenting..."
             className="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#755233]"
+            disabled={isLoading}
           />
           <button 
             onClick={handleSend}

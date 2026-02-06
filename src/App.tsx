@@ -1,30 +1,21 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { collection, onSnapshot, doc, setDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
-import { User, UserRole, RegistrationEntry, WebsiteContent } from './types';
-import Login from './components/Login';
+import { User, UserRole, WebsiteContent } from './types';
 import SplashScreen from './components/SplashScreen';
-import RegistrationForm from './components/RegistrationForm';
-import ParentDashboard from './components/ParentDashboard';
-import StaffDashboard from './components/StaffDashboard';
-import ForgotPassword from './components/ForgotPassword';
-import WebsiteLanding from './components/WebsiteLanding';
-import CorporateLanding from './components/CorporateLanding';
-import MMStoreLanding from './components/MMStoreLanding';
-import CompanyProfile from './components/CompanyProfile';
-import BusinessUnits from './components/BusinessUnits';
-import PublicRegistration from './components/PublicRegistration';
-import DaycareAbout from './components/DaycareAbout';
-import DaycareProgram from './components/DaycareProgram';
+
+// Lazy load components
+const CorporateLanding = lazy(() => import('./components/CorporateLanding'));
+const MMStoreLanding = lazy(() => import('./components/MMStoreLanding'));
+const CompanyProfile = lazy(() => import('./components/CompanyProfile'));
+const BusinessUnits = lazy(() => import('./components/BusinessUnits'));
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [dbSyncing, setDbSyncing] = useState(false);
-  const [viewMode, setViewMode] = useState<'CORPORATE' | 'DAYCARE_LANDING' | 'APP' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS' | 'PUBLIC_REGISTRATION' | 'DAYCARE_ABOUT' | 'DAYCARE_PROGRAM'>('CORPORATE'); 
+  const [viewMode, setViewMode] = useState<'CORPORATE' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS'>('CORPORATE');
   const [user, setUser] = useState<User | null>(null);
-  const [showRegistration, setShowRegistration] = useState(false);
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const [websiteContent, setWebsiteContent] = useState<WebsiteContent>({
     heroTitle: 'Membangun Generasi Cerdas & Berkarakter',
@@ -34,40 +25,17 @@ const App: React.FC = () => {
     whatsappNumber: '6287881110807',
     tagline: 'Cerdas, Ceria, Bersinar'
   });
-  const [registrations, setRegistrations] = useState<RegistrationEntry[]>([]);
-  const [dailyReports, setDailyReports] = useState<Record<string, any>>({});
-  const [scheduledMenus, setScheduledMenus] = useState<any[]>([]);
-  const [scheduledCurriculums, setScheduledCurriculums] = useState<any[]>([]);
-
-  // Conditional Styling
-  useEffect(() => {
-    const isPortal = user && (user.role === 'ADMIN' || user.role === 'TEACHER' || user.role === 'COORDINATOR');
-    const portalStylesheet = document.getElementById('portal-styles');
-
-    if (isPortal && !portalStylesheet) {
-      const link = document.createElement('link');
-      link.id = 'portal-styles';
-      link.rel = 'stylesheet';
-      link.href = '/src/portal.css';
-      document.head.appendChild(link);
-    } else if (!isPortal && portalStylesheet) {
-      portalStylesheet.remove();
-    }
-  }, [user]);
 
   // SMART THEME ENGINE
   useEffect(() => {
     const root = document.documentElement;
     const themes = {
       CORPORATE: { primary: '#0f172a', accent: '#ea580c', bg: '#f8fafc', title: 'Corporate - Mannazentrum' },
-      DAYCARE: { primary: '#42210b', accent: '#f3b524', bg: '#f7f3e3', title: 'Daycare - Mannazentrum' },
       MM_STORE: { primary: '#5d4037', accent: '#e6b946', bg: '#fffdf9', title: 'Malika Maliaki - Store' }
     };
 
     let activeTheme = themes.CORPORATE;
-    if (viewMode.startsWith('DAYCARE') || viewMode === 'APP' || viewMode === 'PUBLIC_REGISTRATION') {
-      activeTheme = themes.DAYCARE;
-    } else if (viewMode === 'MM_STORE') {
+    if (viewMode === 'MM_STORE') {
       activeTheme = themes.MM_STORE;
     }
 
@@ -102,151 +70,35 @@ const App: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // Fetch other data only when a user is logged in
-    if (user) {
-      const unsubRegs = onSnapshot(query(collection(db, "registrations")), (snap) => {
-        const data: RegistrationEntry[] = [];
-        snap.forEach(doc => data.push(doc.data() as RegistrationEntry));
-        setRegistrations(data);
-      });
-
-      const unsubReports = onSnapshot(query(collection(db, "daily_reports")), (snap) => {
-        const reports: Record<string, any> = {};
-        snap.forEach(doc => reports[doc.id] = doc.data());
-        setDailyReports(reports);
-      });
-
-      const unsubMenus = onSnapshot(query(collection(db, "scheduled_menus")), (snap) => {
-        const data: any[] = [];
-        snap.forEach(doc => data.push(doc.data()));
-        setScheduledMenus(data);
-      });
-
-      const unsubCurrs = onSnapshot(query(collection(db, "scheduled_curriculums")), (snap) => {
-        const data: any[] = [];
-        snap.forEach(doc => data.push(doc.data()));
-        setScheduledCurriculums(data);
-      });
-
-      return () => {
-        unsubRegs(); unsubReports(); unsubMenus(); unsubCurrs();
-      };
-    }
-  }, [user]);
-
-  const handleLogin = async (username: string, pass: string) => {
-    if (username === 'admin' && pass === 'password') {
-      setUser({ id: 'admin', name: 'Staff Mannazentrum', role: UserRole.ADMIN });
-      return;
-    }
-    // Fetch registrations from Firestore to authenticate user
-    const q = query(collection(db, "registrations"), where("username", "==", username), where("password", "==", pass));
-    const querySnapshot = await getDocs(q);
-    if (querySnapshot.empty) {
-      alert('Login gagal. Periksa kembali username/password.');
-    } else {
-      const found = querySnapshot.docs[0].data() as RegistrationEntry;
-      if (found.status === 'Approved') {
-        let role = UserRole.TEACHER;
-        if (found.type === 'Orang Tua') role = UserRole.PARENT;
-        if (found.type === 'Coordinator') role = UserRole.COORDINATOR;
-        setUser({ id: found.id, name: found.personalData.nama, role });
-      } else {
-        alert('Akun Anda belum aktif. Mohon hubungi Admin.');
-      }
-    }
-  };
-
   if (loading) return <SplashScreen />;
 
-  // NAVIGASI KOMPONEN LANDING
-  if (viewMode === 'CORPORATE') return (
-    <CorporateLanding 
-      onNavigateToDaycare={() => setViewMode('DAYCARE_LANDING')} 
-      onNavigateToMMStore={() => setViewMode('MM_STORE')} 
-      onNavigateToProfile={() => setViewMode('COMPANY_PROFILE')} 
-      onNavigateToBusinessUnits={() => setViewMode('BUSINESS_UNITS')} 
-      onNavigateToApp={() => setViewMode('APP')}
-    />
-  );
-  
-  if (viewMode === 'COMPANY_PROFILE') return <CompanyProfile onBack={() => setViewMode('CORPORATE')} />;
-  
-  if (viewMode === 'BUSINESS_UNITS') return (
-    <BusinessUnits 
-      onBack={() => setViewMode('CORPORATE')} 
-      onNavigateToDaycare={() => setViewMode('DAYCARE_LANDING')} 
-      onNavigateToMMStore={() => setViewMode('MM_STORE')} 
-      onNavigateToApp={() => setViewMode('APP')}
-    />
-  );
-  
-  if (viewMode === 'PUBLIC_REGISTRATION') return <PublicRegistration onBack={() => setViewMode('DAYCARE_LANDING')} websiteContent={websiteContent} />;
-  if (viewMode === 'DAYCARE_ABOUT') return <DaycareAbout onBack={() => setViewMode('DAYCARE_LANDING')} />;
-  if (viewMode === 'DAYCARE_PROGRAM') return <DaycareProgram onBack={() => setViewMode('DAYCARE_LANDING')} />;
-  
-  if (viewMode === 'DAYCARE_LANDING') return (
-    <WebsiteLanding 
-      onNavigateToApp={() => setViewMode('APP')} 
-      onNavigateToRegistration={() => setViewMode('PUBLIC_REGISTRATION')} 
-      onNavigateToAbout={() => setViewMode('DAYCARE_ABOUT')} 
-      onNavigateToProgram={() => setViewMode('DAYCARE_PROGRAM')} 
-      onNavigateToCorporate={() => setViewMode('CORPORATE')} 
-      cmsContent={websiteContent} 
-    />
-  );
-  
-  if (viewMode === 'MM_STORE') return <MMStoreLanding onBackToCorporate={() => setViewMode('CORPORATE')} />;
-
-  // AUTH LOGIC (LOGIN SCREEN)
-  if (!user) {
-    if (showRegistration) return <RegistrationForm onBack={() => setShowRegistration(false)} onRegister={(reg) => syncToCloud("registrations", reg.id, reg)} />;
-    if (showForgotPassword) return <ForgotPassword onBack={() => setShowForgotPassword(false)} />;
-    return (
-      <Login 
-        onLogin={handleLogin} 
-        onRegister={() => setShowRegistration(true)} 
-        onForgotPassword={() => setShowForgotPassword(true)} 
-        onBackToLanding={() => setViewMode('DAYCARE_LANDING')} 
-      />
-    );
-  }
-
-  // DASHBOARD LOGIC
   return (
-    <div className="min-h-screen transition-colors duration-700 ease-in-out bg-[var(--bg-app)] relative">
-      {dbSyncing && (
-        <div className="fixed top-4 right-4 z-[300] bg-[var(--primary-color)] text-white px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-2xl animate-pulse flex items-center gap-2">
-          <div className="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
-          Cloud Syncing...
-        </div>
+    <Suspense fallback={<SplashScreen />}>
+      {/* NAVIGASI KOMPONEN LANDING */}
+      {viewMode === 'CORPORATE' && (
+        <CorporateLanding
+          onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
+          onNavigateToMMStore={() => setViewMode('MM_STORE')}
+          onNavigateToProfile={() => setViewMode('COMPANY_PROFILE')}
+          onNavigateToBusinessUnits={() => setViewMode('BUSINESS_UNITS')}
+          onNavigateToApp={() => alert('The app is currently under reconstruction.')}
+        />
       )}
 
-      {user.role === UserRole.PARENT ? (
-        <ParentDashboard 
-          user={user} 
-          onLogout={() => setUser(null)} 
-          registrations={registrations}
-          dailyReports={dailyReports}
-        />
-      ) : (
-        <StaffDashboard 
-          user={user} 
-          onLogout={() => setUser(null)} 
-          registrations={registrations}
-          onUpdateStatus={(id, status) => syncToCloud("registrations", id, { status })}
-          onSaveReport={(childId, date, data) => syncToCloud("daily_reports", `${childId}-${date}`, data)}
-          dailyReports={dailyReports}
-          scheduledMenus={scheduledMenus}
-          setScheduledMenu={(date, data) => syncToCloud("scheduled_menus", date, data)}
-          scheduledCurriculums={scheduledCurriculums}
-          setScheduledCurriculum={(date, data) => syncToCloud("scheduled_curriculums", date, data)}
-          websiteContent={websiteContent}
-          setWebsiteContent={(cms) => syncToCloud("settings", "website_cms", cms)}
+      {viewMode === 'COMPANY_PROFILE' && <CompanyProfile onBack={() => setViewMode('CORPORATE')} />}
+
+      {viewMode === 'BUSINESS_UNITS' && (
+        <BusinessUnits
+          onBack={() => setViewMode('CORPORATE')}
+          onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
+          onNavigateToMMStore={() => setViewMode('MM_STORE')}
+          onNavigateToApp={() => alert('The app is currently under reconstruction.')}
         />
       )}
-    </div>
+
+      {viewMode === 'MM_STORE' && <MMStoreLanding onBackToCorporate={() => setViewMode('CORPORATE')} />}
+
+    </Suspense>
   );
 };
 
