@@ -12,6 +12,7 @@
     "@google/genai": "^0.12.0",
     "@google/generative-ai": "^0.12.0",
     "@types/react-signature-canvas": "^1.0.5",
+    "@vercel/analytics": "^1.6.1",
     "firebase": "^12.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

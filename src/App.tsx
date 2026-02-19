@@ -5,6 +5,7 @@ import { db } from "./firebase";
 import { User, UserRole, WebsiteContent } from './types';
 import SplashScreen from './components/SplashScreen';
 import CorporateLanding from './components/CorporateLanding';
+import { Analytics } from '@vercel/analytics/react';
 
 // Lazy load components
 const MMStoreLanding = lazy(() => import('./components/MMStoreLanding'));
@@ -91,7 +92,7 @@ const App: React.FC = () => {
       )}
 
       {viewMode === 'MM_STORE' && <MMStoreLanding onBackToCorporate={() => setViewMode('CORPORATE')} />}
-
+      <Analytics />
     </Suspense>
   );
 };
