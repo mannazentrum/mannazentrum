@@ -48,18 +48,18 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
             
             <div className="p-10 md:p-16">
               <div className="text-center mb-12">
-                <span className="text-orange-600 font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">Join Our Team</span>
+                <span className="text-accent font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">Join Our Team</span>
                 <h2 className="text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-4">Kesempatan Berkarir</h2>
                 <p className="text-slate-500 font-medium max-w-xl mx-auto">Bergabunglah bersama kami membangun generasi masa depan yang lebih cerah dan berkarakter di unit-unit bisnis kami.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
                 {careerList.map((job, idx) => (
-                  <div key={idx} className="bg-slate-50 p-6 rounded-[30px] border border-slate-100 flex items-center gap-5 group hover:bg-white hover:border-orange-200 hover:shadow-xl transition-all">
+                  <div key={idx} className="bg-slate-50 p-6 rounded-[30px] border border-slate-100 flex items-center gap-5 group hover:bg-white hover:border-accent/40 hover:shadow-xl transition-all">
                     <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 transition-transform">{job.icon}</div>
                     <div>
                       <h4 className="font-black text-slate-900 text-lg leading-tight uppercase">{job.title}</h4>
-                      <p className="text-xs font-bold text-orange-600 tracking-widest mt-1 uppercase">{job.unit}</p>
+                      <p className="text-xs font-bold text-accent tracking-widest mt-1 uppercase">{job.unit}</p>
                     </div>
                   </div>
                 ))}
@@ -70,7 +70,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
                 <p className="text-slate-400 text-sm">Silakan kirimkan berkas lamaran Anda melalui email:</p>
                 <div className="flex flex-col md:flex-row justify-center items-center gap-6 pt-2">
                    <div className="bg-white/10 px-6 py-3 rounded-full border border-white/20 font-mono text-sm">
-                     <span className="text-orange-500 mr-2">✉️</span> mannazentruminfo@gmail.com
+                     <span className="text-accent mr-2">✉️</span> mannazentruminfo@gmail.com
                    </div>
                    <div className="bg-white/10 px-6 py-3 rounded-full border border-white/20 font-mono text-sm">
                      <span className="text-green-500 mr-2">💬</span> WA HRD: +6287878384807
@@ -109,7 +109,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
             <button onClick={onNavigateToProfile} className="hover:text-slate-900 transition outline-none">Tentang Perusahaan</button>
             <button onClick={onNavigateToBusinessUnits} className="hover:text-slate-900 transition flex items-center">Unit Bisnis</button>
             <button onClick={handleCareerClick} className="hover:text-slate-900 transition flex items-center">Karir</button>
-            <button onClick={() => scrollToSection('kontak')} className="hover:text-slate-900 transition flex items-center font-bold text-orange-600">Kontak</button>
+            <button onClick={() => scrollToSection('kontak')} className="hover:text-slate-900 transition flex items-center font-bold text-accent">Kontak</button>
           </div>
         </div>
       </nav>
@@ -118,7 +118,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
       <header className="relative bg-slate-50 py-32 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-7xl font-serif font-bold text-slate-900 mb-6 leading-tight">
-            Graha <br/> <span className="text-orange-600">Inovasi & Edukasi</span>
+            Graha <br/> <span className="text-accent">Inovasi & Edukasi</span>
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
             PT. Elrafa Terang Sejahtera berkomitmen menghadirkan solusi layanan pendidikan dan pengembangan sumber daya manusia yang berkualitas, terpercaya, dan berdampak positif bagi masyarakat.
@@ -128,7 +128,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
              <button onClick={onNavigateToBusinessUnits} className="bg-white text-slate-900 border border-slate-200 px-8 py-3 rounded-full font-medium hover:bg-slate-50 transition">Unit Bisnis</button>
           </div>
         </div>
-        <div className="absolute top-0 left-0 w-64 h-64 bg-orange-100 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 opacity-50"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 opacity-50"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 opacity-50"></div>
       </header>
 
@@ -136,16 +136,16 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
       <section id="unit-bisnis" className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-orange-600 font-bold uppercase tracking-widest text-xs">Portofolio Kami</span>
+            <span className="text-accent font-bold uppercase tracking-widest text-xs">Portofolio Kami</span>
             <h3 className="text-3xl font-bold text-slate-900 mt-2">Unit Bisnis Strategis</h3>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl hover:border-orange-200 transition-all duration-300 cursor-pointer flex flex-col items-start" onClick={onNavigateToDaycare}>
-              <div className="w-14 h-14 bg-pdf-yellow/20 text-pdf-brown rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-pdf-yellow transition-colors">🧸</div>
+            <div className="group bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl hover:border-accent/40 transition-all duration-300 cursor-pointer flex flex-col items-start" onClick={onNavigateToDaycare}>
+              <div className="w-14 h-14 bg-accent/20 text-primary rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-accent transition-colors">🧸</div>
               <h4 className="text-xl font-bold text-slate-900 mb-3">Mannazentrum Daycare</h4>
               <p className="text-slate-500 text-sm leading-relaxed mb-6">Layanan pengasuhan anak usia dini dengan kurikulum holistik berbasis karakter.</p>
-              <span className="mt-auto text-orange-600 font-bold text-sm">Lihat Detail →</span>
+              <span className="mt-auto text-accent font-bold text-sm">Lihat Detail →</span>
             </div>
 
             <div className="group bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl hover:border-pink-200 transition-all duration-300 cursor-pointer flex flex-col items-start" onClick={onNavigateToMMStore}>
@@ -171,7 +171,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <div className="space-y-8 animate-fadeIn">
               <div>
-                <span className="text-orange-600 font-bold uppercase tracking-widest text-xs">Hubungi Kami</span>
+                <span className="text-accent font-bold uppercase tracking-widest text-xs">Hubungi Kami</span>
                 <h3 className="text-4xl font-bold text-slate-900 mt-2">Pusat Informasi & <br/> Korespondensi</h3>
                 <p className="text-slate-500 mt-4 leading-relaxed">
                   Silakan hubungi kami untuk pertanyaan seputar unit bisnis, kemitraan, atau informasi pendaftaran. Kami siap melayani Anda.
@@ -209,7 +209,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
             </div>
 
             <div className="relative group animate-fadeIn">
-              <div className="absolute -inset-4 bg-orange-600/5 rounded-[60px] blur-2xl group-hover:bg-orange-600/10 transition"></div>
+              <div className="absolute -inset-4 bg-accent/5 rounded-[60px] blur-2xl group-hover:bg-accent/10 transition"></div>
               <div className="relative bg-white p-2 rounded-[50px] shadow-2xl border border-slate-100 overflow-hidden h-[500px]">
                 <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.8116548762744!2d106.6385!3d-6.32!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTknMTIuMCJTIDEwNsKwMzgnMTguNiJF!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" 

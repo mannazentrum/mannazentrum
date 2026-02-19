@@ -27,51 +27,50 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
           {/* Graduation Cap Icon - Positioned above the Black Peak */}
           <g transform="translate(48, 20) scale(0.6)">
             {/* Support post/chimney as seen in image */}
-            <rect x="-3" y="15" width="6" height="18" fill="#a1887f" />
+            <rect x="-3" y="15" width="6" height="18" className="fill-stone-500" />
             {/* Cap outline */}
-            <path 
-              d="M-20 5 L0 15 L20 5 L0 -5 Z" 
-              fill="none" 
-              stroke="#a1887f" 
-              strokeWidth="3" 
-              strokeLinejoin="round" 
+            <path
+              d="M-20 5 L0 15 L20 5 L0 -5 Z"
+              fill="none"
+              strokeWidth="3"
+              strokeLinejoin="round"
+              className="stroke-stone-500"
             />
-            <path 
-              d="M-20 5 V12 C-20 12, 0 22, 20 12 V5" 
-              fill="none" 
-              stroke="#a1887f" 
-              strokeWidth="3" 
-              strokeLinejoin="round" 
+            <path
+              d="M-20 5 V12 C-20 12, 0 22, 20 12 V5"
+              fill="none"
+              strokeWidth="3"
+              strokeLinejoin="round"
+              className="stroke-stone-500"
             />
             {/* Tassel detail */}
-            <circle cx="20" cy="5" r="3" fill="#a1887f" />
+            <circle cx="20" cy="5" r="3" className="fill-stone-500" />
           </g>
 
           {/* Roof Line - Black Segment (Left Peak) */}
-          <path 
-            d="M15 110 L50 65 L80 110" 
-            stroke="#000000" 
-            strokeWidth="14" 
-            fill="none" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
+          <path
+            d="M15 110 L50 65 L80 110"
+            strokeWidth="14"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="stroke-black"
           />
 
           {/* Roof Line - Brown Segment (Right Peak - Higher) */}
-          <path 
-            d="M80 110 L115 30 L145 95" 
-            stroke="#42210b" 
-            strokeWidth="14" 
-            fill="none" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
+          <path
+            d="M80 110 L115 30 L145 95"
+            strokeWidth="14"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="stroke-primary"
           />
 
           {/* Red Heart - Positioned inside the Brown Peak area */}
-          <path 
-            d="M110 65 C110 60, 118 60, 118 65 C118 73, 110 80, 110 80 C110 80, 102 73, 102 65 C102 60, 110 60, 110 65" 
-            fill="#cc3333" 
-            className="animate-pulse"
+          <path
+            d="M110 65 C110 60, 118 60, 118 65 C118 73, 110 80, 110 80 C110 80, 102 73, 102 65 C102 60, 110 60, 110 65"
+            className="animate-pulse fill-red-600"
             style={{ transformOrigin: '110px 70px' }}
           />
         </svg>

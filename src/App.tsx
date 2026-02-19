@@ -26,23 +26,9 @@ const App: React.FC = () => {
     tagline: 'Cerdas, Ceria, Bersinar'
   });
 
-  // SMART THEME ENGINE
+  // Set the document title based on the view mode
   useEffect(() => {
-    const root = document.documentElement;
-    const themes = {
-      CORPORATE: { primary: '#0f172a', accent: '#ea580c', bg: '#f8fafc', title: 'Corporate - Mannazentrum' },
-      MM_STORE: { primary: '#5d4037', accent: '#e6b946', bg: '#fffdf9', title: 'Malika Maliaki - Store' }
-    };
-
-    let activeTheme = themes.CORPORATE;
-    if (viewMode === 'MM_STORE') {
-      activeTheme = themes.MM_STORE;
-    }
-
-    root.style.setProperty('--primary-color', activeTheme.primary);
-    root.style.setProperty('--accent-color', activeTheme.accent);
-    root.style.setProperty('--bg-app', activeTheme.bg);
-    document.title = activeTheme.title;
+    document.title = viewMode === 'MM_STORE' ? 'Malika Maliaki - Store' : 'Corporate - Mannazentrum';
   }, [viewMode]);
 
   const syncToCloud = async (collectionName: string, docId: string, data: any) => {
@@ -69,31 +55,35 @@ const App: React.FC = () => {
     };
   }, []);
 
+  const themeClasses = viewMode === 'MM_STORE' ? 'bg-cream text-primary' : 'bg-white text-primary';
+
   return (
-    <Suspense fallback={<SplashScreen />}>
-      {/* NAVIGASI KOMPONEN LANDING */}
-      {viewMode === 'CORPORATE' && (
-        <CorporateLanding
-          onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
-          onNavigateToMMStore={() => setViewMode('MM_STORE')}
-          onNavigateToProfile={() => setViewMode('COMPANY_PROFILE')}
-          onNavigateToBusinessUnits={() => setViewMode('BUSINESS_UNITS')}
-        />
-      )}
+    <div className={`App ${themeClasses}`}>
+      <Suspense fallback={<SplashScreen />}>
+        {/* NAVIGASI KOMPONEN LANDING */}
+        {viewMode === 'CORPORATE' && (
+          <CorporateLanding
+            onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
+            onNavigateToMMStore={() => setViewMode('MM_STORE')}
+            onNavigateToProfile={() => setViewMode('COMPANY_PROFILE')}
+            onNavigateToBusinessUnits={() => setViewMode('BUSINESS_UNITS')}
+          />
+        )}
 
-      {viewMode === 'COMPANY_PROFILE' && <CompanyProfile onBack={() => setViewMode('CORPORATE')} />}
+        {viewMode === 'COMPANY_PROFILE' && <CompanyProfile onBack={() => setViewMode('CORPORATE')} />}
 
-      {viewMode === 'BUSINESS_UNITS' && (
-        <BusinessUnits
-          onBack={() => setViewMode('CORPORATE')}
-          onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
-          onNavigateToMMStore={() => setViewMode('MM_STORE')}
-        />
-      )}
+        {viewMode === 'BUSINESS_UNITS' && (
+          <BusinessUnits
+            onBack={() => setViewMode('CORPORATE')}
+            onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
+            onNavigateToMMStore={() => setViewMode('MM_STORE')}
+          />
+        )}
 
-      {viewMode === 'MM_STORE' && <MMStoreLanding onBackToCorporate={() => setViewMode('CORPORATE')} />}
-      <Analytics />
-    </Suspense>
+        {viewMode === 'MM_STORE' && <MMStoreLanding onBackToCorporate={() => setViewMode('CORPORATE')} />}
+        <Analytics />
+      </Suspense>
+    </div>
   );
 };
 
