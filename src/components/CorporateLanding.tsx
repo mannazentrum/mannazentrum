@@ -196,14 +196,35 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
                     <p className="text-slate-600 text-sm mt-1">+62 878-8111-0807</p>
                   </div>
                 </div>
-
-                <div className="flex items-start gap-4 p-5 bg-white rounded-3xl shadow-sm border border-slate-100">
-                  <span className="text-3xl">✉️</span>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm uppercase tracking-tight">Email Respon Cepat</h4>
-                    <p className="text-slate-600 text-sm mt-1">info@mannazentrum.com</p>
-                    <p className="text-slate-600 text-sm">mannazentruminfo@gmail.com</p>
-                  </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="flex items-start gap-4 p-5 bg-white rounded-3xl shadow-sm border border-slate-100">
+                      <span className="text-3xl">✉️</span>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm uppercase tracking-tight">Informasi Umum</h4>
+                        <p className="text-slate-600 text-sm mt-1">info@mannazentrum.com</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4 p-5 bg-white rounded-3xl shadow-sm border border-slate-100">
+                      <span className="text-3xl">🧸</span>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm uppercase tracking-tight">Daycare</h4>
+                        <p className="text-slate-600 text-sm mt-1">daycare@mannazentrum.com</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4 p-5 bg-white rounded-3xl shadow-sm border border-slate-100">
+                      <span className="text-3xl">📚</span>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm uppercase tracking-tight">Bimbel</h4>
+                        <p className="text-slate-600 text-sm mt-1">bimbel@mannazentrum.com</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4 p-5 bg-white rounded-3xl shadow-sm border border-slate-100">
+                      <span className="text-3xl">🎓</span>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm uppercase tracking-tight">PKBM</h4>
+                        <p className="text-slate-600 text-sm mt-1">pkbm@mannazentrum.com</p>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>
