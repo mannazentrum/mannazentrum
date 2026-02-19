@@ -194,6 +194,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
                   <div>
                     <h4 className="font-bold text-slate-900 text-sm uppercase tracking-tight">WhatsApp Corporate</h4>
                     <p className="text-slate-600 text-sm mt-1">+62 878-8111-0807</p>
+                    <p className="text-slate-600 text-sm mt-1">0811-1889-3389</p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
