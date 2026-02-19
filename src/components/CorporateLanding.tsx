@@ -16,13 +16,21 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
   onNavigateToBusinessUnits,
 }) => {
   const [showCareerNotice, setShowCareerNotice] = useState(false);
+  const [showContactForm, setShowContactForm] = useState(false);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const handleCareerClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setShowCareerNotice(false); // Close potential other overlays
+    setShowCareerNotice(false);
+    setShowContactForm(false);
     setShowCareerNotice(true);
+  };
+
+  const handlePendaftaranClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowCareerNotice(false);
+    setShowContactForm(true);
   };
 
   const scrollToSection = (id: string) => {
@@ -82,6 +90,70 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
               <button 
                 onClick={() => setShowCareerNotice(false)}
                 className="mt-10 w-full text-slate-400 font-bold text-[10px] uppercase tracking-[0.4em] hover:text-slate-900"
+              >
+                TUTUP HALAMAN
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Form Modal */}
+      {showContactForm && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-900/80 backdrop-blur-md animate-fadeIn overflow-y-auto">
+          <div className="bg-white w-full max-w-lg rounded-[50px] shadow-2xl border-4 border-slate-100 overflow-hidden relative my-auto">
+            <button 
+              onClick={() => setShowContactForm(false)}
+              className="absolute top-8 right-8 w-12 h-12 bg-slate-50 text-slate-400 hover:text-slate-900 rounded-full flex items-center justify-center text-2xl transition-all z-10"
+            >
+              ×
+            </button>
+            
+            <div className="p-10">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-2">Informasi Pendaftaran</h2>
+                <p className="text-slate-500 font-medium">Silakan isi formulir di bawah ini.</p>
+              </div>
+
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const target = e.target as typeof e.target & {
+                    name: { value: string };
+                    email: { value: string };
+                    phone: { value: string };
+                    message: { value: string };
+                  };
+                  const name = target.name.value;
+                  const email = target.email.value;
+                  const phone = target.phone.value;
+                  const message = target.message.value;
+                  window.location.href = `mailto:info@mannazentrum.com?subject=Pendaftaran&body=Nama:%20${name}%0AEmail:%20${email}%0APhone:%20${phone}%0A%0A${message}`;
+                }}
+                className="space-y-4"
+              >
+                <div>
+                  <label htmlFor="name" className="font-bold text-slate-800 text-sm">Nama</label>
+                  <input type="text" id="name" name="name" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
+                </div>
+                <div>
+                  <label htmlFor="email" className="font-bold text-slate-800 text-sm">Alamat Email</label>
+                  <input type="email" id="email" name="email" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="font-bold text-slate-800 text-sm">Nomor Telepon</label>
+                  <input type="tel" id="phone" name="phone" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
+                </div>
+                <div>
+                  <label htmlFor="message" className="font-bold text-slate-800 text-sm">Pesan</label>
+                  <textarea id="message" name="message" rows={4} className="w-full border border-slate-200 rounded-lg p-3 mt-1" required></textarea>
+                </div>
+                <button type="submit" className="w-full bg-slate-900 text-white p-4 rounded-lg font-medium hover:bg-slate-800 transition">Kirim</button>
+              </form>
+              
+              <button 
+                onClick={() => setShowContactForm(false)}
+                className="mt-6 w-full text-slate-400 font-bold text-[10px] uppercase tracking-[0.4em] hover:text-slate-900"
               >
                 TUTUP HALAMAN
               </button>
@@ -155,11 +227,11 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
               <span className="mt-auto text-pink-600 font-bold text-sm">Lihat Detail →</span>
             </div>
 
-            <div className="group bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300 cursor-pointer flex flex-col items-start" onClick={onNavigateToDaycare}>
+            <div className="group bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl hover:border-blue-200 transition-all duration-300 cursor-pointer flex flex-col items-start" onClick={handlePendaftaranClick}>
               <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-blue-600 transition-colors">🏫</div>
               <h4 className="text-xl font-bold text-slate-900 mb-3">Mannazentrum Preschool</h4>
               <p className="text-slate-500 text-sm leading-relaxed mb-6">Pendidikan Kelompok Bermain (KB), K1 dan K2 dengan fokus pada pengembangan karakter.</p>
-              <span className="mt-auto text-blue-600 font-bold text-sm">Lihat Detail →</span>
+              <span className="mt-auto text-blue-600 font-bold text-sm">Informasi Pendaftaran</span>
             </div>
           </div>
         </div>
