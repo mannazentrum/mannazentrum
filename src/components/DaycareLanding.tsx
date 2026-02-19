@@ -40,9 +40,16 @@ const DaycareLanding: React.FC<DaycareLandingProps> = ({ onBack }) => {
       console.error("Error submitting form: ", error);
       alert("There was an error submitting your form. Please try again later.");
     } finally {
+      // By setting isSubmitting to false, we allow the form to be submitted again
+      // and the button to return to its original state if the user closes and re-opens the form.
       setIsSubmitting(false);
     }
   };
+
+  const openForm = () => {
+    setIsSubmitted(false); // Reset on open
+    setShowContactForm(true);
+  }
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800 relative">
@@ -137,7 +144,7 @@ const DaycareLanding: React.FC<DaycareLandingProps> = ({ onBack }) => {
            Lembaga pendidikan dan penitipan anak usia dini (Daycare, KB, K1, K2) yang menitikberatkan pada pembentukan karakter dan kemandirian. 
           </p>
           <div className="flex justify-center space-x-4">
-             <button onClick={() => { setIsSubmitted(false); setShowContactForm(true); }} className="bg-slate-900 text-white px-8 py-3 rounded-full font-medium hover:bg-slate-800 transition">Informasi Pendaftaran</button>
+             <button onClick={openForm} className="bg-slate-900 text-white px-8 py-3 rounded-full font-medium hover:bg-slate-800 transition">Informasi Pendaftaran</button>
           </div>
         </div>
         <div className="absolute top-0 left-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 opacity-50"></div>

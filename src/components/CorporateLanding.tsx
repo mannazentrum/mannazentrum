@@ -58,9 +58,8 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
 
   const handleCareerClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setShowCareerNotice(false);
-    setShowContactForm(false);
     setShowCareerNotice(true);
+    setShowContactForm(false);
   };
 
   const handlePendaftaranClick = (e: React.MouseEvent) => {
@@ -279,7 +278,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
       <section id="kontak" className="py-24 px-6 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-start">
-            <div className="space-y-8 animate-fadeIn">
+            <div className.="space-y-8 animate-fadeIn">
               <div>
                 <span className="text-accent font-bold uppercase tracking-widest text-xs">Hubungi Kami</span>
                 <h3 className="text-4xl font-bold text-slate-900 mt-2">Pusat Informasi & <br/> Korespondensi</h3>
