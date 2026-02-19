@@ -11,10 +11,11 @@ import { Analytics } from '@vercel/analytics/react';
 const MMStoreLanding = lazy(() => import('./components/MMStoreLanding'));
 const CompanyProfile = lazy(() => import('./components/CompanyProfile'));
 const BusinessUnits = lazy(() => import('./components/BusinessUnits'));
+const DaycareLanding = lazy(() => import('./components/DaycareLanding'));
 
 const App: React.FC = () => {
   const [dbSyncing, setDbSyncing] = useState(false);
-  const [viewMode, setViewMode] = useState<'CORPORATE' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS'>('CORPORATE');
+  const [viewMode, setViewMode] = useState<'CORPORATE' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS' | 'DAYCARE'>('CORPORATE');
   const [user, setUser] = useState<User | null>(null);
 
   const [websiteContent, setWebsiteContent] = useState<WebsiteContent>({
@@ -28,7 +29,13 @@ const App: React.FC = () => {
 
   // Set the document title based on the view mode
   useEffect(() => {
-    document.title = viewMode === 'MM_STORE' ? 'Malika Maliaki - Store' : 'Corporate - Mannazentrum';
+    if (viewMode === 'MM_STORE') {
+      document.title = 'Malika Maliaki - Store';
+    } else if (viewMode === 'DAYCARE') {
+      document.title = 'Daycare & Preschool - Mannazentrum';
+    } else {
+      document.title = 'Corporate - Mannazentrum';
+    }
   }, [viewMode]);
 
   const syncToCloud = async (collectionName: string, docId: string, data: any) => {
@@ -63,7 +70,7 @@ const App: React.FC = () => {
         {/* NAVIGASI KOMPONEN LANDING */}
         {viewMode === 'CORPORATE' && (
           <CorporateLanding
-            onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
+            onNavigateToDaycare={() => setViewMode('DAYCARE')}
             onNavigateToMMStore={() => setViewMode('MM_STORE')}
             onNavigateToProfile={() => setViewMode('COMPANY_PROFILE')}
             onNavigateToBusinessUnits={() => setViewMode('BUSINESS_UNITS')}
@@ -75,10 +82,12 @@ const App: React.FC = () => {
         {viewMode === 'BUSINESS_UNITS' && (
           <BusinessUnits
             onBack={() => setViewMode('CORPORATE')}
-            onNavigateToDaycare={() => alert('Daycare functionality is currently under reconstruction.')}
+            onNavigateToDaycare={() => setViewMode('DAYCARE')}
             onNavigateToMMStore={() => setViewMode('MM_STORE')}
           />
         )}
+
+        {viewMode === 'DAYCARE' && <DaycareLanding onBack={() => setViewMode('CORPORATE')} />}
 
         {viewMode === 'MM_STORE' && <MMStoreLanding onBackToCorporate={() => setViewMode('CORPORATE')} />}
         <Analytics />
