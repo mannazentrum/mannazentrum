@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import { careerList } from '../data/careers';
+import { db } from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 interface CorporateLandingProps {
   onNavigateToDaycare: () => void;
@@ -17,6 +19,40 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
 }) => {
   const [showCareerNotice, setShowCareerNotice] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const target = e.target as typeof e.target & {
+      name: { value: string };
+      email: { value: string };
+      phone: { value: string };
+      message: { value: string };
+    };
+    const name = target.name.value;
+    const email = target.email.value;
+    const phone = target.phone.value;
+    const message = target.message.value;
+
+    try {
+      await addDoc(collection(db, "formSubmissions"), {
+        name,
+        email,
+        phone,
+        message,
+        submittedAt: new Date(),
+        source: "Corporate Landing",
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+      alert("There was an error submitting your form. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -30,6 +66,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
   const handlePendaftaranClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowCareerNotice(false);
+    setIsSubmitted(false);
     setShowContactForm(true);
   };
 
@@ -110,53 +147,54 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
             </button>
             
             <div className="p-10">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-2">Informasi Pendaftaran</h2>
-                <p className="text-slate-500 font-medium">Silakan isi formulir di bawah ini.</p>
-              </div>
+              {isSubmitted ? (
+                 <div className="text-center py-12">
+                  <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-2">Terima Kasih!</h2>
+                  <p className="text-slate-500 font-medium">Pesan Anda telah kami terima. Tim kami akan segera menghubungi Anda.</p>
+                  <button 
+                    onClick={() => setShowContactForm(false)}
+                    className="mt-8 bg-slate-900 text-white px-8 py-3 rounded-full font-medium hover:bg-slate-800 transition"
+                  >
+                    Tutup
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="text-center mb-8">
+                    <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none mb-2">Informasi Pendaftaran</h2>
+                    <p className="text-slate-500 font-medium">Silakan isi formulir di bawah ini.</p>
+                  </div>
 
-              <form 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const target = e.target as typeof e.target & {
-                    name: { value: string };
-                    email: { value: string };
-                    phone: { value: string };
-                    message: { value: string };
-                  };
-                  const name = target.name.value;
-                  const email = target.email.value;
-                  const phone = target.phone.value;
-                  const message = target.message.value;
-                  window.location.href = `mailto:info@mannazentrum.com?subject=Pendaftaran&body=Nama:%20${name}%0AEmail:%20${email}%0APhone:%20${phone}%0A%0A${message}`;
-                }}
-                className="space-y-4"
-              >
-                <div>
-                  <label htmlFor="name" className="font-bold text-slate-800 text-sm">Nama</label>
-                  <input type="text" id="name" name="name" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
-                </div>
-                <div>
-                  <label htmlFor="email" className="font-bold text-slate-800 text-sm">Alamat Email</label>
-                  <input type="email" id="email" name="email" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="font-bold text-slate-800 text-sm">Nomor Telepon</label>
-                  <input type="tel" id="phone" name="phone" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
-                </div>
-                <div>
-                  <label htmlFor="message" className="font-bold text-slate-800 text-sm">Pesan</label>
-                  <textarea id="message" name="message" rows={4} className="w-full border border-slate-200 rounded-lg p-3 mt-1" required></textarea>
-                </div>
-                <button type="submit" className="w-full bg-slate-900 text-white p-4 rounded-lg font-medium hover:bg-slate-800 transition">Kirim</button>
-              </form>
-              
-              <button 
-                onClick={() => setShowContactForm(false)}
-                className="mt-6 w-full text-slate-400 font-bold text-[10px] uppercase tracking-[0.4em] hover:text-slate-900"
-              >
-                TUTUP HALAMAN
-              </button>
+                  <form onSubmit={handleFormSubmit} className="space-y-4">
+                    <div>
+                      <label htmlFor="name" className="font-bold text-slate-800 text-sm">Nama</label>
+                      <input type="text" id="name" name="name" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="font-bold text-slate-800 text-sm">Alamat Email</label>
+                      <input type="email" id="email" name="email" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="font-bold text-slate-800 text-sm">Nomor Telepon</label>
+                      <input type="tel" id="phone" name="phone" className="w-full border border-slate-200 rounded-lg p-3 mt-1" required />
+                    </div>
+                    <div>
+                      <label htmlFor="message" className="font-bold text-slate-800 text-sm">Pesan</label>
+                      <textarea id="message" name="message" rows={4} className="w-full border border-slate-200 rounded-lg p-3 mt-1" required></textarea>
+                    </div>
+                    <button type="submit" className="w-full bg-slate-900 text-white p-4 rounded-lg font-medium hover:bg-slate-800 transition" disabled={isSubmitting}>
+                      {isSubmitting ? 'Mengirim...' : 'Kirim'}
+                    </button>
+                  </form>
+                  
+                  <button 
+                    onClick={() => setShowContactForm(false)}
+                    className="mt-6 w-full text-slate-400 font-bold text-[10px] uppercase tracking-[0.4em] hover:text-slate-900"
+                  >
+                    TUTUP HALAMAN
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
