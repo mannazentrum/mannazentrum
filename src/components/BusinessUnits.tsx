@@ -154,6 +154,39 @@ const BusinessUnits: React.FC<BusinessUnitsProps> = ({
             </div>
           </div>
 
+          {/* Unit 4: Jasa Layanan */}
+          <div className="bg-white rounded-[40px] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-xl transition-all duration-500">
+            <div className="h-64 bg-emerald-50 flex items-center justify-center relative overflow-hidden">
+               <span className="text-8xl group-hover:scale-110 transition-transform duration-500">🤝</span>
+               <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent"></div>
+            </div>
+            <div className="p-10 space-y-6">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Jasa Layanan</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">
+                  Layanan operasional terpadu yang memberikan solusi pengembangan website, serta penyediaan transportasi premium dan antar jemput.
+                </p>
+              </div>
+              <ul className="space-y-2">
+                <li className="flex items-center text-xs text-slate-400 font-medium">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2"></span> Jasa Pembuatan Website
+                </li>
+                <li className="flex items-center text-xs text-slate-400 font-medium">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2"></span> Antar Jemput Siswa
+                </li>
+                <li className="flex items-center text-xs text-slate-400 font-medium">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-2"></span> Sewa Mobil (Wedding, VIP, Travel)
+                </li>
+              </ul>
+              <button 
+                onClick={() => window.open('https://wa.me/6287881110807', '_blank')}
+                className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-slate-800 transition shadow-lg"
+              >
+                Hubungi Kami
+              </button>
+            </div>
+          </div>
+
         </div>
       </main>
 

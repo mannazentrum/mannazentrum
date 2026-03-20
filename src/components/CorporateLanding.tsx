@@ -270,6 +270,13 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
               <p className="text-slate-500 text-sm leading-relaxed mb-6">Pendidikan Kelompok Bermain (KB), K1 dan K2 dengan fokus pada pengembangan karakter.</p>
               <span className="mt-auto text-blue-600 font-bold text-sm">Informasi Pendaftaran</span>
             </div>
+
+            <div className="group bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl hover:border-emerald-200 transition-all duration-300 cursor-pointer flex flex-col items-start" onClick={() => scrollToSection('kontak')}>
+              <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-emerald-600 transition-colors">🤝</div>
+              <h4 className="text-xl font-bold text-slate-900 mb-3">Jasa Layanan</h4>
+              <p className="text-slate-500 text-sm leading-relaxed mb-6">Solusi inovatif untuk pembuatan website, transportasi premium, dan antar jemput siswa.</p>
+              <span className="mt-auto text-emerald-600 font-bold text-sm">Hubungi Kami</span>
+            </div>
           </div>
         </div>
       </section>
@@ -278,7 +285,7 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
       <section id="kontak" className="py-24 px-6 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-start">
-            <div className.="space-y-8 animate-fadeIn">
+            <div className="space-y-8 animate-fadeIn">
               <div>
                 <span className="text-accent font-bold uppercase tracking-widest text-xs">Hubungi Kami</span>
                 <h3 className="text-4xl font-bold text-slate-900 mt-2">Pusat Informasi & <br/> Korespondensi</h3>
