@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
-import { db } from "../firebase";
-import { collection, addDoc } from "firebase/firestore"; 
+import { submitContactForm } from '../services/formService';
 
 interface DaycareLandingProps {
   onBack: () => void;
@@ -27,12 +26,11 @@ const DaycareLanding: React.FC<DaycareLandingProps> = ({ onBack }) => {
     const message = target.message.value;
 
     try {
-      await addDoc(collection(db, "formSubmissions"), {
+      await submitContactForm({
         name,
         email,
         phone,
         message,
-        submittedAt: new Date(),
         source: "Daycare/Preschool Landing",
       });
       setIsSubmitted(true);

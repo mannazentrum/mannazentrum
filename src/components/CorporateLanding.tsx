@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react';
 import { careerList } from '../data/careers';
-import { db } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { submitContactForm } from '../services/formService';
 
 interface CorporateLandingProps {
   onNavigateToDaycare: () => void;
@@ -37,12 +36,11 @@ const CorporateLanding: React.FC<CorporateLandingProps> = ({
     const message = target.message.value;
 
     try {
-      await addDoc(collection(db, "formSubmissions"), {
+      await submitContactForm({
         name,
         email,
         phone,
         message,
-        submittedAt: new Date(),
         source: "Corporate Landing",
       });
       setIsSubmitted(true);
