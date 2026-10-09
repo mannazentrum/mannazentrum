@@ -9,21 +9,20 @@ export default defineConfig({
     host: '0.0.0.0',
   },
   build: {
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('scheduler')) {
-              return 'vendor-react';
-            }
-            if (id.includes('@vercel/analytics')) {
-              return 'vendor-analytics';
-            }
-            if (id.includes('firebase') || id.includes('@firebase')) {
-              return 'vendor-firebase';
-            }
-          }
+          if (!id.includes('/node_modules/') && !id.includes('\\node_modules\\')) return;
+          const p = id.replace(/\\/g, '/');
+          // Order matters: check analytics before react (its path contains "react")
+          if (p.includes('/node_modules/@vercel/analytics/')) return 'vendor-analytics';
+          if (p.includes('/node_modules/firebase/') || p.includes('/node_modules/@firebase/')) return 'vendor-firebase';
+          if (
+            p.includes('/node_modules/react/') ||
+            p.includes('/node_modules/react-dom/') ||
+            p.includes('/node_modules/scheduler/')
+          ) return 'vendor-react';
         },
       },
     },

@@ -8,8 +8,11 @@
     <meta name="theme-color" content="#42210b">
 
     <!-- Resource hints for external assets -->
-    <link rel="preconnect" href="https://www.google.com">
-    <link rel="dns-prefetch" href="https://maps.google.com">
+    <!-- Hero/product images (Unsplash) are above the fold on MM Store -->
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <!-- Google Maps iframe is lazy-loaded below the fold: DNS only, no early connection -->
+    <link rel="dns-prefetch" href="https://www.google.com">
+    <!-- Vercel Analytics -->
     <link rel="dns-prefetch" href="https://va.vercel-scripts.com">
 
     <style>
@@ -17,9 +20,22 @@
             --bg-app: #f7f3e3;
         }
 
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
         body {
             background-color: var(--bg-app);
             transition: background-color 0.5s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto !important; }
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
 
         .card-shadow {
