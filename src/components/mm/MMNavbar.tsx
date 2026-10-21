@@ -1,28 +1,43 @@
-
 import React from 'react';
 
 export const MMNavbar: React.FC<{ onBack: () => void, setPage: (p: string) => void, cartCount: number }> = ({ onBack, setPage, cartCount }) => (
-  <nav className="sticky top-0 z-50 bg-[#fffdf9]/95 backdrop-blur-md border-b border-[#5d4037]/5 px-6 py-4">
-    <div className="max-w-7xl mx-auto flex justify-between items-center">
-      <div className="flex items-center gap-3 cursor-pointer" onClick={() => setPage('home')}>
-        <div className="w-10 h-10 bg-[#e6b946] rounded-full flex items-center justify-center text-white font-playfair font-bold text-xl">M</div>
-        <h1 className="font-playfair text-2xl font-bold text-[#5d4037]">Malika Maliaki</h1>
-      </div>
-      <div className="hidden md:flex items-center gap-8 font-nunito font-bold text-[#5d4037]/80 text-sm">
-        <button onClick={() => setPage('home')} className="hover:text-[#e6b946] transition">Beranda</button>
-        <button className="hover:text-[#e6b946] transition">Tentang Kami</button>
-        <button className="hover:text-[#e6b946] transition">Filosofi</button>
-        <button onClick={() => setPage('classes')} className="hover:text-[#e6b946] transition">Kelas</button>
-        <button onClick={() => setPage('shop')} className="hover:text-[#e6b946] transition">Toko</button>
-      </div>
-      <div className="flex items-center gap-4">
-        <button onClick={onBack} className="hidden md:block text-xs font-bold text-[#5d4037]/50 hover:text-[#5d4037]">← Kembali</button>
-        <button className="bg-[#6d4c41] text-white px-6 py-2 rounded-full font-nunito font-bold text-sm hover:bg-[#5d4037] transition shadow-md">Masuk</button>
-        <div className="relative cursor-pointer text-[#5d4037]">
-            <span className="text-xl">🛒</span>
-            {cartCount > 0 && <span className="absolute -top-1 -right-1 bg-[#e6b946] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{cartCount}</span>}
+  <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 font-sans">
+    <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex justify-between items-center">
+      <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => setPage('home')}>
+        <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:bg-slate-800 transition">
+          M
+        </div>
+        <div>
+          <h1 className="font-semibold text-base md:text-lg text-slate-900 leading-none tracking-tight">Malika Maliaki</h1>
+          <p className="text-[10px] uppercase tracking-[0.22em] text-slate-400 mt-0.5">Creative Store & Education</p>
         </div>
       </div>
+      
+      <nav className="hidden md:flex items-center space-x-8 text-sm font-normal text-slate-600">
+        <button onClick={() => setPage('home')} className="hover:text-slate-900 transition font-medium text-slate-900">Beranda</button>
+        <button onClick={() => setPage('classes')} className="hover:text-slate-900 transition">Kelas Kreatif</button>
+        <button onClick={() => setPage('shop')} className="hover:text-slate-900 transition">Katalog Toko</button>
+      </nav>
+
+      <div className="flex items-center space-x-4">
+        <button 
+          onClick={onBack} 
+          className="text-xs md:text-sm font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5"
+        >
+          <span>←</span> Kembali ke Beranda
+        </button>
+        <button 
+          onClick={() => setPage('shop')}
+          className="bg-slate-900 text-white text-xs md:text-sm px-5 py-2.5 rounded-full font-medium hover:bg-slate-800 transition shadow-sm flex items-center gap-2"
+        >
+          <span>Toko</span>
+          {cartCount > 0 && (
+            <span className="bg-amber-400 text-slate-900 text-[10px] px-1.5 py-0.5 rounded-full font-bold">
+              {cartCount}
+            </span>
+          )}
+        </button>
+      </div>
     </div>
-  </nav>
+  </header>
 );

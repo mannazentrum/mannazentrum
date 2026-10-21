@@ -23,7 +23,7 @@ const App: React.FC = () => {
     }
   }, [viewMode]);
 
-  const themeClasses = viewMode === 'MM_STORE' ? 'bg-cream text-primary' : 'bg-white text-primary';
+  const themeClasses = 'bg-white text-slate-800 font-sans antialiased';
 
   return (
     <div className={`App ${themeClasses}`}>
