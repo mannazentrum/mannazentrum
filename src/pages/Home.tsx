@@ -275,8 +275,8 @@ const Home: React.FC = () => {
       <section className="relative w-full bg-white">
         <div className="relative w-full h-[320px] sm:h-[420px] md:h-[520px] lg:h-[600px] overflow-hidden bg-slate-100">
           <img 
-            src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=2000&q=85" 
-            alt="Pendidik dan anak-anak Mannazentrum belajar balok kayu dengan gembira" 
+            src="/images/hero-banner.jpg" 
+            alt="Keluarga besar pendidik dan anak-anak ceria Mannazentrum Daycare & Preschool" 
             className="w-full h-full object-cover object-center select-none"
             loading="eager"
           />
