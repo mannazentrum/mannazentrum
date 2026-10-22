@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import FloatingCTA from '../components/FloatingCTA';
 import { 
   ShoppingBag, 
   Sparkles, 
@@ -274,6 +275,7 @@ const Store: React.FC = () => {
         </div>
       </section>
 
+      <FloatingCTA />
       <Footer />
     </div>
   );

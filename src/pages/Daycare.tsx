@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import FloatingCTA from '../components/FloatingCTA';
 import { submitContactForm } from '../services/formService';
 import { 
   Baby, 
@@ -348,6 +349,9 @@ const Daycare: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Sticky Bottom Floating WhatsApp & Survey CTA */}
+      <FloatingCTA onOpenSurvey={openForm} />
 
       <Footer onOpenContact={openForm} />
     </div>

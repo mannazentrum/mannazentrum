@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import FloatingCTA from '../components/FloatingCTA';
 import { newsArticles, Article } from '../data/newsData';
 import { 
   Search, 
@@ -230,6 +231,7 @@ const News: React.FC = () => {
         </div>
       </section>
 
+      <FloatingCTA />
       <Footer />
     </div>
   );

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import FloatingCTA from '../components/FloatingCTA';
 import { Shield, Target, Heart, Award, CheckCircle2, Building, Users } from 'lucide-react';
 
 const About: React.FC = () => {
@@ -221,6 +222,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
+      <FloatingCTA />
       <Footer />
     </div>
   );

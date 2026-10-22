@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import FloatingCTA from '../components/FloatingCTA';
 import { careerList } from '../data/careers';
 import { newsArticles } from '../data/newsData';
 import { submitContactForm } from '../services/formService';
@@ -19,7 +20,14 @@ import {
   Calendar,
   BookOpen,
   Baby,
-  Smile
+  Smile,
+  Building2,
+  UserCheck,
+  Star,
+  Award,
+  FileCheck2,
+  Navigation,
+  Car
 } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -35,19 +43,17 @@ const Home: React.FC = () => {
       name: { value: string };
       email: { value: string };
       phone: { value: string };
+      category: { value: string };
+      location: { value: string };
       message: { value: string };
     };
-    const name = target.name.value;
-    const email = target.email.value;
-    const phone = target.phone.value;
-    const message = target.message.value;
 
     try {
       await submitContactForm({
-        name,
-        email,
-        phone,
-        message,
+        name: target.name.value,
+        email: target.email.value,
+        phone: target.phone.value,
+        message: `[Kategori: ${target.category.value} | Lokasi: ${target.location.value}] ${target.message.value}`,
         source: "Beranda Utama",
       });
       setIsSubmitted(true);
@@ -68,7 +74,7 @@ const Home: React.FC = () => {
     <div className="min-h-screen bg-white font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900">
       <SEO 
         title="Mannazentrum - Daycare, Preschool & Sahabat Tumbuh Kembang Buah Hati" 
-        description="Mannazentrum hadir sebagai mitra orang tua dalam mengasuh dan mendidik buah hati dengan penuh kasih sayang. Daycare, Preschool, dan Ekosistem Pendidikan Terpercaya di Tangerang."
+        description="Mannazentrum hadir sebagai mitra orang tua dalam mengasuh dan mendidik buah hati dengan penuh kasih sayang. Layanan Daycare, Preschool resmi berizin di Cisauk, Rumpin & sekitarnya."
         canonicalPath="/"
       />
 
@@ -148,7 +154,7 @@ const Home: React.FC = () => {
               {isSubmitted ? (
                  <div className="text-center py-10">
                   <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">✓</div>
-                  <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Terima Kasih Ayah / Bunda!</h3>
+                  <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Terima Kasih!</h3>
                   <p className="text-slate-500 text-sm leading-relaxed">Pesan dan informasi Anda telah kami terima. Tim konselor Mannazentrum akan segera menghubungi Anda melalui WhatsApp.</p>
                   <button 
                     onClick={() => setShowContactForm(false)}
@@ -161,18 +167,18 @@ const Home: React.FC = () => {
                 <>
                   <div className="text-center mb-6">
                     <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[10px] block mb-1">Konsultasi & Survei</span>
-                    <h3 className="text-2xl font-normal text-slate-900 tracking-tight">Informasi & Pendaftaran</h3>
-                    <p className="text-slate-500 text-xs mt-1">Lengkapi data singkat berikut untuk konsultasi program atau menjadwalkan kunjungan lokasi.</p>
+                    <h3 className="text-2xl font-normal text-slate-900 tracking-tight">Informasi, Survei & Kemitraan</h3>
+                    <p className="text-slate-500 text-xs mt-1">Lengkapi data berikut untuk pendaftaran anak atau pertanyaan kemitraan korporat.</p>
                   </div>
 
                   <form onSubmit={handleFormSubmit} className="space-y-4 text-left">
                     <div>
-                      <label htmlFor="name" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Nama Orang Tua</label>
+                      <label htmlFor="name" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Nama Lengkap</label>
                       <input 
                         type="text" 
                         id="name" 
                         name="name" 
-                        placeholder="Nama Ayah / Bunda" 
+                        placeholder="Nama Ayah / Bunda / Rekan Kemitraan" 
                         className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
                         required 
                       />
@@ -199,13 +205,44 @@ const Home: React.FC = () => {
                         required 
                       />
                     </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label htmlFor="category" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Kategori Kebutuhan</label>
+                        <select 
+                          id="category" 
+                          name="category" 
+                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition"
+                        >
+                          <option value="Orang Tua - Daycare">Orang Tua - Daycare</option>
+                          <option value="Orang Tua - Preschool">Orang Tua - Preschool</option>
+                          <option value="Orang Tua - Survei Lokasi">Orang Tua - Survei Lokasi</option>
+                          <option value="Korporat - Kemitraan B2B">Korporat - Kemitraan B2B</option>
+                          <option value="Korporat - CSR & Donasi">Korporat - CSR & Donasi</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label htmlFor="location" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Pilihan Lokasi / Area</label>
+                        <select 
+                          id="location" 
+                          name="location" 
+                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition"
+                        >
+                          <option value="Cisauk (Serpong Garden)">Cisauk (Serpong Garden)</option>
+                          <option value="Rumpin & Sekitarnya (Bogor)">Rumpin & Sekitarnya (Bogor)</option>
+                          <option value="BSD City / Tangerang">BSD City / Tangerang</option>
+                        </select>
+                      </div>
+                    </div>
+
                     <div>
-                      <label htmlFor="message" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Program yang Diminati / Pertanyaan</label>
+                      <label htmlFor="message" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Pesan / Rincian Pertanyaan</label>
                       <textarea 
                         id="message" 
                         name="message" 
                         rows={3} 
-                        placeholder="Contoh: Ingin info Daycare balita usia 2 tahun & jadwal kunjungan..." 
+                        placeholder="Tuliskan usia anak, paket yang diinginkan, atau proposal kemitraan..." 
                         className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
                         required
                       ></textarea>
@@ -215,7 +252,7 @@ const Home: React.FC = () => {
                       className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 active:scale-[0.99] transition" 
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? 'Mengirim Data...' : 'Kirim Informasi Konsultasi'}
+                      {isSubmitting ? 'Mengirim Data...' : 'Kirim Formulir'}
                     </button>
                   </form>
                   
@@ -234,9 +271,6 @@ const Home: React.FC = () => {
 
       {/* ========================================================
           HERO BANNER (MATCHING TEMPLATE IMAGE 1)
-          - Full-width panoramic photo banner
-          - Overlay branding
-          - Main Page H1 Heading: Clean, parent-friendly & SEO-optimized
          ======================================================== */}
       <section className="relative w-full bg-white">
         <div className="relative w-full h-[320px] sm:h-[420px] md:h-[520px] lg:h-[600px] overflow-hidden bg-slate-100">
@@ -259,7 +293,7 @@ const Home: React.FC = () => {
         </div>
 
         {/* Headline section below the photo banner */}
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-12 pb-14 md:pt-16 md:pb-20">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-12 pb-12 md:pt-16 md:pb-16">
           <div className="max-w-4xl">
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs mb-2 block">
               Mitra Terpercaya Tumbuh Kembang Buah Hati
@@ -269,88 +303,305 @@ const Home: React.FC = () => {
               Show you care.
             </h1>
             <p className="mt-4 sm:mt-5 text-slate-600 text-base sm:text-lg md:text-xl font-light max-w-3xl leading-relaxed">
-              Menghadirkan lingkungan pengasuhan dan pendidikan usia dini yang aman, higienis, penuh kasih sayang, serta menumbuhkan kemandirian anak dengan hati.
+              Menghadirkan lingkungan pengasuhan dan pendidikan usia dini yang aman, higienis, penuh kasih sayang, serta menumbuhkan kemandirian anak dengan hati di kawasan Cisauk, Rumpin & sekitarnya.
             </p>
-
-            {/* Quick Action Badges */}
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/daycare"
-                className="bg-slate-900 text-white text-xs md:text-sm px-6 py-3 rounded-full font-medium hover:bg-slate-800 transition shadow-sm inline-flex items-center gap-2"
-              >
-                <Baby className="w-4 h-4" />
-                <span>Eksplorasi Daycare</span>
-              </Link>
-              <Link
-                to="/preschool"
-                className="bg-amber-500 text-white text-xs md:text-sm px-6 py-3 rounded-full font-medium hover:bg-amber-600 transition shadow-sm inline-flex items-center gap-2"
-              >
-                <BookOpen className="w-4 h-4" />
-                <span>Program Preschool</span>
-              </Link>
-              <button
-                onClick={openContactModal}
-                className="border border-slate-300 text-slate-800 text-xs md:text-sm px-6 py-3 rounded-full font-medium hover:bg-slate-50 transition inline-flex items-center gap-2"
-              >
-                <Calendar className="w-4 h-4" />
-                <span>Jadwalkan Kunjungan Survei</span>
-              </button>
-            </div>
           </div>
         </div>
       </section>
 
       {/* ========================================================
-          SECTION 2: PARENT ASSURANCE PILLARS
+          FASE 3: PEMISAHAN ALUR AUDIENS (ORANG TUA MURID VS KORPORAT)
          ======================================================== */}
-      <section className="bg-amber-50/40 py-12 px-6 sm:px-10 lg:px-16 border-y border-amber-100/60">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-amber-200/50 flex items-center justify-center text-amber-600 shrink-0">
-              <ShieldCheck className="w-6 h-6" />
+      <section className="bg-white pb-16 px-6 sm:px-10 lg:px-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-2">
+              Jalur Kebutuhan
+            </span>
+            <h2 className="text-3xl md:text-4xl font-light text-slate-900 tracking-tight">
+              Pilih Alur Akses Sesuai Kebutuhan Anda
+            </h2>
+            <p className="text-slate-500 font-light text-sm mt-2">
+              Kemudahan navigasi langsung bagi orang tua yang mencari pengasuhan anak maupun mitra bisnis & instansi.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            {/* Alur 1: Orang Tua Murid */}
+            <div className="bg-amber-50/50 rounded-[32px] p-8 md:p-10 border border-amber-200/70 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-36 h-36 bg-amber-200/30 rounded-bl-full pointer-events-none"></div>
+              
+              <div>
+                <div className="inline-flex items-center gap-2 bg-amber-500 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
+                  <UserCheck className="w-4 h-4" />
+                  <span>JALUR AYAH & BUNDA</span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-light text-slate-900 tracking-tight mb-3">
+                  Mencari Daycare & Preschool Ramah Anak?
+                </h3>
+                
+                <p className="text-slate-600 font-light text-sm leading-relaxed mb-6">
+                  Solusi penitipan anak profesional untuk orang tua bekerja di wilayah <strong>Cisauk, Serpong Garden, Rumpin & Bogor</strong>. Didukung ruang steril UV, pemantauan CCTV, menu gizi 4 bintang, dan kurikulum sensori motorik ceria.
+                </p>
+
+                <div className="space-y-2.5 mb-8 text-xs font-medium text-slate-700">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Layanan Daycare Bayi (3 bln+) & Balita (Toddler)</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Preschool Playgroup & TK dwibahasa (Bilingual)</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Fasilitas Antar-Jemput Siswa Aman (Cisauk - Rumpin)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-4 border-t border-amber-200/60">
+                <Link
+                  to="/daycare"
+                  className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-2"
+                >
+                  <Baby className="w-4 h-4" />
+                  <span>Program Daycare</span>
+                </Link>
+                <Link
+                  to="/preschool"
+                  className="bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-2"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  <span>Program Preschool</span>
+                </Link>
+                <button
+                  onClick={openContactModal}
+                  className="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 text-xs font-semibold px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-2"
+                >
+                  <Calendar className="w-4 h-4 text-amber-600" />
+                  <span>Jadwalkan Survey Lokasi</span>
+                </button>
+              </div>
             </div>
-            <div>
-              <h4 className="font-semibold text-slate-900 text-sm">CCTV & Keamanan 24/7</h4>
-              <p className="text-xs text-slate-500 font-light mt-0.5">Area tertutup & aman dipantau</p>
+
+            {/* Alur 2: Korporat & Kemitraan */}
+            <div className="bg-slate-900 text-white rounded-[32px] p-8 md:p-10 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-36 h-36 bg-white/5 rounded-bl-full pointer-events-none"></div>
+
+              <div>
+                <div className="inline-flex items-center gap-2 bg-white/10 text-amber-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 border border-white/15">
+                  <Building2 className="w-4 h-4" />
+                  <span>JALUR KORPORAT & KEMITRAAN</span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-light text-white tracking-tight mb-3">
+                  PT. Elrafa Terang Sejahtera
+                </h3>
+                
+                <p className="text-slate-300 font-light text-sm leading-relaxed mb-6">
+                  Holding terintegrasi yang menaungi unit pendidikan, yayasan pengasuhan sosial, penyedia perlengkapan tumbuh kembang anak, dan bimbingan belajar terpercaya berbadan hukum resmi.
+                </p>
+
+                <div className="space-y-2.5 mb-8 text-xs font-light text-slate-300">
+                  <div className="flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Legalitas Badan Hukum Resmi (SK Kemenkumham & NIB)</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Program Corporate Daycare & Kemitraan Karyawan B2B</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Penyaluran CSR & Beasiswa Yayasan Pendidikan Anak</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-800">
+                <Link
+                  to="/tentang"
+                  className="bg-white hover:bg-slate-100 text-slate-900 text-xs font-semibold px-6 py-3 rounded-full transition shadow-sm inline-flex items-center gap-2"
+                >
+                  <span>Profil Perusahaan</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/unit-bisnis"
+                  className="bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-6 py-3 rounded-full transition border border-slate-700 inline-flex items-center gap-2"
+                >
+                  <span>Unit Bisnis Terpadu</span>
+                </Link>
+                <button
+                  onClick={() => setShowCareerNotice(true)}
+                  className="text-slate-400 hover:text-white text-xs font-medium px-4 py-3 transition"
+                >
+                  Karir & Rekrutmen &rarr;
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          FASE 3: SOCIAL PROOF, LEGALITAS & MULTI-LOKASI SECTION
+         ======================================================== */}
+      <section className="bg-[#FAF9F5] py-20 md:py-28 px-6 sm:px-10 lg:px-16 border-t border-b border-stone-200/50">
+        <div className="max-w-7xl mx-auto">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-2">
+              Kepercayaan & Bukti Sosial
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-slate-900 tracking-tight">
+              Standar Legalitas Resmi & Kepuasan Orang Tua
+            </h2>
+            <p className="text-slate-500 font-light text-sm md:text-base mt-3">
+              Didirikan dengan kepatuhan hukum penuh, standar fasilitas higienis medis, dan komitmen pelayanan di wilayah Cisauk hingga Rumpin Bogor.
+            </p>
+          </div>
+
+          {/* Bagian 1: Badges Legalitas & Izin Resmi */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <FileCheck2 className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-semibold text-amber-600 uppercase tracking-widest block">Badan Hukum Resmi</span>
+                <h3 className="font-bold text-slate-900 text-base mt-0.5">PT. Elrafa Terang Sejahtera</h3>
+                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
+                  Terdaftar di Kemenkumham RI dengan NIB resmi operasional sektor pendidikan anak usia dini dan pengasuhan anak.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <Award className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-semibold text-emerald-600 uppercase tracking-widest block">Kualifikasi Pendidik</span>
+                <h3 className="font-bold text-slate-900 text-base mt-0.5">Tersertifikasi Basic Life Support</h3>
+                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
+                  Pengasuh dan guru terlatih penanganan pertolongan pertama anak, gizi MPASI, dan pemantauan tumbuh kembang holistik.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                <Navigation className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-semibold text-indigo-600 uppercase tracking-widest block">Cakupan Wilayah</span>
+                <h3 className="font-bold text-slate-900 text-base mt-0.5">Cisauk, Rumpin & Sekitar Bogor</h3>
+                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
+                  Pusat fasilitas di Serpong Garden 1 Cisauk, dengan layanan antar-jemput anak aman menjangkau wilayah Rumpin & perbatasan Bogor.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Bagian 2: Testimoni Otentik Orang Tua (Cards Bintang 5) */}
+          <div className="mb-12">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+              <div>
+                <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block">Testimoni Nyata</span>
+                <h3 className="text-2xl md:text-3xl font-light text-slate-900 tracking-tight">Apa Kata Orang Tua Murid?</h3>
+              </div>
+              <div className="flex items-center gap-1.5 bg-white px-4 py-2 rounded-full border border-stone-200 shadow-sm text-xs text-slate-700">
+                <div className="flex text-amber-400">
+                  <Star className="w-4 h-4 fill-amber-400" />
+                  <Star className="w-4 h-4 fill-amber-400" />
+                  <Star className="w-4 h-4 fill-amber-400" />
+                  <Star className="w-4 h-4 fill-amber-400" />
+                  <Star className="w-4 h-4 fill-amber-400" />
+                </div>
+                <span className="font-bold ml-1">5.0 / 5.0</span>
+                <span className="text-slate-400">(Ulasan Terverifikasi)</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex text-amber-400 mb-3">
+                    <Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" />
+                  </div>
+                  <p className="text-slate-600 font-light text-sm italic leading-relaxed mb-6">
+                    "Sebagai ibu pekerja di area BSD City, ketenangan hati adalah prioritas utama. Di Mannazentrum Cisauk, pengasuhnya telaten, jadwal makan bergizi, dan laporan harian lewat WhatsApp sangat jelas. Anak saya Rayyan jadi mandiri sekali."
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-sm">
+                    HP
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900 text-xs">Helene P.</h4>
+                    <p className="text-[11px] text-slate-400">Bunda dari Rayyan (Toddler Daycare Cisauk)</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex text-emerald-500 mb-3">
+                    <Star className="w-4 h-4 fill-emerald-500" /><Star className="w-4 h-4 fill-emerald-500" /><Star className="w-4 h-4 fill-emerald-500" /><Star className="w-4 h-4 fill-emerald-500" /><Star className="w-4 h-4 fill-emerald-500" />
+                  </div>
+                  <p className="text-slate-600 font-light text-sm italic leading-relaxed mb-6">
+                    "Kami berdomisili dekat perbatasan Rumpin-Bogor. Program preschool-nya sangat menyenangkan, anak tidak dituntut hafalan kaku tapi belajarnya lewat bermain balok kayu dan melukis. Komunikasi guru ke orang tua sangat terbuka."
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-sm">
+                    SG
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900 text-xs">Dr. Shawn Gunawan</h4>
+                    <p className="text-[11px] text-slate-400">Ayah dari Chloe (Preschool Cisauk / Rumpin)</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex text-indigo-500 mb-3">
+                    <Star className="w-4 h-4 fill-indigo-500" /><Star className="w-4 h-4 fill-indigo-500" /><Star className="w-4 h-4 fill-indigo-500" /><Star className="w-4 h-4 fill-indigo-500" /><Star className="w-4 h-4 fill-indigo-500" />
+                  </div>
+                  <p className="text-slate-600 font-light text-sm italic leading-relaxed mb-6">
+                    "Ruang bayinya steril dengan lampu UV dan pendingin udara yang bersih. Penyimpanan ASI perah di freezer terpantau rapi. Sebagai psikolog anak, saya apresiasi pendekatan kasih dan rasa aman yang dibangun tim."
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-800 font-bold flex items-center justify-center text-sm">
+                    AS
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900 text-xs">Amanda S., M.Psi</h4>
+                    <p className="text-[11px] text-slate-400">Bunda dari Keenan (Infant Care Cisauk)</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-amber-200/50 flex items-center justify-center text-emerald-600 shrink-0">
-              <Utensils className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="font-semibold text-slate-900 text-sm">Menu Gizi 4 Bintang</h4>
-              <p className="text-xs text-slate-500 font-light mt-0.5">Higienis tanpa MSG sintetis</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-amber-200/50 flex items-center justify-center text-indigo-600 shrink-0">
-              <Heart className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="font-semibold text-slate-900 text-sm">Rasio Terpantau</h4>
-              <p className="text-xs text-slate-500 font-light mt-0.5">One-on-one baby & caregiver</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-amber-200/50 flex items-center justify-center text-rose-600 shrink-0">
-              <Sparkles className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="font-semibold text-slate-900 text-sm">Sensori & Seni Kreatif</h4>
-              <p className="text-xs text-slate-500 font-light mt-0.5">Didukung Malika Maliaki</p>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* ========================================================
           SECTION 3: MISSION & PHILOSOPHY (MATCHING TEMPLATE IMAGE 2)
          ======================================================== */}
-      <section className="bg-[#FAF9F5] py-20 md:py-28 px-6 sm:px-10 lg:px-16 border-b border-stone-200/40">
+      <section className="bg-white py-20 md:py-28 px-6 sm:px-10 lg:px-16 border-b border-stone-200/40">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           <div className="lg:col-span-6">
@@ -443,7 +694,7 @@ const Home: React.FC = () => {
                 Mannazentrum Daycare
               </h3>
               <p className="text-slate-500 font-light text-sm leading-relaxed mb-6">
-                Layanan pengasuhan harian penuh kasih dengan gizi seimbang, toilet training, stimulasi motorik, dan pemantauan tumbuh kembang berkala.
+                Layanan pengasuhan harian penuh kasih dengan gizi seimbang, toilet training, stimulasi motorik, dan pemantauan tumbuh kembang berkala di Cisauk & Rumpin.
               </p>
               <div className="mt-auto">
                 <Link 
@@ -514,58 +765,9 @@ const Home: React.FC = () => {
       </section>
 
       {/* ========================================================
-          SECTION 5: TESTIMONIALS (MATCHING TEMPLATE IMAGE 4)
-         ======================================================== */}
-      <section className="bg-[#FAF9F5] py-20 md:py-28 px-6 sm:px-10 lg:px-16 border-t border-b border-stone-200/40">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
-          <div className="lg:col-span-6">
-            <div className="overflow-hidden shadow-sm bg-white rounded-3xl">
-              <img 
-                src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1200&q=80" 
-                alt="Pendidik tersenyum bersama anak-anak saat belajar bermain balok" 
-                className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-700"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          <div className="lg:col-span-6 space-y-8 lg:pl-4">
-            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block">
-              Cerita Dari Keluarga Kami
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-900 tracking-tight leading-tight">
-              See what our parents and educators have to say
-            </h2>
-
-            <div className="space-y-3 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-              <p className="text-slate-600 font-light italic text-base leading-relaxed">
-                "Sebagai ibu yang bekerja di BSD, menitipkan anak di Mannazentrum memberikan rasa tenang luar biasa. Pengasuhnya telaten, laporan harian jelas, dan anak saya tumbuh sangat mandiri dan ceria."
-              </p>
-              <div className="flex items-center gap-2 pt-1">
-                <span className="font-bold text-slate-900 text-sm">Helene P.</span>
-                <span className="text-slate-400 text-xs">— Bunda dari Rayyan (Toddler Daycare sejak 2024)</span>
-              </div>
-            </div>
-
-            <div className="space-y-3 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-              <p className="text-slate-600 font-light italic text-base leading-relaxed">
-                "Kurikulum preschool di sini sangat ramah anak. Anak tidak dipaksa menghafal kaku, melainkan distimulasi lewat sensory play dan rasa ingin tahu. Kemampuan sosialnya berkembang pesat."
-              </p>
-              <div className="flex items-center gap-2 pt-1">
-                <span className="font-bold text-slate-900 text-sm">Shawn G.</span>
-                <span className="text-slate-400 text-xs">— Ayah dari Chloe (Preschool Kelas Kindy)</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================
           SECTION 6: LATEST NEWS & PARENTING ARTICLES
          ======================================================== */}
-      <section className="bg-white py-20 md:py-28 px-6 sm:px-10 lg:px-16">
+      <section className="bg-white py-20 px-6 sm:px-10 lg:px-16 border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-14">
             <div>
@@ -632,7 +834,7 @@ const Home: React.FC = () => {
                 <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block mb-2">Pusat Informasi</span>
                 <h2 className="text-3xl md:text-4xl font-light text-slate-900 tracking-tight">Kunjungi & Konsultasikan Buah Hati Anda</h2>
                 <p className="text-slate-500 font-light mt-3 leading-relaxed text-sm md:text-base">
-                  Tim konselor Mannazentrum siap menjawab pertanyaan seputar program daycare bayi, toddler, preschool, serta memfasilitasi survei lokasi langsung.
+                  Tim konselor Mannazentrum siap menjawab pertanyaan seputar program daycare bayi, toddler, preschool, serta memfasilitasi survei lokasi langsung di Serpong Garden Cisauk atau area layanan Rumpin Bogor.
                 </p>
               </div>
 
@@ -642,7 +844,7 @@ const Home: React.FC = () => {
                   <div>
                     <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider">Alamat Fasilitas & Kantor</h4>
                     <p className="text-slate-600 text-sm leading-relaxed mt-1 font-light">
-                      Serpong Garden 1, Cluster Green View, Blok A02 No 12A, Jl Raya Cisauk, Kec. Cisauk, Kab. Tangerang, Banten.
+                      Serpong Garden 1, Cluster Green View, Blok A02 No 12A, Jl Raya Cisauk, Kec. Cisauk, Kab. Tangerang, Banten (Dekat BSD City & Rumpin).
                     </p>
                   </div>
                 </div>
@@ -697,19 +899,8 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Floating Fast Action WhatsApp Button */}
-      <a 
-        href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20ingin%20konsultasi%20mengenai%20Daycare%20/%20Preschool."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white p-3.5 rounded-full shadow-2xl hover:bg-emerald-500 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group"
-        aria-label="Chat WhatsApp Langsung"
-      >
-        <span className="text-xl">💬</span>
-        <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-semibold pr-1">
-          Chat WhatsApp
-        </span>
-      </a>
+      {/* Sticky Bottom Floating WhatsApp & Survey CTA */}
+      <FloatingCTA onOpenSurvey={openContactModal} />
 
       <Footer onOpenContact={openContactModal} />
     </div>

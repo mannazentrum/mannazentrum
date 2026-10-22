@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import FloatingCTA from '../components/FloatingCTA';
 import { submitContactForm } from '../services/formService';
 import { 
   BookOpen, 
@@ -304,6 +305,9 @@ const Preschool: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Sticky Bottom Floating WhatsApp & Survey CTA */}
+      <FloatingCTA onOpenSurvey={openForm} />
 
       <Footer onOpenContact={openForm} />
     </div>
