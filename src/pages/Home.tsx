@@ -35,6 +35,7 @@ const Home: React.FC = () => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedReviewScreenshot, setSelectedReviewScreenshot] = useState<{ src: string; name: string } | null>(null);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -532,63 +533,121 @@ const Home: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               
-              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between">
+              {/* Review 1: yessy leie */}
+              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between hover:shadow-md transition">
                 <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-[#e91e63] text-white font-bold flex items-center justify-center text-lg shadow-sm">
+                        y
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 text-sm leading-snug">yessy leie</h4>
+                        <p className="text-[11px] text-slate-400">3 reviews &bull; 7 bulan lalu</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">Google Review</span>
+                  </div>
+
                   <div className="flex text-amber-400 mb-3">
                     <Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" />
                   </div>
-                  <p className="text-slate-600 font-light text-sm italic leading-relaxed mb-6">
-                    "Sebagai ibu pekerja di area BSD City, ketenangan hati adalah prioritas utama. Di Mannazentrum Cisauk, pengasuhnya telaten, jadwal makan bergizi, dan laporan harian lewat WhatsApp sangat jelas. Anak saya Rayyan jadi mandiri sekali."
+
+                  <p className="text-slate-700 font-light text-sm leading-relaxed mb-6">
+                    "Miss dan mister di sana baik ,ramah dan telaten. Makanan dan snack yg di siapkan dari sana enak, anak2 suka dan lahap,untuk harga masih terjangkau, activity di sana seru2 utk belajar dan pengalaman anak. Utk kualitas daycare di sana tidak di ragukan lagi TOP BGT lah. Semoga MannaZentrum tambah jaya 🥰👍"
                   </p>
                 </div>
-                <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-sm">
-                    HP
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-slate-900 text-xs">Helene P.</h4>
-                    <p className="text-[11px] text-slate-400">Bunda dari Rayyan (Toddler Daycare Cisauk)</p>
-                  </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-emerald-700 font-medium flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
+                  </span>
+                  <button
+                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-yessy.png', name: 'yessy leie' })}
+                    className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
+                  >
+                    Lihat Bukti Foto ↗
+                  </button>
                 </div>
               </div>
 
-              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between">
+              {/* Review 2: William Pieter */}
+              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between hover:shadow-md transition">
                 <div>
-                  <div className="flex text-emerald-500 mb-3">
-                    <Star className="w-4 h-4 fill-emerald-500" /><Star className="w-4 h-4 fill-emerald-500" /><Star className="w-4 h-4 fill-emerald-500" /><Star className="w-4 h-4 fill-emerald-500" /><Star className="w-4 h-4 fill-emerald-500" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-slate-900 text-amber-400 font-bold flex items-center justify-center text-xs shadow-sm relative">
+                        WP
+                        <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center text-[8px] font-black">★</span>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 text-sm leading-snug">William Pieter</h4>
+                        <p className="text-[11px] text-slate-400">Local Guide &bull; 26 reviews &bull; 5 bulan lalu</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">Google Review</span>
                   </div>
-                  <p className="text-slate-600 font-light text-sm italic leading-relaxed mb-6">
-                    "Kami berdomisili dekat perbatasan Rumpin-Bogor. Program preschool-nya sangat menyenangkan, anak tidak dituntut hafalan kaku tapi belajarnya lewat bermain balok kayu dan melukis. Komunikasi guru ke orang tua sangat terbuka."
+
+                  <div className="flex text-amber-400 mb-3">
+                    <Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" />
+                  </div>
+
+                  <p className="text-slate-700 font-light text-sm leading-relaxed mb-6">
+                    "Senang banget ketemu tempat penitipan anak seperti ini. Pengasuhnya ramah dan kelihatan benar-benar sayang sama anak-anak. Anak saya cepat akrab dan setiap pulang selalu kelihatan happy. Tempatnya juga bersih dan nyaman, jadi sebagai orang tua rasanya lebih tenang menitipkan anak di sini. Recommended banget 😊"
                   </p>
                 </div>
-                <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-sm">
-                    SG
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-slate-900 text-xs">Dr. Shawn Gunawan</h4>
-                    <p className="text-[11px] text-slate-400">Ayah dari Chloe (Preschool Cisauk / Rumpin)</p>
-                  </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-emerald-700 font-medium flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
+                  </span>
+                  <button
+                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-william.png', name: 'William Pieter' })}
+                    className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
+                  >
+                    Lihat Bukti Foto ↗
+                  </button>
                 </div>
               </div>
 
-              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between">
+              {/* Review 3: Hanna Fidyanti */}
+              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between hover:shadow-md transition">
                 <div>
-                  <div className="flex text-indigo-500 mb-3">
-                    <Star className="w-4 h-4 fill-indigo-500" /><Star className="w-4 h-4 fill-indigo-500" /><Star className="w-4 h-4 fill-indigo-500" /><Star className="w-4 h-4 fill-indigo-500" /><Star className="w-4 h-4 fill-indigo-500" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-emerald-700 text-white font-bold flex items-center justify-center text-xs shadow-sm">
+                        HF
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 text-sm leading-snug">Hanna Fidyanti</h4>
+                        <p className="text-[11px] text-slate-400">6 reviews &bull; 2 photos &bull; 6 bulan lalu</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">Google Review</span>
                   </div>
-                  <p className="text-slate-600 font-light text-sm italic leading-relaxed mb-6">
-                    "Ruang bayinya steril dengan lampu UV dan pendingin udara yang bersih. Penyimpanan ASI perah di freezer terpantau rapi. Sebagai psikolog anak, saya apresiasi pendekatan kasih dan rasa aman yang dibangun tim."
+
+                  <div className="flex text-amber-400 mb-3">
+                    <Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" />
+                  </div>
+
+                  <p className="text-slate-700 font-light text-xs leading-relaxed mb-6 space-y-2">
+                    <span className="block font-medium text-slate-800">"Sudah hampir 2 tahun kami menitipkan anak kami di sini dari dia umur 3 bulan."</span>
+                    <span className="block mt-1">Disini owner dan miss nya sangat baik dan telaten dalam menjaga dan merawat anak kami. Mereka juga sangat terbuka apabila kami memberikan saran atau pesan untuk anak kami.</span>
+                    <span className="block mt-1">Disini tidak hanya penitipan, tapi anak kami juga di ajari sensori, agama dan banyak kegiatan lain sehingga dia bisa tumbuh dengan baik. Selain itu setiap bulan nya ada kegiatan outdoor seperti periksa ke dokter gigi, main ke playground.</span>
+                    <span className="block mt-1">Selain itu disini juga ada live cctv dan laporan kegiatan setiap hari nya ketika anak kami akan kami jemput pulang. Ini sangat membantu kami sebagai orang tua untuk tetap bisa update dengan kegiatan si kecil. Sukses selalu MannaZentrum Daycare 👍👍"</span>
                   </p>
                 </div>
-                <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-800 font-bold flex items-center justify-center text-sm">
-                    AS
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-slate-900 text-xs">Amanda S., M.Psi</h4>
-                    <p className="text-[11px] text-slate-400">Bunda dari Keenan (Infant Care Cisauk)</p>
-                  </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-emerald-700 font-medium flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
+                  </span>
+                  <button
+                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-hanna.png', name: 'Hanna Fidyanti' })}
+                    className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
+                  >
+                    Lihat Bukti Foto ↗
+                  </button>
                 </div>
               </div>
 
@@ -898,6 +957,53 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Review Screenshot Lightbox Modal */}
+      {selectedReviewScreenshot && (
+        <div 
+          className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn"
+          onClick={() => setSelectedReviewScreenshot(null)}
+        >
+          <div 
+            className="bg-white rounded-[32px] p-6 max-w-lg w-full shadow-2xl relative my-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                  Ulasan Asli Google: {selectedReviewScreenshot.name}
+                </span>
+              </div>
+              <button 
+                onClick={() => setSelectedReviewScreenshot(null)}
+                className="w-9 h-9 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 flex items-center justify-center text-xl transition"
+                aria-label="Tutup Screenshot"
+              >
+                &times;
+              </button>
+            </div>
+            
+            <div className="overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center">
+              <img 
+                src={selectedReviewScreenshot.src} 
+                alt={`Screenshot Ulasan Google ${selectedReviewScreenshot.name}`} 
+                className="w-full h-auto max-h-[70vh] object-contain shadow-inner"
+              />
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+              <span>Google Maps Verified Review ⭐ 5.0</span>
+              <button
+                onClick={() => setSelectedReviewScreenshot(null)}
+                className="bg-slate-900 text-white px-5 py-2 rounded-full text-xs font-medium hover:bg-slate-800 transition"
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Sticky Bottom Floating WhatsApp & Survey CTA */}
       <FloatingCTA onOpenSurvey={openContactModal} />
