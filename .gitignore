@@ -58,7 +58,6 @@ node_modules
 
 # Gatsby build output
 .cache/
-public
 
 # vuepress build output
 .vuepress/dist

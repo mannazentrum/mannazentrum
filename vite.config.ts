@@ -18,9 +18,12 @@ export default defineConfig({
           // Order matters: check analytics before react (its path contains "react")
           if (p.includes('/node_modules/@vercel/analytics/')) return 'vendor-analytics';
           if (p.includes('/node_modules/firebase/') || p.includes('/node_modules/@firebase/')) return 'vendor-firebase';
+          if (p.includes('/node_modules/lucide-react/')) return 'vendor-lucide';
           if (
             p.includes('/node_modules/react/') ||
             p.includes('/node_modules/react-dom/') ||
+            p.includes('/node_modules/react-router/') ||
+            p.includes('/node_modules/react-router-dom/') ||
             p.includes('/node_modules/scheduler/')
           ) return 'vendor-react';
         },

@@ -1,59 +1,42 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SplashScreen from './components/SplashScreen';
 import { Analytics } from '@vercel/analytics/react';
 
-// Lazy load components for optimal bundle splitting
-const CorporateLanding = lazy(() => import('./components/CorporateLanding'));
-const MMStoreLanding = lazy(() => import('./components/MMStoreLanding'));
-const CompanyProfile = lazy(() => import('./components/CompanyProfile'));
-const BusinessUnits = lazy(() => import('./components/BusinessUnits'));
-const DaycareLanding = lazy(() => import('./components/DaycareLanding'));
+// Lazy loaded page components for optimal bundle splitting
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const Daycare = lazy(() => import('./pages/Daycare'));
+const Preschool = lazy(() => import('./pages/Preschool'));
+const Store = lazy(() => import('./pages/Store'));
+const News = lazy(() => import('./pages/News'));
+const BusinessUnitsPage = lazy(() => import('./pages/BusinessUnitsPage'));
 
 const App: React.FC = () => {
-  const [viewMode, setViewMode] = useState<'CORPORATE' | 'MM_STORE' | 'COMPANY_PROFILE' | 'BUSINESS_UNITS' | 'DAYCARE'>('CORPORATE');
-
-  // Set the document title based on the view mode
-  useEffect(() => {
-    if (viewMode === 'MM_STORE') {
-      document.title = 'Malika Maliaki - Store';
-    } else if (viewMode === 'DAYCARE') {
-      document.title = 'Daycare & Preschool - Mannazentrum';
-    } else {
-      document.title = 'Corporate - Mannazentrum';
-    }
-  }, [viewMode]);
-
-  const themeClasses = 'bg-white text-slate-800 font-sans antialiased';
-
   return (
-    <div className={`App ${themeClasses}`}>
-      <Suspense fallback={<SplashScreen />}>
-        {/* NAVIGASI KOMPONEN LANDING */}
-        {viewMode === 'CORPORATE' && (
-          <CorporateLanding
-            onNavigateToDaycare={() => setViewMode('DAYCARE')}
-            onNavigateToMMStore={() => setViewMode('MM_STORE')}
-            onNavigateToProfile={() => setViewMode('COMPANY_PROFILE')}
-            onNavigateToBusinessUnits={() => setViewMode('BUSINESS_UNITS')}
-          />
-        )}
+    <BrowserRouter>
+      <div className="App bg-white text-slate-800 font-sans antialiased min-h-screen">
+        <Suspense fallback={<SplashScreen />}>
+          <Routes>
+            {/* Rute Utama Bersih & SEO-Friendly */}
+            <Route path="/" element={<Home />} />
+            <Route path="/tentang" element={<About />} />
+            <Route path="/daycare" element={<Daycare />} />
+            <Route path="/preschool" element={<Preschool />} />
+            <Route path="/toko" element={<Store />} />
+            <Route path="/berita" element={<News />} />
+            <Route path="/unit-bisnis" element={<BusinessUnitsPage />} />
 
-        {viewMode === 'COMPANY_PROFILE' && <CompanyProfile onBack={() => setViewMode('CORPORATE')} />}
-
-        {viewMode === 'BUSINESS_UNITS' && (
-          <BusinessUnits
-            onBack={() => setViewMode('CORPORATE')}
-            onNavigateToDaycare={() => setViewMode('DAYCARE')}
-            onNavigateToMMStore={() => setViewMode('MM_STORE')}
-          />
-        )}
-
-        {viewMode === 'DAYCARE' && <DaycareLanding onBack={() => setViewMode('CORPORATE')} />}
-
-        {viewMode === 'MM_STORE' && <MMStoreLanding onBackToCorporate={() => setViewMode('CORPORATE')} />}
-        <Analytics />
-      </Suspense>
-    </div>
+            {/* Aliases & Fallbacks */}
+            <Route path="/store" element={<Navigate to="/toko" replace />} />
+            <Route path="/about" element={<Navigate to="/tentang" replace />} />
+            <Route path="/blog" element={<Navigate to="/berita" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+          <Analytics />
+        </Suspense>
+      </div>
+    </BrowserRouter>
   );
 };
 

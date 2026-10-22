@@ -1,0 +1,7 @@
+# Robots.txt for Mannazentrum - PT. Elrafa Terang Sejahtera
+User-agent: *
+Allow: /
+
+# Host & Sitemap
+Host: https://mannazentrum.com
+Sitemap: https://mannazentrum.com/sitemap.xml
