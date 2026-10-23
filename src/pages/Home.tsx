@@ -673,8 +673,8 @@ const Home: React.FC = () => {
                   <PhotoBadge code="beranda_filosofi01" position="top-left" />
                   <img 
                     data-photo-code="beranda_filosofi01"
-                    src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80" 
-                    alt="Anak-anak belajar dan berinteraksi di meja belajar ruang kelas" 
+                    src="/images/beranda_filosofi01.jpg" 
+                    alt="Tim pengasuh dan pendidik berdedikasi Mannazentrum Daycare" 
                     className="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />
