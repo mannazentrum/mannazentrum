@@ -15,8 +15,8 @@ const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900">
       <SEO 
-        title="Tentang Kami - Profil PT. Elrafa Terang Sejahtera & Yayasan Mannazentrum"
-        description="Pelajari visi, misi, dan nilai luhur PT. Elrafa Terang Sejahtera dalam membangun ekosistem pendidikan anak usia dini, Daycare, Preschool, dan kesejahteraan keluarga."
+        title="Tentang Kami - Mannazentrum & PT. Elrafa Terang Sejahtera"
+        description="Pelajari visi, misi, profil, dan nilai luhur kami dalam membangun ekosistem pendidikan anak usia dini, Daycare, Preschool, dan kesejahteraan keluarga."
         canonicalPath="/tentang"
       />
 
@@ -48,7 +48,7 @@ const About: React.FC = () => {
         {/* Page Main H1 Heading */}
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-12 pb-16 md:pt-16 md:pb-20 bg-white text-slate-900">
           <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-3">
-            Profil Perusahaan
+            Tentang Kami
           </span>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-light text-slate-900 tracking-tight leading-tight">
             Menjadi Terang & Garam bagi Masyarakat

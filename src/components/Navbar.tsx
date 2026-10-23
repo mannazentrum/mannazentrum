@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
   ];
 
   const corporateLinks = [
-    { to: '/tentang', label: 'Profil PT. Elrafa' },
+    { to: '/tentang', label: 'Tentang Kami' },
     { to: '/unit-bisnis', label: 'Unit Bisnis' },
   ];
 

@@ -714,7 +714,7 @@ const Home: React.FC = () => {
                 to="/tentang"
                 className="inline-flex items-center text-sm font-semibold text-slate-900 hover:text-amber-700 transition group"
               >
-                <span>Pelajari Profil PT. Elrafa Terang Sejahtera</span>
+                <span>Pelajari Lebih Lanjut Tentang Kami</span>
                 <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </div>
