@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
+import PhotoBadge from '../components/PhotoBadge';
 import { Shield, Target, Heart, Award, CheckCircle2, Building, Users } from 'lucide-react';
 
 const About: React.FC = () => {
@@ -24,7 +25,9 @@ const About: React.FC = () => {
       {/* Hero Section Banner */}
       <section className="relative w-full bg-slate-900 text-white">
         <div className="relative w-full h-[320px] sm:h-[400px] md:h-[480px] overflow-hidden">
+          <PhotoBadge code="tentang_hero01" position="top-right" />
           <img 
+            data-photo-code="tentang_hero01"
             src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=85" 
             alt="Komitmen Tim PT. Elrafa Terang Sejahtera" 
             className="w-full h-full object-cover opacity-60 select-none"
@@ -61,8 +64,10 @@ const About: React.FC = () => {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           <div className="lg:col-span-6">
-            <div className="overflow-hidden shadow-sm bg-white rounded-3xl">
+            <div className="relative overflow-hidden shadow-sm bg-white rounded-3xl">
+              <PhotoBadge code="tentang_visi01" position="top-left" />
               <img 
+                data-photo-code="tentang_visi01"
                 src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80" 
                 alt="Pertemuan Visi dan Misi Perusahaan" 
                 className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-700"
@@ -114,8 +119,10 @@ const About: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             
             <div className="flex flex-col bg-slate-50/50 p-6 rounded-3xl border border-slate-100">
-              <div className="overflow-hidden bg-slate-100 rounded-2xl mb-6">
+              <div className="relative overflow-hidden bg-slate-100 rounded-2xl mb-6">
+                <PhotoBadge code="tentang_misi01" position="top-left" />
                 <img 
+                  data-photo-code="tentang_misi01"
                   src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" 
                   alt="Pendidikan Holistik PAUD dan Bimbingan Belajar" 
                   className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
@@ -129,8 +136,10 @@ const About: React.FC = () => {
             </div>
 
             <div className="flex flex-col bg-slate-50/50 p-6 rounded-3xl border border-slate-100">
-              <div className="overflow-hidden bg-slate-100 rounded-2xl mb-6">
+              <div className="relative overflow-hidden bg-slate-100 rounded-2xl mb-6">
+                <PhotoBadge code="tentang_misi02" position="top-left" />
                 <img 
+                  data-photo-code="tentang_misi02"
                   src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80" 
                   alt="Infrastruktur dan Kesejahteraan Keluarga" 
                   className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
@@ -144,8 +153,10 @@ const About: React.FC = () => {
             </div>
 
             <div className="flex flex-col bg-slate-50/50 p-6 rounded-3xl border border-slate-100">
-              <div className="overflow-hidden bg-slate-100 rounded-2xl mb-6">
+              <div className="relative overflow-hidden bg-slate-100 rounded-2xl mb-6">
+                <PhotoBadge code="tentang_misi03" position="top-left" />
                 <img 
+                  data-photo-code="tentang_misi03"
                   src="https://images.unsplash.com/photo-1596464716127-f2a829822391?auto=format&fit=crop&w=800&q=80" 
                   alt="Tumbuh Kembang dan Stimulasi Kreativitas" 
                   className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
+import PhotoBadge from '../components/PhotoBadge';
 import { Baby, ShoppingBag, BookOpen, Truck, ArrowRight, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 const BusinessUnitsPage: React.FC = () => {
@@ -23,7 +24,9 @@ const BusinessUnitsPage: React.FC = () => {
       {/* Hero Banner */}
       <section className="relative w-full bg-slate-900 text-white">
         <div className="relative w-full h-[300px] sm:h-[380px] md:h-[450px] overflow-hidden">
+          <PhotoBadge code="unit_hero01" position="top-right" />
           <img 
+            data-photo-code="unit_hero01"
             src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=2000&q=85" 
             alt="Unit Bisnis dan Portofolio Layanan PT. Elrafa Terang Sejahtera" 
             className="w-full h-full object-cover opacity-60 select-none"
@@ -60,8 +63,10 @@ const BusinessUnitsPage: React.FC = () => {
           
           {/* Unit 1: Daycare & Preschool */}
           <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100 grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-5 overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]">
+            <div className="md:col-span-5 relative overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]">
+              <PhotoBadge code="unit_daycare_preschool01" position="top-left" />
               <img 
+                data-photo-code="unit_daycare_preschool01"
                 src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" 
                 alt="Mannazentrum Daycare & Preschool" 
                 className="w-full h-full object-cover"
@@ -95,8 +100,10 @@ const BusinessUnitsPage: React.FC = () => {
 
           {/* Unit 2: Malika Maliaki */}
           <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100 grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-5 overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]">
+            <div className="md:col-span-5 relative overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]">
+              <PhotoBadge code="unit_toko01" position="top-left" />
               <img 
+                data-photo-code="unit_toko01"
                 src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80" 
                 alt="Malika Maliaki Store & Workshop" 
                 className="w-full h-full object-cover"
@@ -125,8 +132,10 @@ const BusinessUnitsPage: React.FC = () => {
 
           {/* Unit 3: Bimbingan Belajar & PKBM */}
           <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100 grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-5 overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]">
+            <div className="md:col-span-5 relative overflow-hidden rounded-2xl bg-slate-100 aspect-[4/3]">
+              <PhotoBadge code="unit_bimbel01" position="top-left" />
               <img 
+                data-photo-code="unit_bimbel01"
                 src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80" 
                 alt="Bimbingan Belajar dan Edukasi Lanjutan" 
                 className="w-full h-full object-cover"

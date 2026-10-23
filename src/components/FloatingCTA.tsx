@@ -10,6 +10,17 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
   const [showSurveyModal, setShowSurveyModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showBadges, setShowBadges] = useState<boolean>(() => {
+    const saved = localStorage.getItem('mz_show_photo_badges');
+    return saved === null ? true : saved === 'true';
+  });
+
+  const togglePhotoBadges = () => {
+    const next = !showBadges;
+    setShowBadges(next);
+    localStorage.setItem('mz_show_photo_badges', String(next));
+    window.dispatchEvent(new Event('mz-photo-badge-toggle'));
+  };
 
   const handleOpen = () => {
     if (onOpenSurvey) {
@@ -50,6 +61,16 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
 
   return (
     <>
+      {/* Floating Toggle Kode Label Foto (Untuk Manajemen Konten & Persiapan Aset Foto) */}
+      <button
+        onClick={togglePhotoBadges}
+        className="fixed bottom-5 left-4 sm:left-6 z-50 flex items-center gap-2 bg-slate-950/90 hover:bg-slate-900 text-amber-300 px-3.5 py-2.5 rounded-full shadow-2xl border border-amber-400/40 text-xs font-mono font-medium backdrop-blur-md hover:scale-105 active:scale-95 transition-all"
+        title="Klik untuk menyembunyikan atau menampilkan kode posisi foto di seluruh website"
+      >
+        <span className={`w-2 h-2 rounded-full ${showBadges ? 'bg-amber-400 animate-pulse' : 'bg-slate-500'}`}></span>
+        <span>Kode Foto: {showBadges ? 'AKTIF' : 'NONAKTIF'}</span>
+      </button>
+
       {/* Sticky Bottom Floating Bar / Widget */}
       <div className="fixed bottom-5 right-4 sm:right-6 z-50 flex flex-col sm:flex-row items-end sm:items-center gap-2.5">
         

@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
+import PhotoBadge from '../components/PhotoBadge';
 import { newsArticles, Article } from '../data/newsData';
 import { 
   Search, 
@@ -60,8 +61,10 @@ const News: React.FC = () => {
             </button>
 
             <div className="overflow-y-auto p-6 md:p-10">
-              <div className="aspect-[16/9] w-full rounded-2xl overflow-hidden mb-6 bg-slate-100">
+              <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden mb-6 bg-slate-100">
+                <PhotoBadge code={`berita_detail_artikel0${activeArticle.id}`} position="top-left" />
                 <img 
+                  data-photo-code={`berita_detail_artikel0${activeArticle.id}`}
                   src={activeArticle.imageUrl} 
                   alt={activeArticle.title} 
                   className="w-full h-full object-cover"
@@ -168,8 +171,10 @@ const News: React.FC = () => {
                   className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col group cursor-pointer"
                   onClick={() => setActiveArticle(article)}
                 >
-                  <div className="overflow-hidden aspect-[16/10] bg-slate-100">
+                  <div className="relative overflow-hidden aspect-[16/10] bg-slate-100">
+                    <PhotoBadge code={`berita_artikel0${article.id}`} position="top-left" />
                     <img 
+                      data-photo-code={`berita_artikel0${article.id}`}
                       src={article.imageUrl} 
                       alt={article.title} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

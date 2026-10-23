@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
+import PhotoBadge from '../components/PhotoBadge';
 import { careerList } from '../data/careers';
 import { newsArticles } from '../data/newsData';
 import { submitContactForm } from '../services/formService';
@@ -35,7 +36,7 @@ const Home: React.FC = () => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedReviewScreenshot, setSelectedReviewScreenshot] = useState<{ src: string; name: string } | null>(null);
+  const [selectedReviewScreenshot, setSelectedReviewScreenshot] = useState<{ src: string; name: string; code: string } | null>(null);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -275,7 +276,9 @@ const Home: React.FC = () => {
          ======================================================== */}
       <section className="relative w-full bg-white">
         <div className="relative w-full h-[320px] sm:h-[420px] md:h-[520px] lg:h-[600px] overflow-hidden bg-slate-100">
+          <PhotoBadge code="beranda_hero01" position="top-right" />
           <img 
+            data-photo-code="beranda_hero01"
             src="/images/hero-banner.jpg" 
             alt="Keluarga besar pendidik dan anak-anak ceria Mannazentrum Daycare & Preschool" 
             className="w-full h-full object-cover object-center select-none"
@@ -563,7 +566,7 @@ const Home: React.FC = () => {
                     <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
                   </span>
                   <button
-                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-yessy.png', name: 'yessy leie' })}
+                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-yessy.png', name: 'yessy leie', code: 'beranda_review_yessy01' })}
                     className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
                   >
                     Lihat Bukti Foto ↗
@@ -602,7 +605,7 @@ const Home: React.FC = () => {
                     <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
                   </span>
                   <button
-                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-william.png', name: 'William Pieter' })}
+                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-william.png', name: 'William Pieter', code: 'beranda_review_william01' })}
                     className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
                   >
                     Lihat Bukti Foto ↗
@@ -643,7 +646,7 @@ const Home: React.FC = () => {
                     <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
                   </span>
                   <button
-                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-hanna.png', name: 'Hanna Fidyanti' })}
+                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-hanna.png', name: 'Hanna Fidyanti', code: 'beranda_review_hanna01' })}
                     className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
                   >
                     Lihat Bukti Foto ↗
@@ -666,8 +669,10 @@ const Home: React.FC = () => {
           <div className="lg:col-span-6">
             <div className="grid grid-cols-2 gap-4 sm:gap-6 items-end">
               <div className="pt-12 sm:pt-16">
-                <div className="overflow-hidden shadow-sm bg-white rounded-2xl">
+                <div className="relative overflow-hidden shadow-sm bg-white rounded-2xl">
+                  <PhotoBadge code="beranda_filosofi01" position="top-left" />
                   <img 
+                    data-photo-code="beranda_filosofi01"
                     src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=700&q=80" 
                     alt="Anak-anak belajar dan berinteraksi di meja belajar ruang kelas" 
                     className="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700"
@@ -677,8 +682,10 @@ const Home: React.FC = () => {
               </div>
               
               <div className="-mt-8 sm:-mt-12">
-                <div className="overflow-hidden shadow-sm bg-white rounded-2xl">
+                <div className="relative overflow-hidden shadow-sm bg-white rounded-2xl">
+                  <PhotoBadge code="beranda_filosofi02" position="top-left" />
                   <img 
+                    data-photo-code="beranda_filosofi02"
                     src="https://images.unsplash.com/photo-1596464716127-f2a829822391?auto=format&fit=crop&w=700&q=80" 
                     alt="Anak melakukan kegiatan kreasi dan stimulasi sensorik" 
                     className="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700"
@@ -740,8 +747,10 @@ const Home: React.FC = () => {
             
             {/* Column 1: Daycare */}
             <div className="group flex flex-col bg-slate-50/50 p-6 rounded-3xl border border-slate-100 hover:shadow-xl transition-all">
-              <div className="overflow-hidden bg-slate-100 rounded-2xl mb-6">
+              <div className="relative overflow-hidden bg-slate-100 rounded-2xl mb-6">
+                <PhotoBadge code="beranda_pilar_daycare01" position="top-left" />
                 <img 
+                  data-photo-code="beranda_pilar_daycare01"
                   src="https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=800&q=80" 
                   alt="Mannazentrum Daycare Bayi & Toddler" 
                   className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
@@ -767,8 +776,10 @@ const Home: React.FC = () => {
 
             {/* Column 2: Preschool */}
             <div className="group flex flex-col bg-slate-50/50 p-6 rounded-3xl border border-slate-100 hover:shadow-xl transition-all">
-              <div className="overflow-hidden bg-slate-100 rounded-2xl mb-6">
+              <div className="relative overflow-hidden bg-slate-100 rounded-2xl mb-6">
+                <PhotoBadge code="beranda_pilar_preschool01" position="top-left" />
                 <img 
+                  data-photo-code="beranda_pilar_preschool01"
                   src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" 
                   alt="Mannazentrum Preschool & Playgroup" 
                   className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
@@ -794,8 +805,10 @@ const Home: React.FC = () => {
 
             {/* Column 3: Malika Maliaki */}
             <div className="group flex flex-col bg-slate-50/50 p-6 rounded-3xl border border-slate-100 hover:shadow-xl transition-all">
-              <div className="overflow-hidden bg-slate-100 rounded-2xl mb-6">
+              <div className="relative overflow-hidden bg-slate-100 rounded-2xl mb-6">
+                <PhotoBadge code="beranda_pilar_toko01" position="top-left" />
                 <img 
+                  data-photo-code="beranda_pilar_toko01"
                   src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80" 
                   alt="Malika Maliaki Store & Creative Art" 
                   className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
@@ -847,10 +860,12 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {newsArticles.slice(0, 3).map((article) => (
+            {newsArticles.slice(0, 3).map((article, idx) => (
               <article key={article.id} className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
-                <div className="overflow-hidden aspect-[16/10] bg-slate-100">
+                <div className="relative overflow-hidden aspect-[16/10] bg-slate-100">
+                  <PhotoBadge code={`beranda_artikel0${idx + 1}`} position="top-left" />
                   <img 
+                    data-photo-code={`beranda_artikel0${idx + 1}`}
                     src={article.imageUrl} 
                     alt={article.title} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -984,8 +999,10 @@ const Home: React.FC = () => {
               </button>
             </div>
             
-            <div className="overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center">
+            <div className="relative overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 flex items-center justify-center">
+              <PhotoBadge code={selectedReviewScreenshot.code} position="top-left" />
               <img 
+                data-photo-code={selectedReviewScreenshot.code}
                 src={selectedReviewScreenshot.src} 
                 alt={`Screenshot Ulasan Google ${selectedReviewScreenshot.name}`} 
                 className="w-full h-auto max-h-[70vh] object-contain shadow-inner"

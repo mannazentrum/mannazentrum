@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
+import PhotoBadge from '../components/PhotoBadge';
 import { 
   ShoppingBag, 
   Sparkles, 
@@ -151,8 +152,10 @@ const Store: React.FC = () => {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="overflow-hidden rounded-3xl shadow-xl bg-slate-100">
+            <div className="relative overflow-hidden rounded-3xl shadow-xl bg-slate-100">
+              <PhotoBadge code="toko_hero01" position="top-left" />
               <img 
+                data-photo-code="toko_hero01"
                 src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80" 
                 alt="Eksplorasi seni dan kebersamaan keluarga Malika Maliaki" 
                 className="w-full aspect-[4/3] object-cover"
@@ -203,7 +206,9 @@ const Store: React.FC = () => {
                 className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col group"
               >
                 <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+                  <PhotoBadge code={product.id.replace('p', 'toko_produk0')} position="bottom-left" />
                   <img 
+                    data-photo-code={product.id.replace('p', 'toko_produk0')}
                     src={product.image} 
                     alt={product.name} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

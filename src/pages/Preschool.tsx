@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
+import PhotoBadge from '../components/PhotoBadge';
 import { submitContactForm } from '../services/formService';
 import { 
   BookOpen, 
@@ -143,7 +144,9 @@ const Preschool: React.FC = () => {
       {/* Hero Banner Section */}
       <section className="relative w-full overflow-hidden bg-slate-900 text-white">
         <div className="relative w-full h-[360px] md:h-[480px]">
+          <PhotoBadge code="preschool_hero01" position="top-right" />
           <img 
+            data-photo-code="preschool_hero01"
             src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=2000&q=80" 
             alt="Anak-anak preschool belajar interaktif dengan gembira" 
             className="w-full h-full object-cover opacity-60 select-none"

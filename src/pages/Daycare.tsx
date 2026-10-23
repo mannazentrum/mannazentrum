@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
+import PhotoBadge from '../components/PhotoBadge';
 import { submitContactForm } from '../services/formService';
 import { 
   Baby, 
@@ -144,7 +145,9 @@ const Daycare: React.FC = () => {
       {/* Hero Banner with Photo */}
       <section className="relative w-full overflow-hidden bg-slate-900 text-white">
         <div className="relative w-full h-[360px] md:h-[480px]">
+          <PhotoBadge code="daycare_hero01" position="top-right" />
           <img 
+            data-photo-code="daycare_hero01"
             src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=2000&q=80" 
             alt="Pengasuh Mannazentrum Daycare merawat balita dengan penuh perhatian" 
             className="w-full h-full object-cover opacity-60"
@@ -236,8 +239,10 @@ const Daycare: React.FC = () => {
       <section className="py-20 md:py-28 px-6 sm:px-10 lg:px-16 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6">
-            <div className="overflow-hidden shadow-sm bg-slate-100 rounded-3xl">
+            <div className="relative overflow-hidden shadow-sm bg-slate-100 rounded-3xl">
+              <PhotoBadge code="daycare_fasilitas01" position="top-left" />
               <img 
+                data-photo-code="daycare_fasilitas01"
                 src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80" 
                 alt="Fasilitas bermain bersih dan ramah anak di Mannazentrum" 
                 className="w-full aspect-[4/3] object-cover"
