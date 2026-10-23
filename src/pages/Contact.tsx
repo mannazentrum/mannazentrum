@@ -23,8 +23,8 @@ import {
   Navigation
 } from 'lucide-react';
 
-const GOOGLE_MAPS_SEARCH_URL = "https://www.google.com/maps/search/?api=1&query=Mannazentrum+Serpong+Garden+1+Cisauk";
-const GOOGLE_MAPS_EMBED_URL = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.8116548762744!2d106.6385!3d-6.32!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTknMTIuMCJTIDEwNsKwMzgnMTguNiJF!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid";
+const GOOGLE_MAPS_SEARCH_URL = "https://www.google.com/maps/search/?api=1&query=-6.327342509230009,106.63988146193053";
+const GOOGLE_MAPS_EMBED_URL = "https://maps.google.com/maps?q=-6.327342509230009,106.63988146193053&t=&z=17&ie=UTF8&iwloc=&output=embed";
 
 const Contact: React.FC = () => {
   const [showCareerNotice, setShowCareerNotice] = useState(false);
@@ -322,7 +322,7 @@ const Contact: React.FC = () => {
                 <div className="px-4 py-3 bg-slate-50 rounded-2xl mt-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs text-slate-500">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <span>Pin: Cluster Green View A02/12A, Cisauk</span>
+                    <span>Mannazentrum Daycare: -6.32734, 106.63988 (Cluster Green View)</span>
                   </div>
                   <a 
                     href={GOOGLE_MAPS_SEARCH_URL}
