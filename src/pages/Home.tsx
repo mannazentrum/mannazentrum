@@ -897,78 +897,56 @@ const Home: React.FC = () => {
       </section>
 
       {/* ========================================================
-          SECTION 7: CONTACT & LOCATION MAP
+          SECTION 7: PUSAT INFORMASI & LOKASI (NAVIGASI KE HALAMAN TERPISAH)
          ======================================================== */}
-      <section id="kontak" className="py-20 md:py-28 px-6 sm:px-10 lg:px-16 bg-[#FAF9F5] border-t border-stone-200/40">
+      <section id="kontak" className="py-16 md:py-24 px-6 sm:px-10 lg:px-16 bg-[#FAF9F5] border-t border-stone-200/40">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
-            
-            <div className="space-y-8">
-              <div>
-                <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block mb-2">Pusat Informasi</span>
-                <h2 className="text-3xl md:text-4xl font-light text-slate-900 tracking-tight">Kunjungi & Konsultasikan Buah Hati Anda</h2>
-                <p className="text-slate-500 font-light mt-3 leading-relaxed text-sm md:text-base">
-                  Tim konselor Mannazentrum siap menjawab pertanyaan seputar program daycare bayi, toddler, preschool, serta memfasilitasi survei lokasi langsung di Serpong Garden Cisauk atau area layanan Rumpin Bogor.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="p-5 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-start gap-4">
-                  <MapPin className="w-6 h-6 text-amber-600 shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider">Alamat Fasilitas & Kantor</h4>
-                    <p className="text-slate-600 text-sm leading-relaxed mt-1 font-light">
-                      Serpong Garden 1, Cluster Green View, Blok A02 No 12A, Jl Raya Cisauk, Kec. Cisauk, Kab. Tangerang, Banten (Dekat BSD City & Rumpin).
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-5 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-start gap-4">
-                  <Phone className="w-6 h-6 text-emerald-600 shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-slate-900 text-xs uppercase tracking-wider">Layanan Konsultasi WhatsApp</h4>
-                    <div className="flex flex-wrap gap-4 mt-1">
-                      <a 
-                        href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20ingin%20tanya%20informasi%20layanan%20Daycare%20/%20Preschool." 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-slate-800 text-sm font-medium hover:text-emerald-600 transition flex items-center gap-1.5"
-                      >
-                        +62 878-8111-0807 (Konselor) ↗
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-5 bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-wrap gap-3">
-                  <button
-                    onClick={openContactModal}
-                    className="bg-slate-900 text-white px-6 py-2.5 rounded-full text-xs font-medium hover:bg-slate-800 transition"
-                  >
-                    Formulir Survei Lokasi
-                  </button>
-                  <button
-                    onClick={() => setShowCareerNotice(true)}
-                    className="border border-slate-300 text-slate-700 px-6 py-2.5 rounded-full text-xs font-medium hover:bg-slate-50 transition"
-                  >
-                    Info Karir Pendidik
-                  </button>
-                </div>
+          <div className="bg-white rounded-3xl p-8 sm:p-12 lg:p-16 border border-slate-100 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="space-y-4 max-w-2xl">
+              <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block">
+                Pusat Informasi & Lokasi
+              </span>
+              <h2 className="text-3xl md:text-4xl font-light text-slate-900 tracking-tight">
+                Kunjungi Fasilitas & Jadwalkan Survei Buah Hati
+              </h2>
+              <p className="text-slate-500 font-light leading-relaxed text-sm md:text-base">
+                Fasilitas Mannazentrum terletak strategis di <strong>Serpong Garden 1 Cisauk</strong> (dekat BSD City & Rumpin). Temukan petunjuk arah Google Maps, informasi layanan konselor, dan reservasi kunjungan langsung di halaman Pusat Informasi kami.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-2">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 bg-slate-900 text-white px-7 py-3 rounded-full text-xs sm:text-sm font-medium hover:bg-amber-600 transition shadow-sm active:scale-95"
+                >
+                  <MapPin className="w-4 h-4 text-amber-400" />
+                  <span>Buka Halaman Pusat Informasi & Google Maps</span>
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </Link>
+                <button
+                  onClick={openContactModal}
+                  className="border border-slate-300 text-slate-700 px-6 py-3 rounded-full text-xs sm:text-sm font-medium hover:bg-slate-50 transition"
+                >
+                  Formulir Cepat
+                </button>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="bg-white p-2 rounded-3xl shadow-lg border border-slate-100 overflow-hidden h-[460px]">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.8116548762744!2d106.6385!3d-6.32!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTknMTIuMCJTIDEwNsKwMzgnMTguNiJF!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" 
-                  className="w-full h-full rounded-2xl border-0"
-                  allowFullScreen={true}
-                  loading="lazy"
-                  title="Lokasi Mannazentrum Serpong Garden Cisauk"
-                ></iframe>
+            <div className="w-full lg:w-auto shrink-0 flex flex-col gap-3">
+              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-3">
+                <MapPin className="w-5 h-5 text-amber-600 shrink-0" />
+                <span className="text-xs text-slate-600 font-light">Serpong Garden 1 Cisauk (Dekat Stasiun KRL & Tol)</span>
+              </div>
+              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-3">
+                <Phone className="w-5 h-5 text-emerald-600 shrink-0" />
+                <a 
+                  href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20ingin%20tanya%20informasi%20layanan%20Daycare%20/%20Preschool."
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-xs text-slate-800 font-medium hover:text-emerald-600 transition"
+                >
+                  WhatsApp: +62 878-8111-0807 ↗
+                </a>
               </div>
             </div>
-
           </div>
         </div>
       </section>
