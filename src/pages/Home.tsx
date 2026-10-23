@@ -361,6 +361,10 @@ const Home: React.FC = () => {
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Fasilitas Antar-Jemput Siswa Aman (Cisauk - Rumpin)</span>
                   </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Harga yang terjangkau mulai dari Rp. 1.000.000,-</span>
+                  </div>
                 </div>
               </div>
 
