@@ -29,7 +29,10 @@ const SEO: React.FC<SEOProps> = ({ title, description, canonicalPath }) => {
     }
 
     // 3. Update canonical link & OG URL
-    const fullUrl = `https://mannazentrum.com${canonicalPath || window.location.pathname}`;
+    const isShop = typeof window !== 'undefined' && window.location.hostname.startsWith('shop.');
+    const fullUrl = isShop 
+      ? `https://shop.mannazentrum.com${window.location.pathname === '/' ? '' : window.location.pathname}`
+      : `https://mannazentrum.com${canonicalPath || window.location.pathname}`;
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement('link');
