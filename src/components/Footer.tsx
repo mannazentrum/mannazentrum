@@ -51,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
               <Link to="/toko" className="hover:text-amber-400 transition">Malika Maliaki Store</Link>
             </li>
             <li>
-              <Link to="/berita" className="hover:text-amber-400 transition">Tips & Berita Parenting</Link>
+              <Link to="/berita" className="hover:text-amber-400 transition">News & Tips</Link>
             </li>
           </ul>
         </div>

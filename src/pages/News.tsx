@@ -41,8 +41,8 @@ const News: React.FC = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900">
       <SEO 
-        title="Berita, Tips Parenting & Tumbuh Kembang Anak | Mannazentrum"
-        description="Kumpulan artikel edukatif, panduan parenting ramah anak, stimulasi sensori motorik, serta berita kegiatan seru di Mannazentrum Daycare & Preschool Cisauk."
+        title="News & Tips - Berita & Tips Parenting | Mannazentrum"
+        description="Kumpulan berita kegiatan, panduan praktis parenting ramah anak, stimulasi sensori motorik, serta tips tumbuh kembang di Mannazentrum Daycare & Preschool Cisauk."
         canonicalPath="/berita"
       />
 
@@ -110,10 +110,10 @@ const News: React.FC = () => {
           </span>
           {/* Primary H1 Heading */}
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-light text-slate-900 tracking-tight leading-tight mb-4">
-            Berita, Artikel Parenting & Tips Tumbuh Kembang
+            News & Tips
           </h1>
           <p className="text-slate-500 font-light text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Dapatkan panduan praktis pengasuhan balita, inspirasi stimulasi sensori dari para ahli, serta dokumentasi kegiatan seru di Mannazentrum.
+            Dapatkan berita kegiatan terbaru, panduan praktis parenting, inspirasi stimulasi sensori dari para ahli, serta tips tumbuh kembang anak di Mannazentrum.
           </p>
 
           {/* Search Bar */}

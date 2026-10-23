@@ -849,7 +849,7 @@ const Home: React.FC = () => {
                 Wawasan & Kabar Kegiatan
               </span>
               <h2 className="text-3xl sm:text-4xl font-light text-slate-900 tracking-tight">
-                Tips Parenting & Artikel Terbaru
+                News & Tips Terbaru
               </h2>
             </div>
             <Link 

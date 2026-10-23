@@ -14,7 +14,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
     { to: '/daycare', label: 'Daycare' },
     { to: '/preschool', label: 'Preschool' },
     { to: '/toko', label: 'Toko MM' },
-    { to: '/berita', label: 'Tips Parenting' },
+    { to: '/berita', label: 'News & Tips' },
     { to: '/contact', label: 'Pusat Informasi' },
   ];
 
