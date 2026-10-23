@@ -23,7 +23,6 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
 
   const corporateLinks = [
     { to: '/tentang', label: 'Tentang Kami' },
-    { to: '/unit-bisnis', label: 'Unit Bisnis' },
   ];
 
   const handleCtaClick = () => {
