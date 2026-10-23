@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Heart, Sparkles, MessageCircle, Building2, UserCheck, Calendar } from 'lucide-react';
 
 interface NavbarProps {
@@ -8,9 +8,6 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
-
-  const isCorporateRoute = location.pathname === '/tentang' || location.pathname === '/unit-bisnis';
 
   const parentLinks = [
     { to: '/', label: 'Beranda' },
@@ -38,32 +35,12 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
     <header className="sticky top-0 bg-white/95 backdrop-blur-md border-b border-slate-100 z-50 transition-all">
       {/* Top Audience Segmentation Bar */}
       <div className="bg-slate-900 text-white text-[11px] py-1.5 px-4 sm:px-8 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
-          <div className="flex items-center gap-2 text-center sm:text-left">
+        <div className="max-w-7xl mx-auto flex justify-center items-center">
+          <div className="flex items-center gap-2 text-center">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
             <span className="text-slate-300 leading-relaxed sm:leading-normal">
               Menerima Siswa Preschool dan Daycare di Cisauk, Cibogo, Citra Garden Serpong, Icon BSD, Intermoda BSD, GSP - Griya Serpong Permai, Serpong Garden, Winston, Suradita, Golden Park, GoHome dan sekitarnya.
             </span>
-          </div>
-
-          {/* Quick Audience Switcher */}
-          <div className="flex items-center gap-3 font-medium">
-            <span className="text-slate-400 text-[10px] uppercase tracking-wider hidden md:inline">Pilihan Alur:</span>
-            <Link 
-              to="/" 
-              className={`hover:text-amber-300 transition flex items-center gap-1 ${!isCorporateRoute ? 'text-amber-400 font-semibold' : 'text-slate-300'}`}
-            >
-              <UserCheck className="w-3 h-3" />
-              <span>Orang Tua Murid</span>
-            </Link>
-            <span className="text-slate-600">|</span>
-            <Link 
-              to="/tentang" 
-              className={`hover:text-amber-300 transition flex items-center gap-1 ${isCorporateRoute ? 'text-amber-400 font-semibold' : 'text-slate-300'}`}
-            >
-              <Building2 className="w-3 h-3" />
-              <span>Korporat & Kemitraan</span>
-            </Link>
           </div>
         </div>
       </div>
