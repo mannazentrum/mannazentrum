@@ -113,9 +113,16 @@ const Store: React.FC = () => {
 
       {/* Top Banner Notice */}
       <div className="bg-[#FAF9F5] border-b border-stone-200/60 py-2.5 px-4 text-center">
-        <p className="text-slate-600 font-sans text-xs font-normal">
-          ✨ <strong className="font-semibold text-slate-900">Malika Maliaki</strong> — Unit Edukasi Kreatif & Perlengkapan Stimulasi Anak PT. Elrafa Terang Sejahtera
-        </p>
+        <div className="flex items-center justify-center gap-2 text-slate-600 font-sans text-xs font-normal">
+          <img 
+            src="/images/logo-toko-manna-maliaki.jpg" 
+            alt="Logo Toko Manna Maliaki" 
+            className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover shrink-0 shadow-xs" 
+          />
+          <span>
+            <strong className="font-semibold text-slate-900">Toko Manna Maliaki</strong> — Unit Edukasi Kreatif & Perlengkapan Stimulasi
+          </span>
+        </div>
       </div>
 
       {/* Hero Header */}
