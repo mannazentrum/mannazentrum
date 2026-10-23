@@ -301,19 +301,30 @@ const Daycare: React.FC = () => {
               { time: '08:30 - 09:30', title: 'Morning Circle & Senam Motorik Kasar', desc: 'Bernyanyi, berdoa bersama, peregangan tubuh, dan stimulasi motorik ceria.' },
               { time: '09:30 - 10:30', title: 'Sensory Play & Art Workshop', desc: 'Aktivitas eksplorasi tekstur, meremas playdough, dan pengenalan warna bersama Malika Maliaki.' },
               { time: '10:30 - 11:30', title: 'Mandi Pagi / Toilet Training & Persiapan Makan Siang', desc: 'Kebersihan tubuh, pembiasaan cuci tangan, dan belajar makan mandiri.' },
-              { time: '11:30 - 12:30', title: 'Makan Siang Bernutrisi 4 Bintang', desc: 'Menu hangat berimbang protein, karbohidrat, sayuran segar, dan buah potong.' },
+              { 
+                time: '11:30 - 12:30', 
+                title: 'Makan Siang Bernutrisi 4 Bintang', 
+                desc: (
+                  <>
+                    <span>Menu hangat berimbang protein, karbohidrat, sayuran segar, dan buah potong.</span>
+                    <span className="block mt-1 text-slate-600">
+                      Makan siang kita berbeda beda setiap harinya dan berotasi setelah 1 tahun berjalan. Dari minggu yang satu ke minggu berikutnya, menu makanan sehat akan selalu bervariasi demi menjaga keseimbangan gizi dari si Buah Hati.
+                    </span>
+                  </>
+                )
+              },
               { time: '12:30 - 15:00', title: 'Deep Nap Time (Tidur Siang Nyenyak)', desc: 'Istirahat di ruang tidur steril ber-AC diiringi musik pengantar tidur lembut.' },
               { time: '15:00 - 16:00', title: 'Bangun, Mandi Sore & Snack Sore Sehat', desc: 'Mandi sore segar, minum susu, dan buah segar atau kudapan bernutrisi.' },
               { time: '16:00 - 18:00', title: 'Free Play Edukatif & Penjemputan Orang Tua', desc: 'Bermain balok kayu, membaca buku cerita, dan serah terima anak kepada orang tua.' },
             ].map((schedule, i) => (
               <div key={i} className="bg-white p-5 rounded-2xl border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:shadow-sm transition">
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs font-semibold px-3 py-1 bg-amber-50 text-amber-800 rounded-full shrink-0">
+                <div className="flex items-start gap-3">
+                  <span className="font-mono text-xs font-semibold px-3 py-1 bg-amber-50 text-amber-800 rounded-full shrink-0 mt-0.5">
                     {schedule.time}
                   </span>
                   <div>
                     <h3 className="font-semibold text-slate-900 text-sm">{schedule.title}</h3>
-                    <p className="text-slate-500 font-light text-xs mt-0.5">{schedule.desc}</p>
+                    <div className="text-slate-500 font-light text-xs mt-0.5 leading-relaxed">{schedule.desc}</div>
                   </div>
                 </div>
               </div>
