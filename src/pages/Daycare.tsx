@@ -243,9 +243,9 @@ const Daycare: React.FC = () => {
               <PhotoBadge code="daycare_fasilitas01" position="top-left" />
               <img 
                 data-photo-code="daycare_fasilitas01"
-                src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=80" 
-                alt="Fasilitas bermain bersih dan ramah anak di Mannazentrum" 
-                className="w-full aspect-[4/3] object-cover"
+                src="/images/daycare_fasilitas01.jpg" 
+                alt="Fasilitas bermain, nutrisi gizi seimbang, dan lingkungan ramah anak di Mannazentrum Daycare" 
+                className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
             </div>
