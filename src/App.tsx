@@ -11,6 +11,7 @@ const Preschool = lazy(() => import('./pages/Preschool'));
 const Store = lazy(() => import('./pages/Store'));
 const News = lazy(() => import('./pages/News'));
 const BusinessUnitsPage = lazy(() => import('./pages/BusinessUnitsPage'));
+const Contact = lazy(() => import('./pages/Contact'));
 
 const App: React.FC = () => {
   return (
@@ -26,8 +27,11 @@ const App: React.FC = () => {
             <Route path="/toko" element={<Store />} />
             <Route path="/berita" element={<News />} />
             <Route path="/unit-bisnis" element={<BusinessUnitsPage />} />
+            <Route path="/contact" element={<Contact />} />
 
             {/* Aliases & Fallbacks */}
+            <Route path="/kontak" element={<Navigate to="/contact" replace />} />
+            <Route path="/pusat-informasi" element={<Navigate to="/contact" replace />} />
             <Route path="/store" element={<Navigate to="/toko" replace />} />
             <Route path="/about" element={<Navigate to="/tentang" replace />} />
             <Route path="/blog" element={<Navigate to="/berita" replace />} />

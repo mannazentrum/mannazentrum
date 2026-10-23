@@ -67,19 +67,12 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
               <Link to="/unit-bisnis" className="hover:text-amber-400 transition">Unit Bisnis</Link>
             </li>
             <li>
-              <a 
-                href="#kontak" 
-                onClick={(e) => {
-                  const el = document.getElementById('kontak');
-                  if (el) {
-                    e.preventDefault();
-                    el.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
+              <Link 
+                to="/contact" 
                 className="hover:text-amber-400 transition"
               >
                 Pusat Informasi & Lokasi
-              </a>
+              </Link>
             </li>
             {onOpenContact && (
               <li>
