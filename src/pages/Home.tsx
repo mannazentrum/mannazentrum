@@ -825,12 +825,14 @@ const Home: React.FC = () => {
                 Toko perlengkapan stimulasi anak, mainan edukasi kayu ramah lingkungan, kit melukis kreatif, dan workshop kreasi akhir pekan.
               </p>
               <div className="mt-auto">
-                <Link 
-                  to="/toko"
+                <a 
+                  href="https://shop.mannazentrum.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-slate-900 hover:text-rose-700"
                 >
-                  Kunjungi Malika Maliaki &rarr;
-                </Link>
+                  Kunjungi Toko Manna Maliaki &rarr;
+                </a>
               </div>
             </div>
 

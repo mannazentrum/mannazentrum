@@ -119,13 +119,15 @@ const BusinessUnitsPage: React.FC = () => {
                 Menyediakan perlengkapan stimulasi sensori anak, alat melukis berbahan ramah lingkungan, mainan edukasi kayu tanpa toksin, dan kelas seni akhir pekan untuk mengasah imajinasi si kecil.
               </p>
               <div className="pt-2">
-                <Link 
-                  to="/toko"
+                <a 
+                  href="https://shop.mannazentrum.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-slate-900 text-white text-xs px-6 py-2.5 rounded-full font-medium hover:bg-slate-800 transition"
                 >
-                  <span>Kunjungi Toko Malika Maliaki</span>
+                  <span>Kunjungi Toko Manna Maliaki</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
