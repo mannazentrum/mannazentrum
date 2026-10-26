@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
 import PhotoBadge from '../components/PhotoBadge';
+import TestimonialSlideshow from '../components/TestimonialSlideshow';
 import { careerList } from '../data/careers';
 import { newsArticles } from '../data/newsData';
 import { submitContactForm } from '../services/formService';
@@ -516,147 +517,9 @@ const Home: React.FC = () => {
 
           </div>
 
-          {/* Bagian 2: Testimoni Otentik Orang Tua (Cards Bintang 5) */}
+          {/* Bagian 2: Testimoni Otentik Orang Tua (Slideshow Ulasan Bintang 5) */}
           <div className="mb-12">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-              <div>
-                <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block">Testimoni Nyata</span>
-                <h3 className="text-2xl md:text-3xl font-light text-slate-900 tracking-tight">Apa Kata Orang Tua Murid?</h3>
-              </div>
-              <div className="flex items-center gap-1.5 bg-white px-4 py-2 rounded-full border border-stone-200 shadow-sm text-xs text-slate-700">
-                <div className="flex text-amber-400">
-                  <Star className="w-4 h-4 fill-amber-400" />
-                  <Star className="w-4 h-4 fill-amber-400" />
-                  <Star className="w-4 h-4 fill-amber-400" />
-                  <Star className="w-4 h-4 fill-amber-400" />
-                  <Star className="w-4 h-4 fill-amber-400" />
-                </div>
-                <span className="font-bold ml-1">5.0 / 5.0</span>
-                <span className="text-slate-400">(Ulasan Terverifikasi)</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              {/* Review 1: yessy leie */}
-              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between hover:shadow-md transition">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-[#e91e63] text-white font-bold flex items-center justify-center text-lg shadow-sm">
-                        y
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-slate-900 text-sm leading-snug">yessy leie</h4>
-                        <p className="text-[11px] text-slate-400">3 reviews &bull; 7 bulan lalu</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">Google Review</span>
-                  </div>
-
-                  <div className="flex text-amber-400 mb-3">
-                    <Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" />
-                  </div>
-
-                  <p className="text-slate-700 font-light text-sm leading-relaxed mb-6">
-                    "Miss dan mister di sana baik ,ramah dan telaten. Makanan dan snack yg di siapkan dari sana enak, anak2 suka dan lahap,untuk harga masih terjangkau, activity di sana seru2 utk belajar dan pengalaman anak. Utk kualitas daycare di sana tidak di ragukan lagi TOP BGT lah. Semoga MannaZentrum tambah jaya 🥰👍"
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-emerald-700 font-medium flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
-                  </span>
-                  <button
-                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-yessy.png', name: 'yessy leie', code: 'beranda_review_yessy01' })}
-                    className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
-                  >
-                    Lihat Bukti Foto ↗
-                  </button>
-                </div>
-              </div>
-
-              {/* Review 2: William Pieter */}
-              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between hover:shadow-md transition">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-slate-900 text-amber-400 font-bold flex items-center justify-center text-xs shadow-sm relative">
-                        WP
-                        <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center text-[8px] font-black">★</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-slate-900 text-sm leading-snug">William Pieter</h4>
-                        <p className="text-[11px] text-slate-400">Local Guide &bull; 26 reviews &bull; 5 bulan lalu</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">Google Review</span>
-                  </div>
-
-                  <div className="flex text-amber-400 mb-3">
-                    <Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" />
-                  </div>
-
-                  <p className="text-slate-700 font-light text-sm leading-relaxed mb-6">
-                    "Senang banget ketemu tempat penitipan anak seperti ini. Pengasuhnya ramah dan kelihatan benar-benar sayang sama anak-anak. Anak saya cepat akrab dan setiap pulang selalu kelihatan happy. Tempatnya juga bersih dan nyaman, jadi sebagai orang tua rasanya lebih tenang menitipkan anak di sini. Recommended banget 😊"
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-emerald-700 font-medium flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
-                  </span>
-                  <button
-                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-william.png', name: 'William Pieter', code: 'beranda_review_william01' })}
-                    className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
-                  >
-                    Lihat Bukti Foto ↗
-                  </button>
-                </div>
-              </div>
-
-              {/* Review 3: Hanna Fidyanti */}
-              <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex flex-col justify-between hover:shadow-md transition">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-emerald-700 text-white font-bold flex items-center justify-center text-xs shadow-sm">
-                        HF
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-slate-900 text-sm leading-snug">Hanna Fidyanti</h4>
-                        <p className="text-[11px] text-slate-400">6 reviews &bull; 2 photos &bull; 6 bulan lalu</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full">Google Review</span>
-                  </div>
-
-                  <div className="flex text-amber-400 mb-3">
-                    <Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" /><Star className="w-4 h-4 fill-amber-400" />
-                  </div>
-
-                  <p className="text-slate-700 font-light text-xs leading-relaxed mb-6 space-y-2">
-                    <span className="block font-medium text-slate-800">"Sudah hampir 2 tahun kami menitipkan anak kami di sini dari dia umur 3 bulan."</span>
-                    <span className="block mt-1">Disini owner dan miss nya sangat baik dan telaten dalam menjaga dan merawat anak kami. Mereka juga sangat terbuka apabila kami memberikan saran atau pesan untuk anak kami.</span>
-                    <span className="block mt-1">Disini tidak hanya penitipan, tapi anak kami juga di ajari sensori, agama dan banyak kegiatan lain sehingga dia bisa tumbuh dengan baik. Selain itu setiap bulan nya ada kegiatan outdoor seperti periksa ke dokter gigi, main ke playground.</span>
-                    <span className="block mt-1">Selain itu disini juga ada live cctv dan laporan kegiatan setiap hari nya ketika anak kami akan kami jemput pulang. Ini sangat membantu kami sebagai orang tua untuk tetap bisa update dengan kegiatan si kecil. Sukses selalu MannaZentrum Daycare 👍👍"</span>
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-emerald-700 font-medium flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Ulasan Terverifikasi
-                  </span>
-                  <button
-                    onClick={() => setSelectedReviewScreenshot({ src: '/images/reviews/review-hanna.png', name: 'Hanna Fidyanti', code: 'beranda_review_hanna01' })}
-                    className="text-amber-600 hover:text-amber-700 font-semibold text-[11px] hover:underline"
-                  >
-                    Lihat Bukti Foto ↗
-                  </button>
-                </div>
-              </div>
-
-            </div>
+            <TestimonialSlideshow onSelectScreenshot={setSelectedReviewScreenshot} />
           </div>
 
         </div>
