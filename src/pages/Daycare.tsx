@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
 import PhotoBadge from '../components/PhotoBadge';
+import PhotoSlideshow, { PhotoSlideItem } from '../components/PhotoSlideshow';
 import { submitContactForm } from '../services/formService';
 import { 
   Baby, 
@@ -18,6 +19,39 @@ import {
   Phone,
   HelpCircle
 } from 'lucide-react';
+
+const daycareFacilitySlides: PhotoSlideItem[] = [
+  {
+    src: '/images/daycare_fasilitas01_1.jpg',
+    alt: 'Gedung dan fasad depan Mannazentrum Daycare di Serpong Garden Cisauk',
+    title: 'Gedung & Area Depan',
+    caption: 'Lingkungan perumahan asri, tertata, tenang, dan aman untuk si kecil di Serpong Garden',
+  },
+  {
+    src: '/images/daycare_fasilitas01_2.jpg',
+    alt: 'Plakat identitas resmi Mannazentrum Daycare Green View Blok A2-12A',
+    title: 'Identitas Resmi Daycare',
+    caption: 'Mannazentrum Daycare: Grow Happy & Healthy Together di Green View Blok A2-12A',
+  },
+  {
+    src: '/images/daycare_fasilitas01_3.jpg',
+    alt: 'Teras depan luas berkanopi dan rak sepatu anak Mannazentrum Daycare',
+    title: 'Teras & Area Sambutan',
+    caption: 'Area beranda bersih terlindung kanopi peneduh dengan gerbang pengaman ganda',
+  },
+  {
+    src: '/images/daycare_fasilitas01_4.jpg',
+    alt: 'Area bermain anak dengan rumput sintetis, perosotan kayu pikler, dan alas pelindung',
+    title: 'Area Bermain Edukatif',
+    caption: 'Fasilitas bermain sensori & motorik ramah anak dengan alas rumput sintetis dan puzzle mat empuk',
+  },
+  {
+    src: '/images/daycare_fasilitas01_5.jpg',
+    alt: 'Penyajian menu makan siang higienis 4 bintang dengan sayur segar, lauk ikan, buah potong dan susu',
+    title: 'Gizi & Nutrisi Seimbang',
+    caption: 'Menu makan siang segar tanpa MSG: gizi 4 bintang lengkap dengan sayur, protein, buah, & susu',
+  },
+];
 
 const Daycare: React.FC = () => {
   const [showContactForm, setShowContactForm] = useState(false);
@@ -239,16 +273,11 @@ const Daycare: React.FC = () => {
       <section className="py-20 md:py-28 px-6 sm:px-10 lg:px-16 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6">
-            <div className="relative overflow-hidden shadow-sm bg-slate-100 rounded-3xl">
-              <PhotoBadge code="daycare_fasilitas01" position="top-left" />
-              <img 
-                data-photo-code="daycare_fasilitas01"
-                src="/images/daycare_fasilitas01.jpg" 
-                alt="Fasilitas bermain, nutrisi gizi seimbang, dan lingkungan ramah anak di Mannazentrum Daycare" 
-                className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-700"
-                loading="lazy"
-              />
-            </div>
+            <PhotoSlideshow 
+              slides={daycareFacilitySlides}
+              badgeCode="daycare_fasilitas01"
+              autoPlayInterval={4500}
+            />
           </div>
           <div className="lg:col-span-6 space-y-6 lg:pl-6">
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block">Keamanan & Kenyamanan</span>
