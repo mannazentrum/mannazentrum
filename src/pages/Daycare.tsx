@@ -345,7 +345,7 @@ const Daycare: React.FC = () => {
             <div className="p-6 rounded-2xl bg-[#FAF9F5] border border-stone-200/50">
               <h3 className="font-semibold text-slate-900 text-base mb-2">Berapa rasio antara pengasuh dan anak di Mannazentrum?</h3>
               <p className="text-slate-600 font-light text-sm leading-relaxed">
-                Untuk bayi (infant), rasio maksimal adalah 1:1 hingga 1:2. Untuk balita (toddler), rasionya 1:3 hingga 1:4. Rasio ini menjamin setiap anak mendapatkan perhatian personal dan pengawasan intensif.
+                Untuk bayi (infant), rasio maksimal adalah 1:2 hingga 1:3. Untuk balita (toddler), rasionya 1:4 hingga 1:5. Rasio ini menjamin setiap anak mendapatkan perhatian personal dan pengawasan intensif.
               </p>
             </div>
 
