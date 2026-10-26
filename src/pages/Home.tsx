@@ -565,7 +565,7 @@ const Home: React.FC = () => {
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block">
               Filosofi Pengasuhan Kami
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-900 tracking-tight leading-tight">
+            <h2 className="text-2xl md:text-3xl font-light text-slate-900 tracking-tight leading-tight">
               The path to global change begins with a single child
             </h2>
             <div className="space-y-4 text-slate-600 font-light text-base md:text-lg leading-relaxed">
