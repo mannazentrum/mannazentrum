@@ -7,7 +7,6 @@ import FloatingCTA from '../components/FloatingCTA';
 import PhotoBadge from '../components/PhotoBadge';
 import TestimonialSlideshow from '../components/TestimonialSlideshow';
 import { careerList } from '../data/careers';
-import { newsArticles } from '../data/newsData';
 import { submitContactForm } from '../services/formService';
 import { 
   Heart, 
@@ -703,65 +702,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* ========================================================
-          SECTION 6: LATEST NEWS & PARENTING ARTICLES
-         ======================================================== */}
-      <section className="bg-white py-20 px-6 sm:px-10 lg:px-16 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-14">
-            <div>
-              <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-2">
-                Wawasan & Kabar Kegiatan
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-light text-slate-900 tracking-tight">
-                News & Tips Terbaru
-              </h2>
-            </div>
-            <Link 
-              to="/berita" 
-              className="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-semibold text-slate-900 hover:text-amber-700 transition"
-            >
-              <span>Lihat Semua Artikel</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {newsArticles.slice(0, 3).map((article, idx) => (
-              <article key={article.id} className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col group">
-                <div className="relative overflow-hidden aspect-[16/10] bg-slate-100">
-                  <PhotoBadge code={`beranda_artikel0${idx + 1}`} position="top-left" />
-                  <img 
-                    data-photo-code={`beranda_artikel0${idx + 1}`}
-                    src={article.imageUrl} 
-                    alt={article.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
-                    <span className="bg-amber-50 text-amber-800 font-medium px-2.5 py-1 rounded-full">{article.category}</span>
-                    <span>{article.readTime}</span>
-                  </div>
-                  <h3 className="font-bold text-slate-900 text-lg leading-snug mb-3 group-hover:text-amber-600 transition">
-                    <Link to="/berita">{article.title}</Link>
-                  </h3>
-                  <p className="text-slate-500 font-light text-sm line-clamp-2 mb-6">
-                    {article.summary}
-                  </p>
-                  <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-                    <span>{article.date}</span>
-                    <Link to="/berita" className="text-slate-900 font-semibold hover:text-amber-600">
-                      Baca Selengkapnya →
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
 
 
