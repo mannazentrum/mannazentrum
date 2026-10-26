@@ -55,6 +55,7 @@ const daycareFacilitySlides: PhotoSlideItem[] = [
 
 const Daycare: React.FC = () => {
   const [showContactForm, setShowContactForm] = useState(false);
+  const [showPosterModal, setShowPosterModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -318,33 +319,102 @@ const Daycare: React.FC = () => {
       {/* Daily Routine Schedule Table */}
       <section className="py-20 px-6 sm:px-10 lg:px-16 bg-[#FAF9F5] border-t border-b border-stone-200/40">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10">
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block mb-2">Rutinitas Harian</span>
             <h2 className="text-3xl md:text-4xl font-light text-slate-900 tracking-tight">Jadwal Aktivitas Si Kecil di Daycare</h2>
-            <p className="text-slate-500 font-light mt-2 text-sm">Ritme teratur membantu anak merasa aman, tenang, dan terlatih disiplin mandiri.</p>
+            <p className="text-slate-500 font-light mt-2 text-sm max-w-xl mx-auto">
+              Ritme teratur membantu anak merasa aman, tenang, dan terlatih disiplin mandiri sesuai panduan resmi Daily Schedule of Daycare.
+            </p>
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={() => setShowPosterModal(true)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-stone-200 text-xs font-semibold text-slate-700 hover:text-amber-600 hover:border-amber-300 shadow-sm transition active:scale-95"
+              >
+                <span>Lihat Poster Jadwal Resmi</span>
+                <span className="text-amber-600 font-bold">↗</span>
+              </button>
+            </div>
           </div>
 
           <div className="space-y-3">
             {[
-              { time: '07:00 - 08:30', title: 'Kedatangan & Cek Kesehatan Pagi', desc: 'Pengecekan suhu tubuh, sambutan hangat pengasuh, dan sarapan ringan/susu.' },
-              { time: '08:30 - 09:30', title: 'Morning Circle & Senam Motorik Kasar', desc: 'Bernyanyi, berdoa bersama, peregangan tubuh, dan stimulasi motorik ceria.' },
-              { time: '09:30 - 10:30', title: 'Sensory Play & Art Workshop', desc: 'Aktivitas eksplorasi tekstur, meremas playdough, dan pengenalan warna bersama Malika Maliaki.' },
-              { time: '10:30 - 11:30', title: 'Mandi Pagi / Toilet Training & Persiapan Makan Siang', desc: 'Kebersihan tubuh, pembiasaan cuci tangan, dan belajar makan mandiri.' },
-              { 
-                time: '11:30 - 12:30', 
-                title: 'Makan Siang Bernutrisi 4 Bintang', 
+              {
+                time: '07:00 - 08:00',
+                title: 'Menyambut Kedatangan Anak & Mandi Pagi',
+                desc: 'Sambutan hangat pengasuh, cek kesehatan & suhu tubuh anak, serta mandi pagi segar untuk anak yang belum mandi dari rumah.'
+              },
+              {
+                time: '07:00 - 09:00',
+                title: 'Sarapan (dari Orang Tua)',
+                desc: 'Waktu sarapan pagi sehat sesuai bekal bergizi yang dibawakan Ayah & Bunda.'
+              },
+              {
+                time: '09:00 - 09:30',
+                title: 'Berjemur 10 Menit & Main Bebas',
+                desc: 'Aktivitas berjemur di bawah sinar matahari pagi untuk asupan Vitamin D alami, diikuti bermain bebas santai.'
+              },
+              {
+                time: '09:30 - 11:00',
+                title: 'Persiapan Kegiatan (Circle Time) & Toilet Training (Ganti Popok)',
+                desc: 'Berdoa, bernyanyi ceria, stimulasi sensori & motorik edukatif, serta toilet training dan penggantian popok bersih.'
+              },
+              {
+                time: '11:00 - 11:30',
+                title: 'Cuci Tangan & Snack Buah',
+                desc: 'Pembiasaan cuci tangan higienis, dilanjutkan menikmati camilan buah segar potong kaya vitamin.'
+              },
+              {
+                time: '11:30 - 12:45',
+                title: 'Cuci Tangan & Makan Siang (Sesi 1 / Infant)',
                 desc: (
                   <>
-                    <span>Menu hangat berimbang protein, karbohidrat, sayuran segar, dan buah potong.</span>
+                    <span>Menu makan siang bernutrisi 4 bintang hangat seimbang karbohidrat, protein, sayuran segar, dan buah.</span>
                     <span className="block mt-1 text-slate-600">
-                      Makan siang kita berbeda beda setiap harinya dan berotasi setelah 1 tahun berjalan. Dari minggu yang satu ke minggu berikutnya, menu makanan sehat akan selalu bervariasi demi menjaga keseimbangan gizi dari si Buah Hati.
+                      Makan siang bervariasi setiap hari dan berotasi berkala demi keseimbangan gizi si buah hati.
                     </span>
                   </>
                 )
               },
-              { time: '12:30 - 15:00', title: 'Deep Nap Time (Tidur Siang Nyenyak)', desc: 'Istirahat di ruang tidur steril ber-AC diiringi musik pengantar tidur lembut.' },
-              { time: '15:00 - 16:00', title: 'Bangun, Mandi Sore & Snack Sore Sehat', desc: 'Mandi sore segar, minum susu, dan buah segar atau kudapan bernutrisi.' },
-              { time: '16:00 - 18:00', title: 'Free Play Edukatif & Penjemputan Orang Tua', desc: 'Bermain balok kayu, membaca buku cerita, dan serah terima anak kepada orang tua.' },
+              {
+                time: '11:45 - 12:45',
+                title: 'Cuci Tangan & Makan Siang (Sesi 2 / Toddler)',
+                desc: 'Makan siang mandiri anak balita/toddler didampingi para pengasuh dengan penuh kesabaran dan kehangatan.'
+              },
+              {
+                time: '12:45 - 14:30',
+                title: 'Ganti Popok, Pipis, Cuci Kaki & Tangan, Tidur Siang',
+                desc: 'Rutinitas higienis sebelum deep nap di ruang tidur steril ber-AC yang sejuk, tenang, dan diiringi alunan musik lembut.'
+              },
+              {
+                time: '14:30 - 15:00',
+                title: 'Cuci Tangan & Snack Time : Healthy Food',
+                desc: 'Bangun tidur perlahan, cuci tangan, hidrasi air putih, dan menikmati camilan sore sehat bernutrisi.'
+              },
+              {
+                time: '15:00 - 16:00',
+                title: 'Mandi Sore',
+                desc: 'Mandi sore segar dengan air hangat/bersih, perawatan tubuh anak, dan berganti pakaian sore yang nyaman.'
+              },
+              {
+                time: '16:00 - 17:00',
+                title: 'Cuci Tangan & Makan Sore (Sesi 1 / Infant)',
+                desc: 'Cuci tangan dan asupan makan sore hangat bernutrisi bagi si kecil sebelum beraktivitas kembali.'
+              },
+              {
+                time: '16:30 - 17:00',
+                title: 'Cuci Tangan & Makan Sore (Sesi 2 / Toddler)',
+                desc: 'Makan sore bergizi bagi anak balita untuk melengkapi energi sebelum waktu pulang.'
+              },
+              {
+                time: '17:00 - 17:30',
+                title: 'Outdoor Playtime & Menunggu Dijemput',
+                desc: 'Bermain di area luar yang aman dan menyenangkan, melatih motorik kasar sambil bersiap dijemput.'
+              },
+              {
+                time: '17:30 - 19:00',
+                title: 'Bermain Bebas, Waktu Penjemputan Anak',
+                desc: 'Aktivitas santai di ruang bermain hingga serah terima kepada orang tua disertai laporan kegiatan harian via WhatsApp.'
+              },
             ].map((schedule, i) => (
               <div key={i} className="bg-white p-5 rounded-2xl border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:shadow-sm transition">
                 <div className="flex items-start gap-3">
@@ -397,6 +467,53 @@ const Daycare: React.FC = () => {
 
       {/* Sticky Bottom Floating WhatsApp & Survey CTA */}
       <FloatingCTA onOpenSurvey={openForm} />
+
+      {/* Schedule Poster Lightbox Modal */}
+      {showPosterModal && (
+        <div 
+          className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn"
+          onClick={() => setShowPosterModal(false)}
+        >
+          <div 
+            className="bg-white rounded-[32px] p-6 max-w-lg w-full shadow-2xl relative my-auto max-h-[90vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                  Daily Schedule of Daycare
+                </span>
+              </div>
+              <button 
+                onClick={() => setShowPosterModal(false)}
+                className="w-9 h-9 rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 flex items-center justify-center text-xl transition"
+                aria-label="Tutup Poster"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="relative overflow-auto rounded-2xl border border-slate-100 bg-stone-50 flex items-center justify-center p-2">
+              <img 
+                src="/images/daily-schedule-daycare.jpg" 
+                alt="Poster Resmi Daily Schedule of Daycare MannaZentrum" 
+                className="w-full h-auto max-h-[68vh] object-contain rounded-xl shadow-xs"
+              />
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+              <span>MannaZentrum Daycare Routine Poster</span>
+              <button
+                onClick={() => setShowPosterModal(false)}
+                className="bg-slate-900 text-white px-5 py-2 rounded-full text-xs font-medium hover:bg-slate-800 transition"
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer onOpenContact={openForm} />
     </div>
