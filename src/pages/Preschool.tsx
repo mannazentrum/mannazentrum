@@ -147,8 +147,8 @@ const Preschool: React.FC = () => {
           <PhotoBadge code="preschool_hero01" position="top-right" />
           <img 
             data-photo-code="preschool_hero01"
-            src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=2000&q=80" 
-            alt="Anak-anak preschool belajar interaktif dengan gembira" 
+            src="/images/preschool_hero01.jpg" 
+            alt="Ruang kelas preschool Mannazentrum dengan fasilitas belajar edukatif dan ceria" 
             className="w-full h-full object-cover opacity-60 select-none"
             loading="eager"
           />
