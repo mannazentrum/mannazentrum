@@ -26,7 +26,11 @@ import {
   Award,
   FileCheck2,
   Navigation,
-  Car
+  Car,
+  MessageCircle,
+  MapPin,
+  FlaskConical,
+  Languages
 } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -294,7 +298,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* Headline section below the photo banner */}
+        {/* Headline & High-Visibility Call-To-Action (Hero Section) */}
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-12 pb-12 md:pt-16 md:pb-16">
           <div className="max-w-4xl">
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs mb-2 block">
@@ -307,7 +311,306 @@ const Home: React.FC = () => {
             <p className="mt-4 sm:mt-5 text-slate-600 text-base sm:text-lg md:text-xl font-light max-w-3xl leading-relaxed">
               Menghadirkan lingkungan pengasuhan dan pendidikan usia dini yang aman, higienis, penuh kasih sayang, serta menumbuhkan kemandirian anak dengan hati di kawasan Cisauk, Rumpin & sekitarnya.
             </p>
+
+            {/* Call to Action Utama (Hero Section - Jelas & Mencolok untuk Orang Tua) */}
+            <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3.5">
+              <button
+                onClick={openContactModal}
+                className="inline-flex items-center justify-center gap-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm sm:text-base font-semibold px-7 py-4 rounded-full shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all group"
+              >
+                <Calendar className="w-5 h-5 text-amber-400 group-hover:rotate-6 transition-transform" />
+                <span>Jadwalkan Kunjungan (School Tour)</span>
+              </button>
+
+              <a
+                href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20orang%20tua%20murid%20ingin%20konsultasi%20program%20Daycare%20/%20Preschool."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm sm:text-base font-semibold px-6 py-4 rounded-full shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                <MessageCircle className="w-5 h-5 text-white" />
+                <span>Konsultasi Program & Biaya</span>
+              </a>
+
+              <Link
+                to="/daycare"
+                className="inline-flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-200/80 text-sm font-semibold px-6 py-4 rounded-full transition-all"
+              >
+                <Baby className="w-4 h-4 text-amber-600" />
+                <span>Daftar Sekarang &rarr;</span>
+              </Link>
+            </div>
+
+            {/* Quick Trust Highlights di Hero Section */}
+            <div className="mt-8 pt-6 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs sm:text-sm text-slate-600 font-medium">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Usia <strong>3 Bln – 6 Thn</strong></span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Jam <strong>07.00 – 18.00 WIB</strong></span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Area <strong>Cisauk & Rumpin</strong></span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Kurikulum <strong>STEM & Dwibahasa</strong></span>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          INFORMASI INTI DI HALAMAN DEPAN (CORE INFO FOR PARENTS)
+          - Rentang Usia yang Diterima
+          - Jam Operasional Ramah Working Parents
+          - Lokasi & Shuttle Antar-Jemput
+          - Program Unggulan: STEM & Dwibahasa (Bilingual)
+         ======================================================== */}
+      <section className="bg-gradient-to-b from-stone-50/80 to-white py-16 md:py-24 px-6 sm:px-10 lg:px-16 border-b border-stone-200/50">
+        <div className="max-w-7xl mx-auto">
+          
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-2">
+              Panduan Cepat Orang Tua
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-slate-900 tracking-tight">
+              Informasi Inti Daycare & Preschool di Halaman Depan
+            </h2>
+            <p className="text-slate-500 font-light text-sm sm:text-base mt-3 leading-relaxed">
+              Ringkasan penting yang langsung menjawab kebutuhan Ayah & Bunda: usia anak, jadwal operasional kerja, titik lokasi, dan keunggulan kurikulum.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            {/* Card 1: Rentang Usia */}
+            <div className="bg-white rounded-3xl p-7 border border-stone-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                    <Baby className="w-6 h-6" />
+                  </div>
+                  <span className="bg-amber-100 text-amber-800 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    3 Bln – 6 Thn
+                  </span>
+                </div>
+
+                <h3 className="text-xl font-bold text-slate-900 tracking-tight mb-2">
+                  Rentang Usia Anak
+                </h3>
+                
+                <p className="text-xs text-slate-500 font-light mb-4 leading-relaxed">
+                  Pemisahan kelompok usia dengan stimulasi dan rasio pendidik terstandar:
+                </p>
+
+                <ul className="space-y-2.5 text-xs text-slate-700">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                    <span><strong>Baby Care (3 - 18 Bln):</strong> Tummy time, stimulasi sensori dini, catatan ASI/MPASI.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                    <span><strong>Toddler (1.5 - 3 Thn):</strong> Toilet training mandiri, motorik halus & bicara aktif.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                    <span><strong>Preschool & TK (2 - 6 Thn):</strong> Playgroup, TK-A, TK-B fondasi karakter & kemandirian.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-slate-100">
+                <Link
+                  to="/daycare"
+                  className="text-xs font-semibold text-amber-700 hover:text-amber-800 inline-flex items-center gap-1.5 group"
+                >
+                  <span>Pilihan Paket Usia Anak</span>
+                  <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 2: Jam Operasional */}
+            <div className="bg-white rounded-3xl p-7 border border-stone-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center">
+                    <Clock className="w-6 h-6" />
+                  </div>
+                  <span className="bg-sky-100 text-sky-800 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Full & Half Day
+                  </span>
+                </div>
+
+                <h3 className="text-xl font-bold text-slate-900 tracking-tight mb-2">
+                  Jam Operasional Fleksibel
+                </h3>
+                
+                <p className="text-xs text-slate-500 font-light mb-4 leading-relaxed">
+                  Sangat ramah bagi ayah & bunda yang bekerja penuh waktu (working parents):
+                </p>
+
+                <div className="space-y-3 text-xs text-slate-700 bg-sky-50/50 p-3.5 rounded-2xl border border-sky-100/70">
+                  <div>
+                    <span className="font-bold text-slate-900 block">Senin – Jumat:</span>
+                    <span className="text-sky-800 font-semibold text-sm">07.00 – 18.00 WIB</span>
+                    <p className="text-[11px] text-slate-500 font-light mt-0.5">Menerima kedatangan anak sejak pagi hingga penjemputan sore.</p>
+                  </div>
+                  <div className="pt-2 border-t border-sky-100">
+                    <span className="font-bold text-slate-900 block">Sabtu (Kunjungan & Trial):</span>
+                    <span className="text-slate-700 font-medium">08.00 – 14.00 WIB</span>
+                    <p className="text-[11px] text-slate-500 font-light mt-0.5">Khusus survei orang tua & kelas akhir pekan.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-slate-100">
+                <button
+                  onClick={openContactModal}
+                  className="text-xs font-semibold text-sky-700 hover:text-sky-800 inline-flex items-center gap-1.5 group"
+                >
+                  <span>Reservasi Jadwal Trial / Survei</span>
+                  <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Card 3: Lokasi & Antar-Jemput */}
+            <div className="bg-white rounded-3xl p-7 border border-stone-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <MapPin className="w-6 h-6" />
+                  </div>
+                  <span className="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Cisauk & Rumpin
+                  </span>
+                </div>
+
+                <h3 className="text-xl font-bold text-slate-900 tracking-tight mb-2">
+                  Lokasi & Antar-Jemput
+                </h3>
+                
+                <p className="text-xs text-slate-500 font-light mb-4 leading-relaxed">
+                  Lingkungan klaster aman one-gate system dengan fasilitas antar-jemput:
+                </p>
+
+                <ul className="space-y-2.5 text-xs text-slate-700">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                    <span><strong>Lokasi Utama:</strong> Serpong Garden 1 (Blok Green View A2-12A), Cisauk, Tangerang.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                    <span><strong>Akses Cepat:</strong> 3 Menit ke Stasiun KRL Cisauk, Intermoda BSD, dan Tol Serbaraja.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                    <span><strong>Armada Shuttle Aman:</strong> Menjangkau Cisauk, Citra Garden, Suradita, hingga Rumpin Bogor.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-slate-100">
+                <Link
+                  to="/contact"
+                  className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 inline-flex items-center gap-1.5 group"
+                >
+                  <span>Lihat Peta & Rute Shuttle</span>
+                  <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 4: Program Unggulan (STEM & Dwibahasa) */}
+            <div className="bg-white rounded-3xl p-7 border border-stone-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <Sparkles className="w-6 h-6" />
+                  </div>
+                  <span className="bg-indigo-100 text-indigo-800 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Program Unggulan
+                  </span>
+                </div>
+
+                <h3 className="text-xl font-bold text-slate-900 tracking-tight mb-2">
+                  STEM & Dwibahasa
+                </h3>
+                
+                <p className="text-xs text-slate-500 font-light mb-4 leading-relaxed">
+                  Kurikulum holistik menstimulasi logika ilmiah dan komunikasi sejak dini:
+                </p>
+
+                <ul className="space-y-2.5 text-xs text-slate-700">
+                  <li className="flex items-start gap-2">
+                    <FlaskConical className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                    <span><strong>Pengenalan STEM:</strong> Sains ramah anak, eksperimen warna/air, logika berhitung, dan balok rancang bangun.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Languages className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                    <span><strong>Dwibahasa (Bilingual):</strong> Pembiasaan bahasa Inggris harian lewat cerita, lagu, dan aktivitas ceria.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Utensils className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                    <span><strong>Gizi 4 Bintang & Bebas MSG:</strong> Makanan higienis harian bergizi seimbang untuk tumbuh kembang optimal.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-slate-100">
+                <Link
+                  to="/preschool"
+                  className="text-xs font-semibold text-indigo-700 hover:text-indigo-800 inline-flex items-center gap-1.5 group"
+                >
+                  <span>Eksplorasi Kurikulum & Trial</span>
+                  <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </Link>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Quick Contact & Consultation Bar under Core Info */}
+          <div className="mt-10 bg-slate-900 text-white rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div className="text-center md:text-left">
+              <span className="text-amber-400 font-semibold text-xs uppercase tracking-wider block mb-1">
+                Ingin Melihat Langsung Fasilitas Kami?
+              </span>
+              <h4 className="text-xl sm:text-2xl font-light text-white tracking-tight">
+                Kunjungi Mannazentrum Bersama Si Kecil Hari Ini
+              </h4>
+              <p className="text-slate-300 text-xs sm:text-sm font-light mt-1">
+                Konsultasikan kebutuhan pengasuhan harian atau trial class preschool dengan konselor ramah kami.
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+              <button
+                onClick={openContactModal}
+                className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3.5 rounded-full text-xs font-bold transition shadow-md flex items-center gap-2"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>Jadwalkan Kunjungan (School Tour)</span>
+              </button>
+
+              <a
+                href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20ingin%20jadwalkan%20kunjungan%20survei%20lokasi%20atau%20tanya%20Daycare."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3.5 rounded-full text-xs font-semibold transition flex items-center gap-2"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                <span>Chat WhatsApp Admin</span>
+              </a>
+            </div>
+          </div>
+
         </div>
       </section>
 

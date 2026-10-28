@@ -83,7 +83,7 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
           <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
           <Calendar className="w-4 h-4 text-amber-400 shrink-0" />
           <span className="text-xs md:text-sm font-semibold tracking-tight">
-            Jadwalkan Survey Lokasi
+            Jadwalkan Kunjungan (School Tour)
           </span>
         </button>
 
