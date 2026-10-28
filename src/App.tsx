@@ -12,6 +12,7 @@ const Store = lazy(() => import('./pages/Store'));
 const News = lazy(() => import('./pages/News'));
 const BusinessUnitsPage = lazy(() => import('./pages/BusinessUnitsPage'));
 const Contact = lazy(() => import('./pages/Contact'));
+const ReportPortal = lazy(() => import('./pages/ReportPortal'));
 
 // Redirect helper to official shop subdomain
 const RedirectToShop: React.FC = () => {
@@ -21,18 +22,16 @@ const RedirectToShop: React.FC = () => {
   return null;
 };
 
-// Redirect helper to official student report portal
-const RedirectToReportPortal: React.FC = () => {
-  useEffect(() => {
-    window.location.replace('https://laporan.mannazentrum.com');
-  }, []);
-  return null;
-};
-
 const App: React.FC = () => {
   const isShopSubdomain = typeof window !== 'undefined' && (
     window.location.hostname === 'shop.mannazentrum.com' ||
     window.location.hostname.startsWith('shop.')
+  );
+
+  const isReportSubdomain = typeof window !== 'undefined' && (
+    window.location.hostname === 'laporan.mannazentrum.com' ||
+    window.location.hostname.startsWith('laporan.') ||
+    window.location.hostname.startsWith('portal.')
   );
 
   return (
@@ -48,9 +47,19 @@ const App: React.FC = () => {
               <Route path="/shop" element={<Navigate to="/" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+          ) : isReportSubdomain ? (
+            <Routes>
+              {/* Rute Khusus Subdomain laporan.mannazentrum.com */}
+              <Route path="/" element={<ReportPortal />} />
+              <Route path="/login" element={<ReportPortal />} />
+              <Route path="/laporan" element={<ReportPortal />} />
+              <Route path="/dashboard" element={<ReportPortal />} />
+              <Route path="/portal" element={<ReportPortal />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
           ) : (
             <Routes>
-              {/* Rute Utama Bersih & SEO-Friendly (Halaman /toko dialihkan ke subdomain resmi) */}
+              {/* Rute Utama Bersih & SEO-Friendly */}
               <Route path="/" element={<Home />} />
               <Route path="/tentang" element={<About />} />
               <Route path="/daycare" element={<Daycare />} />
@@ -59,18 +68,18 @@ const App: React.FC = () => {
               <Route path="/unit-bisnis" element={<BusinessUnitsPage />} />
               <Route path="/contact" element={<Contact />} />
 
+              {/* Rute Portal Laporan Siswa & Wali Murid */}
+              <Route path="/laporan" element={<ReportPortal />} />
+              <Route path="/portal" element={<ReportPortal />} />
+              <Route path="/portal-laporan" element={<ReportPortal />} />
+              <Route path="/portal-siswa" element={<ReportPortal />} />
+              <Route path="/portal-wali-murid" element={<ReportPortal />} />
+              <Route path="/login" element={<ReportPortal />} />
+
               {/* Pengalihan Rute Toko Lama ke Subdomain https://shop.mannazentrum.com */}
               <Route path="/toko" element={<RedirectToShop />} />
               <Route path="/shop" element={<RedirectToShop />} />
               <Route path="/store" element={<RedirectToShop />} />
-
-              {/* Pengalihan Rute Portal Laporan Siswa ke Subdomain Resmi https://laporan.mannazentrum.com */}
-              <Route path="/laporan" element={<RedirectToReportPortal />} />
-              <Route path="/portal" element={<RedirectToReportPortal />} />
-              <Route path="/portal-laporan" element={<RedirectToReportPortal />} />
-              <Route path="/portal-siswa" element={<RedirectToReportPortal />} />
-              <Route path="/portal-wali-murid" element={<RedirectToReportPortal />} />
-              <Route path="/login" element={<RedirectToReportPortal />} />
 
               {/* Aliases & Fallbacks */}
               <Route path="/kontak" element={<Navigate to="/contact" replace />} />
