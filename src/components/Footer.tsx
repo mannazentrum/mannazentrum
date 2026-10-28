@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Heart, Shield, Clock } from 'lucide-react';
+import { Phone, Mail, MapPin, Heart, Shield, Clock, LogIn } from 'lucide-react';
 
 interface FooterProps {
   onOpenContact?: () => void;
@@ -37,7 +37,7 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
           </div>
         </div>
 
-        {/* Col 3: Navigasi Layanan */}
+        {/* Col 3: Navigasi Layanan & Portal */}
         <div>
           <h3 className="font-medium mb-4 text-xs uppercase tracking-widest text-slate-300">Layanan Pendidikan</h3>
           <ul className="space-y-2.5 text-sm font-light text-slate-400">
@@ -60,6 +60,17 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
             </li>
             <li>
               <Link to="/berita" className="hover:text-amber-400 transition">News & Tips</Link>
+            </li>
+            <li className="pt-2 border-t border-slate-800">
+              <a 
+                href="https://laporan.mannazentrum.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-amber-400 hover:text-amber-300 transition inline-flex items-center gap-1.5 font-medium text-xs"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                <span>Portal Laporan Siswa (Login) ↗</span>
+              </a>
             </li>
           </ul>
         </div>

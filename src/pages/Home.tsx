@@ -30,7 +30,9 @@ import {
   MessageCircle,
   MapPin,
   FlaskConical,
-  Languages
+  Languages,
+  LogIn,
+  Lock
 } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -671,28 +673,38 @@ const Home: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3 pt-4 border-t border-amber-200/60">
+              <div className="flex flex-wrap items-center gap-2.5 pt-4 border-t border-amber-200/60">
                 <Link
                   to="/daycare"
-                  className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-2"
+                  className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-4 sm:px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-1.5"
                 >
                   <Baby className="w-4 h-4" />
                   <span>Program Daycare</span>
                 </Link>
                 <Link
                   to="/preschool"
-                  className="bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-2"
+                  className="bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-4 sm:px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-1.5"
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>Program Preschool</span>
                 </Link>
                 <button
                   onClick={openContactModal}
-                  className="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 text-xs font-semibold px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-2"
+                  className="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 text-xs font-semibold px-4 sm:px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-1.5"
                 >
                   <Calendar className="w-4 h-4 text-amber-600" />
-                  <span>Jadwalkan Survey Lokasi</span>
+                  <span>Jadwalkan Survey</span>
                 </button>
+                <a
+                  href="https://laporan.mannazentrum.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300/80 text-xs font-bold px-4 sm:px-5 py-3 rounded-full transition shadow-sm inline-flex items-center gap-1.5"
+                  title="Login Portal Laporan Siswa"
+                >
+                  <LogIn className="w-4 h-4 text-amber-700" />
+                  <span>Login Portal Laporan ↗</span>
+                </a>
               </div>
             </div>
 
