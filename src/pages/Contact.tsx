@@ -146,25 +146,15 @@ const Contact: React.FC = () => {
 
       {/* Hero Header */}
       <section className="relative w-full bg-slate-900 text-white">
-        <div className="relative w-full h-[260px] sm:h-[340px] md:h-[400px] overflow-hidden">
+        <div className="relative w-full aspect-[1024/317] max-h-[480px] overflow-hidden bg-slate-950 flex items-center justify-center">
           <PhotoBadge code="contact_hero01" position="top-right" />
           <img 
             data-photo-code="contact_hero01"
-            src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=2000&q=85" 
-            alt="Pusat Informasi dan Lokasi Mannazentrum Cisauk" 
-            className="w-full h-full object-cover opacity-50 select-none"
+            src="/images/contact_hero01.jpg" 
+            alt="Pusat Informasi dan Lokasi Mannazentrum Cisauk & Rumpin" 
+            className="w-full h-full object-cover object-center select-none"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/50 to-transparent"></div>
-
-          <div className="absolute top-8 left-6 sm:top-10 sm:left-10 md:top-14 md:left-16 text-white drop-shadow-md select-none">
-            <span className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight block">
-              Mannazentrum
-            </span>
-            <span className="text-[10px] sm:text-xs uppercase tracking-[0.25em] font-medium text-amber-300 mt-1 block">
-              PUSAT INFORMASI & GOOGLE LOCATION
-            </span>
-          </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-10 pb-12 md:pt-14 md:pb-16 bg-white text-slate-900">
