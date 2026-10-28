@@ -24,25 +24,15 @@ const About: React.FC = () => {
 
       {/* Hero Section Banner */}
       <section className="relative w-full bg-slate-900 text-white">
-        <div className="relative w-full h-[320px] sm:h-[400px] md:h-[480px] overflow-hidden">
+        <div className="relative w-full aspect-[1024/317] max-h-[480px] overflow-hidden bg-slate-950 flex items-center justify-center">
           <PhotoBadge code="tentang_hero01" position="top-right" />
           <img 
             data-photo-code="tentang_hero01"
-            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=85" 
-            alt="Komitmen Tim PT. Elrafa Terang Sejahtera" 
-            className="w-full h-full object-cover opacity-60 select-none"
+            src="/images/tentang_hero01.jpg" 
+            alt="Tentang Mannazentrum - Pusat Layanan Pendidikan Usia Dini, Bimbel & Daycare di Cisauk & Rumpin" 
+            className="w-full h-full object-cover object-center select-none"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent"></div>
-
-          <div className="absolute top-8 left-6 sm:top-10 sm:left-10 md:top-14 md:left-16 text-white drop-shadow-md select-none">
-            <span className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight block">
-              PT. Elrafa Terang Sejahtera
-            </span>
-            <span className="text-[10px] sm:text-xs uppercase tracking-[0.25em] font-medium text-white/95 mt-1 block">
-              ABOUT OUR COMPANY & CORE PURPOSE
-            </span>
-          </div>
         </div>
 
         {/* Page Main H1 Heading */}
