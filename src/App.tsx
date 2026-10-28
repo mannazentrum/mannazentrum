@@ -22,6 +22,14 @@ const RedirectToShop: React.FC = () => {
   return null;
 };
 
+// Redirect helper to official student report portal
+const RedirectToReportPortal: React.FC = () => {
+  useEffect(() => {
+    window.location.replace('https://laporan.mannazentrum.com');
+  }, []);
+  return null;
+};
+
 const App: React.FC = () => {
   const isShopSubdomain = typeof window !== 'undefined' && (
     window.location.hostname === 'shop.mannazentrum.com' ||
@@ -68,13 +76,13 @@ const App: React.FC = () => {
               <Route path="/unit-bisnis" element={<BusinessUnitsPage />} />
               <Route path="/contact" element={<Contact />} />
 
-              {/* Rute Portal Laporan Siswa & Wali Murid */}
-              <Route path="/laporan" element={<ReportPortal />} />
-              <Route path="/portal" element={<ReportPortal />} />
-              <Route path="/portal-laporan" element={<ReportPortal />} />
-              <Route path="/portal-siswa" element={<ReportPortal />} />
-              <Route path="/portal-wali-murid" element={<ReportPortal />} />
-              <Route path="/login" element={<ReportPortal />} />
+              {/* Pengalihan Rute Portal Laporan Siswa ke Subdomain Resmi https://laporan.mannazentrum.com */}
+              <Route path="/laporan" element={<RedirectToReportPortal />} />
+              <Route path="/portal" element={<RedirectToReportPortal />} />
+              <Route path="/portal-laporan" element={<RedirectToReportPortal />} />
+              <Route path="/portal-siswa" element={<RedirectToReportPortal />} />
+              <Route path="/portal-wali-murid" element={<RedirectToReportPortal />} />
+              <Route path="/login" element={<RedirectToReportPortal />} />
 
               {/* Pengalihan Rute Toko Lama ke Subdomain https://shop.mannazentrum.com */}
               <Route path="/toko" element={<RedirectToShop />} />

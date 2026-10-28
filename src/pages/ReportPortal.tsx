@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
   Sparkles, 
   ShieldCheck, 
@@ -9,11 +9,18 @@ import {
   Baby, 
   Heart, 
   CheckCircle2,
-  Home
+  Home,
+  ExternalLink
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const ReportPortal: React.FC = () => {
+  useEffect(() => {
+    // Alihkan langsung ke subdomain resmi jika dibuka dari domain utama
+    if (typeof window !== 'undefined' && !window.location.hostname.startsWith('laporan.')) {
+      window.location.replace('https://laporan.mannazentrum.com');
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-[#FDFBF7] font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900 flex flex-col justify-between">
       <SEO 
@@ -148,6 +155,13 @@ const ReportPortal: React.FC = () => {
             {/* Navigation Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
+                href="https://laporan.mannazentrum.com"
+                className="inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-6 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase transition shadow-md w-full sm:w-auto"
+              >
+                <span>Buka laporan.mannazentrum.com</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+              <a
                 href="https://mannazentrum.com"
                 className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase transition shadow-md w-full sm:w-auto"
               >
@@ -158,7 +172,7 @@ const ReportPortal: React.FC = () => {
                 href="https://mannazentrum.com/kontak"
                 className="inline-flex items-center justify-center gap-2 bg-stone-100 hover:bg-stone-200 text-slate-700 px-6 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase transition w-full sm:w-auto"
               >
-                <span>Halaman Kontak & Lokasi</span>
+                <span>Kontak & Lokasi</span>
               </a>
             </div>
 
