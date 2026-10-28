@@ -39,7 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
             <span className="text-slate-300 leading-tight sm:leading-normal">
               <span className="font-semibold text-amber-300 sm:font-normal sm:text-slate-300">Pendaftaran Dibuka: </span>
-              Daycare (3 bln - 4 thn) & Preschool (2 - 6 thn) di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin.
+              Daycare Premium di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin (Preschool & Bayi 3 bln - 6 thn).
             </span>
           </div>
         </div>

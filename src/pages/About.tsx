@@ -15,8 +15,8 @@ const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900">
       <SEO 
-        title="Tentang Kami - Mannazentrum & PT. Elrafa Terang Sejahtera"
-        description="Pelajari visi, misi, profil, dan nilai luhur kami dalam membangun ekosistem pendidikan anak usia dini, Daycare, Preschool, dan kesejahteraan keluarga."
+        title="Tentang Kami - Daycare Premium & PAUD Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin | Mannazentrum"
+        description="Profil PT. Elrafa Terang Sejahtera & Mannazentrum: Ekosistem Daycare Premium dan Pendidikan Anak Usia Dini (PAUD) terpercaya di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin."
         canonicalPath="/tentang"
       />
 

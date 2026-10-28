@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageCircle, Calendar, X, Sparkles, MapPin, Send } from 'lucide-react';
+import { MessageCircle, Calendar, X, Sparkles, MapPin, Send, Loader2, AlertCircle } from 'lucide-react';
 import { submitContactForm } from '../services/formService';
 
 interface FloatingCTAProps {
@@ -10,6 +10,7 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
   const [showSurveyModal, setShowSurveyModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [showBadges, setShowBadges] = useState<boolean>(() => {
     const saved = localStorage.getItem('mz_show_photo_badges');
     return saved === null ? true : saved === 'true';
@@ -28,12 +29,14 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
     } else {
       setShowSurveyModal(true);
       setIsSubmitted(false);
+      setSubmitError(null);
     }
   };
 
   const handleSurveySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
     const target = e.target as typeof e.target & {
       name: { value: string };
       phone: { value: string };
@@ -53,7 +56,7 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
       setIsSubmitted(true);
     } catch (err) {
       console.error('Error submitting survey request:', err);
-      alert('Terjadi kesalahan. Silakan hubungi kami langsung via WhatsApp.');
+      setSubmitError('Terjadi kendala saat mengirimkan jadwal survei. Silakan coba kembali atau hubungi kami langsung via WhatsApp.');
     } finally {
       setIsSubmitting(false);
     }
@@ -117,21 +120,35 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
             <div className="p-8 md:p-10">
               {isSubmitted ? (
                 <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                  <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-emerald-200">
                     ✓
                   </div>
+                  <span className="text-emerald-700 font-semibold uppercase tracking-[0.2em] text-[11px] block mb-1">
+                    Jadwal Terkirim
+                  </span>
                   <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">
                     Jadwal Survey Terkirim!
                   </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed max-w-sm mx-auto mb-6">
-                    Terima kasih Ayah / Bunda. Tim konselor Mannazentrum akan menghubungi via WhatsApp untuk mengonfirmasi jam kunjungan dan titik temu lokasi.
+                  <p className="text-slate-600 text-sm leading-relaxed max-w-sm mx-auto mb-6">
+                    Terima kasih Ayah & Bunda. Tim konselor Mannazentrum akan menghubungi via WhatsApp untuk mengonfirmasi jam kunjungan dan titik temu lokasi.
                   </p>
-                  <button
-                    onClick={() => setShowSurveyModal(false)}
-                    className="bg-slate-900 text-white px-8 py-2.5 rounded-full text-xs font-semibold hover:bg-slate-800 transition"
-                  >
-                    Tutup
-                  </button>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button
+                      onClick={() => setShowSurveyModal(false)}
+                      className="w-full sm:w-auto bg-slate-900 text-white px-8 py-2.5 rounded-full text-xs font-semibold hover:bg-slate-800 transition"
+                    >
+                      Selesai
+                    </button>
+                    <a
+                      href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20sudah%20mengajukan%20jadwal%20survei%20dan%20ingin%20konfirmasi."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-full text-xs font-semibold transition inline-flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>Chat WhatsApp Admin</span>
+                    </a>
+                  </div>
                 </div>
               ) : (
                 <>
@@ -143,9 +160,26 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
                       Jadwalkan Survey Lokasi
                     </h3>
                     <p className="text-slate-500 text-xs mt-1.5 leading-relaxed">
-                      Kunjungi langsung fasilitas kami di <strong>Cisauk (Serpong Garden)</strong> atau layanan area <strong>Rumpin & Bogor</strong>.
+                      Kunjungi langsung fasilitas kami di <strong>Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin</strong>.
                     </p>
                   </div>
+
+                  {submitError && (
+                    <div className="mb-4 p-3.5 bg-rose-50 border border-rose-200 rounded-2xl text-xs text-rose-800 flex items-start gap-2.5 animate-fadeIn">
+                      <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="font-semibold">{submitError}</p>
+                        <a
+                          href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20ingin%20jadwalkan%20survey%20lokasi."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-1 text-emerald-700 underline font-medium inline-block"
+                        >
+                          Hubungi Admin via WhatsApp (+62 878-8111-0807) &rarr;
+                        </a>
+                      </div>
+                    </div>
+                  )}
 
                   <form onSubmit={handleSurveySubmit} className="space-y-4 text-left">
                     <div>
@@ -157,7 +191,8 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
                         id="survey-name"
                         name="name"
                         placeholder="Contoh: Bunda Sarah"
-                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition"
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition disabled:bg-slate-50"
+                        disabled={isSubmitting}
                         required
                       />
                     </div>
@@ -171,7 +206,8 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
                         id="survey-phone"
                         name="phone"
                         placeholder="Contoh: 08123456789"
-                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition"
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition disabled:bg-slate-50"
+                        disabled={isSubmitting}
                         required
                       />
                     </div>
@@ -184,7 +220,8 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
                         <select
                           id="survey-childAge"
                           name="childAge"
-                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition bg-white"
+                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition bg-white disabled:bg-slate-50"
+                          disabled={isSubmitting}
                           required
                         >
                           <option value="3-12 Bulan (Infant)">3 - 12 Bulan (Infant)</option>
@@ -201,12 +238,14 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
                         <select
                           id="survey-location"
                           name="location"
-                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition bg-white"
+                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition bg-white disabled:bg-slate-50"
+                          disabled={isSubmitting}
                           required
                         >
                           <option value="Cisauk / Serpong Garden">Cisauk / Serpong Garden (Tangerang)</option>
+                          <option value="Citra Garden Serpong">Citra Garden Serpong</option>
+                          <option value="BSD City / Serpong">BSD City / Serbaraja</option>
                           <option value="Rumpin & Sekitarnya (Bogor)">Rumpin & Sekitarnya (Bogor)</option>
-                          <option value="BSD City / Serpong">BSD City / Serpong</option>
                           <option value="Lainnya">Wilayah Lainnya</option>
                         </select>
                       </div>
@@ -220,7 +259,8 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
                         type="date"
                         id="survey-date"
                         name="preferredDate"
-                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition"
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 transition disabled:bg-slate-50"
+                        disabled={isSubmitting}
                         required
                       />
                     </div>
@@ -228,10 +268,19 @@ const FloatingCTA: React.FC<FloatingCTAProps> = ({ onOpenSurvey }) => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 transition active:scale-[0.99] flex items-center justify-center gap-2"
+                      className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 transition active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed"
                     >
-                      <Send className="w-4 h-4" />
-                      <span>{isSubmitting ? 'Mengirim Jadwal...' : 'Konfirmasi Jadwal Survey'}</span>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                          <span>Mengirim Jadwal Survey...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Konfirmasi Jadwal Survey</span>
+                        </>
+                      )}
                     </button>
                   </form>
 

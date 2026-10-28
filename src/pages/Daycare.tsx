@@ -17,7 +17,10 @@ import {
   CheckCircle2, 
   Sparkles, 
   Phone,
-  HelpCircle
+  HelpCircle,
+  Loader2,
+  AlertCircle,
+  MessageCircle
 } from 'lucide-react';
 
 const daycareFacilitySlides: PhotoSlideItem[] = [
@@ -58,6 +61,7 @@ const Daycare: React.FC = () => {
   const [showPosterModal, setShowPosterModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,6 +70,7 @@ const Daycare: React.FC = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
     const target = e.target as typeof e.target & {
       name: { value: string };
       email: { value: string };
@@ -88,7 +93,7 @@ const Daycare: React.FC = () => {
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting form: ", error);
-      alert("Terjadi kendala saat mengirimkan pesan. Silakan coba sesaat lagi.");
+      setSubmitError("Terjadi kendala saat mengirimkan pendaftaran. Silakan coba kembali atau hubungi kami langsung via WhatsApp.");
     } finally {
       setIsSubmitting(false);
     }
@@ -96,14 +101,15 @@ const Daycare: React.FC = () => {
 
   const openForm = () => {
     setIsSubmitted(false);
+    setSubmitError(null);
     setShowContactForm(true);
   };
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900">
       <SEO 
-        title="Mannazentrum Daycare - Layanan Penitipan Anak Penuh Kasih Cisauk | Tangerang"
-        description="Layanan penitipan bayi dan anak (Daycare) terpercaya di Cisauk Tangerang. CCTV 24 jam, rasio perawat terpantau, menu gizi 4 bintang, dan stimulasi motorik harian."
+        title="Daycare Premium di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin | Mannazentrum"
+        description="Layanan Daycare Premium anak usia 3 bulan - 4 tahun di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin. CCTV 24 jam, rasio perawat terpantau, menu gizi 4 bintang, dan stimulasi motorik harian."
         canonicalPath="/daycare"
       />
 
@@ -123,50 +129,125 @@ const Daycare: React.FC = () => {
             
             <div className="p-8 md:p-10">
               {isSubmitted ? (
-                <div className="text-center py-10">
-                  <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">✓</div>
-                  <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Terima Kasih Ayah / Bunda!</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">Informasi konsultasi daycare telah kami terima. Tim pengasuh Mannazentrum akan segera menghubungi nomor WhatsApp Anda.</p>
-                  <button 
-                    onClick={() => setShowContactForm(false)}
-                    className="mt-6 bg-slate-900 text-white px-8 py-2.5 rounded-full text-sm font-medium hover:bg-slate-800 transition"
-                  >
-                    Tutup
-                  </button>
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-emerald-200">✓</div>
+                  <span className="text-emerald-700 font-semibold uppercase tracking-[0.2em] text-[11px] block mb-1">Pendaftaran Terkirim</span>
+                  <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Terima Kasih, Ayah & Bunda!</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed max-w-sm mx-auto">
+                    Informasi pendaftaran daycare ananda telah berhasil kami terima. Tim konselor Mannazentrum akan segera menghubungi nomor WhatsApp Anda.
+                  </p>
+                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button 
+                      onClick={() => setShowContactForm(false)}
+                      className="w-full sm:w-auto bg-slate-900 text-white px-7 py-3 rounded-full text-xs font-semibold hover:bg-slate-800 transition"
+                    >
+                      Selesai
+                    </button>
+                    <a
+                      href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20sudah%20mendaftar%20di%20halaman%20Daycare%20dan%20ingin%20tanya%20info%20lebih%20lanjut."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full text-xs font-semibold transition inline-flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>Chat WhatsApp Admin</span>
+                    </a>
+                  </div>
                 </div>
               ) : (
                 <>
                   <div className="text-center mb-6">
                     <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[10px] block mb-1">Konsultasi & Survei Daycare</span>
                     <h3 className="text-2xl font-normal text-slate-900 tracking-tight">Formulir Pendaftaran Daycare</h3>
-                    <p className="text-slate-500 text-xs mt-1">Lengkapi data singkat berikut untuk informasi paket bulanan/harian atau menjadwalkan visit langsung.</p>
+                    <p className="text-slate-500 text-xs mt-1">Lengkapi data singkat berikut untuk informasi paket bulanan/harian atau menjadwalkan visit langsung di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin.</p>
                   </div>
+
+                  {submitError && (
+                    <div className="mb-4 p-3.5 bg-rose-50 border border-rose-200 rounded-2xl text-xs text-rose-800 flex items-start gap-2.5 animate-fadeIn">
+                      <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="font-semibold">{submitError}</p>
+                        <a
+                          href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20ingin%20tanya%20info%20Daycare."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-1 text-emerald-700 underline font-medium inline-block"
+                        >
+                          Hubungi Konselor via WhatsApp (+62 878-8111-0807) &rarr;
+                        </a>
+                      </div>
+                    </div>
+                  )}
 
                   <form onSubmit={handleFormSubmit} className="space-y-4 text-left">
                     <div>
                       <label htmlFor="name" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Nama Orang Tua</label>
-                      <input type="text" id="name" name="name" placeholder="Nama Ayah / Bunda" className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" required />
+                      <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        placeholder="Nama Ayah / Bunda" 
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                        disabled={isSubmitting}
+                        required 
+                      />
                     </div>
                     <div>
                       <label htmlFor="email" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Alamat Email</label>
-                      <input type="email" id="email" name="email" placeholder="email@example.com" className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" required />
+                      <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="email@example.com" 
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                        disabled={isSubmitting}
+                        required 
+                      />
                     </div>
                     <div>
                       <label htmlFor="phone" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Nomor WhatsApp</label>
-                      <input type="tel" id="phone" name="phone" placeholder="Contoh: 08123456789" className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" required />
+                      <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        placeholder="Contoh: 08123456789" 
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                        disabled={isSubmitting}
+                        required 
+                      />
                     </div>
                     <div>
                       <label htmlFor="message" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Usia Bayi / Balita & Pilihan Paket</label>
-                      <textarea id="message" name="message" rows={3} placeholder="Contoh: Balita usia 18 bulan, berminat paket Full-Day..." className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" required></textarea>
+                      <textarea 
+                        id="message" 
+                        name="message" 
+                        rows={3} 
+                        placeholder="Contoh: Balita usia 18 bulan, berminat paket Full-Day di area Cisauk / Serpong Garden..." 
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                        disabled={isSubmitting}
+                        required
+                      ></textarea>
                     </div>
-                    <button type="submit" className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 transition" disabled={isSubmitting}>
-                      {isSubmitting ? 'Mengirim Data...' : 'Kirim Informasi Pendaftaran'}
+                    <button 
+                      type="submit" 
+                      className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 active:scale-[0.99] transition flex items-center justify-center gap-2 shadow-sm disabled:opacity-75 disabled:cursor-not-allowed" 
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                          <span>Sedang Mengirim Data Pendaftaran...</span>
+                        </>
+                      ) : (
+                        <span>Kirim Informasi Pendaftaran</span>
+                      )}
                     </button>
                   </form>
                   
                   <button 
                     onClick={() => setShowContactForm(false)}
                     className="mt-5 w-full text-slate-400 font-semibold text-[10px] uppercase tracking-[0.25em] hover:text-slate-900 transition"
+                    disabled={isSubmitting}
                   >
                     Batal
                   </button>
@@ -197,10 +278,10 @@ const Daycare: React.FC = () => {
               </span>
               {/* Primary H1 Heading */}
               <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-tight mb-4">
-                Mannazentrum Daycare: Rumah Kedua Buah Hati di Cisauk
+                Daycare Premium di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin
               </h1>
               <p className="text-slate-300 text-base md:text-lg font-light max-w-2xl mx-auto leading-relaxed mb-8">
-                Layanan pengasuhan anak usia 3 bulan hingga 4 tahun di Serpong Garden Cisauk, Tangerang, yang berfokus pada kasih sayang tulus, gizi seimbang, dan stimulasi kemandirian.
+                Layanan Daycare Premium anak usia 3 bulan hingga 4 tahun di Serpong Garden Cisauk, Citra Garden, BSD & Rumpin, berfokus pada kasih sayang tulus, gizi seimbang, dan stimulasi kemandirian.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <button 
@@ -229,7 +310,7 @@ const Daycare: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block mb-2">Program Pengasuhan</span>
-            <h2 className="text-3xl md:text-4xl font-light text-slate-900 tracking-tight">Pilihan Program Daycare Sesuai Tahapan Usia</h2>
+            <h2 className="text-3xl md:text-4xl font-light text-slate-900 tracking-tight">Pilihan Program Daycare Premium Sesuai Tahapan Usia</h2>
             <p className="text-slate-500 font-light mt-2 text-sm md:text-base">Pengasuhan profesional dengan perhatian personal sesuai perkembangan spesifik si kecil.</p>
           </div>
 

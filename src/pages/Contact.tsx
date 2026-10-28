@@ -20,7 +20,9 @@ import {
   Sparkles,
   Send,
   Building2,
-  Navigation
+  Navigation,
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
 
 const GOOGLE_MAPS_SEARCH_URL = "https://www.google.com/maps/search/?api=1&query=-6.327342509230009,106.63988146193053";
@@ -30,6 +32,7 @@ const Contact: React.FC = () => {
   const [showCareerNotice, setShowCareerNotice] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,6 +41,7 @@ const Contact: React.FC = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
     const target = e.target as typeof e.target & {
       name: { value: string };
       email: { value: string };
@@ -59,7 +63,7 @@ const Contact: React.FC = () => {
       setIsSubmitted(true);
     } catch (error) {
       console.error('Error submitting form: ', error);
-      alert('Terjadi kendala saat mengirimkan pesan. Silakan hubungi kami via WhatsApp.');
+      setSubmitError('Terjadi kendala saat mengirimkan pesan. Silakan hubungi kami langsung via WhatsApp untuk respon cepat.');
     } finally {
       setIsSubmitting(false);
     }
@@ -75,8 +79,8 @@ const Contact: React.FC = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900">
       <SEO 
-        title="Pusat Informasi & Lokasi Google Maps - Mannazentrum Daycare & Preschool" 
-        description="Kunjungi fasilitas Mannazentrum di Serpong Garden Cisauk. Panduan peta Google Location, kontak resmi WhatsApp konselor, jadwal survei lokasi dan pendaftaran Daycare & Preschool."
+        title="Kontak & Lokasi Daycare Premium di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin | Mannazentrum" 
+        description="Kunjungi fasilitas Daycare Premium dan Preschool Mannazentrum di Serpong Garden Cisauk, Citra Garden, BSD & Rumpin. Panduan Google Maps, jadwal survei lokasi, dan formulir konsultasi pendaftaran."
         canonicalPath="/contact"
       />
 
@@ -170,7 +174,7 @@ const Contact: React.FC = () => {
             <span className="text-amber-600 font-semibold">Pusat Informasi & Lokasi</span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-slate-900 tracking-tight leading-tight">
-            Pusat Informasi & Lokasi Fasilitas
+            Pusat Informasi & Lokasi: Daycare Premium di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin
           </h1>
           <p className="mt-3 text-slate-500 text-sm sm:text-base md:text-lg font-light max-w-3xl leading-relaxed">
             Temukan lokasi resmi Mannazentrum di Serpong Garden Cisauk, panduan rute navigasi, kontak layanan konselor, serta formulir pendaftaran dan survei langsung fasilitas buah hati Anda.
@@ -412,27 +416,52 @@ const Contact: React.FC = () => {
           <div className="bg-white text-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
             {isSubmitted ? (
               <div className="text-center py-10 space-y-4">
-                <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto">
+                <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto border border-emerald-200">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-semibold text-slate-900 tracking-tight">Terima Kasih Banyak!</h3>
-                <p className="text-slate-500 text-sm leading-relaxed max-w-md mx-auto">
-                  Permintaan survei dan konsultasi Anda telah berhasil kami simpan. Konselor Mannazentrum akan menghubungi Anda via WhatsApp untuk konfirmasi waktu visit.
+                <span className="text-emerald-700 font-semibold uppercase tracking-[0.2em] text-[11px] block">
+                  Permintaan Terkirim
+                </span>
+                <h3 className="text-2xl font-semibold text-slate-900 tracking-tight">Terima Kasih Banyak, Ayah & Bunda!</h3>
+                <p className="text-slate-600 text-sm leading-relaxed max-w-md mx-auto">
+                  Permintaan survei dan konsultasi Anda telah berhasil kami simpan. Konselor Mannazentrum akan segera menghubungi Anda via WhatsApp untuk konfirmasi waktu visit.
                 </p>
-                <div className="pt-2">
+                <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    onClick={() => { setIsSubmitted(false); setSubmitError(null); }}
+                    className="w-full sm:w-auto bg-slate-900 text-white px-7 py-2.5 rounded-full text-xs font-semibold hover:bg-slate-800 transition"
+                  >
+                    Kirim Formulir Lain
+                  </button>
                   <a
                     href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20sudah%20mengirimkan%20formulir%20survei%20lokasi."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-2.5 rounded-full text-xs font-medium hover:bg-emerald-700 transition"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 text-white px-6 py-2.5 rounded-full text-xs font-medium hover:bg-emerald-700 transition shadow-sm"
                   >
-                    <span>Konfirmasi Cepat via WhatsApp</span>
-                    <span>&rarr;</span>
+                    <span>Konfirmasi Cepat via WhatsApp &rarr;</span>
                   </a>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleFormSubmit} className="space-y-4">
+                {submitError && (
+                  <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-2xl text-xs text-rose-800 flex items-start gap-2.5 animate-fadeIn">
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="font-semibold">{submitError}</p>
+                      <a
+                        href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20ingin%20tanya%20info%20jadwal%20survei."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 text-emerald-700 underline font-medium inline-block"
+                      >
+                        Hubungi Konselor via WhatsApp (+62 878-8111-0807) &rarr;
+                      </a>
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="form-name" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">
@@ -443,7 +472,8 @@ const Contact: React.FC = () => {
                       id="form-name" 
                       name="name" 
                       placeholder="Contoh: Bunda Sarah / Ayah Dimas" 
-                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
+                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                      disabled={isSubmitting}
                       required 
                     />
                   </div>
@@ -457,7 +487,8 @@ const Contact: React.FC = () => {
                       id="form-phone" 
                       name="phone" 
                       placeholder="08123456789" 
-                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
+                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                      disabled={isSubmitting}
                       required 
                     />
                   </div>
@@ -473,7 +504,8 @@ const Contact: React.FC = () => {
                       id="form-email" 
                       name="email" 
                       placeholder="email@example.com" 
-                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
+                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -484,7 +516,8 @@ const Contact: React.FC = () => {
                     <select 
                       id="form-category" 
                       name="category" 
-                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition"
+                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition disabled:bg-slate-50"
+                      disabled={isSubmitting}
                     >
                       <option value="Daycare Bayi (3 - 18 Bulan)">Daycare Bayi (3 - 18 Bulan)</option>
                       <option value="Daycare Toddler (1.5 - 3 Tahun)">Daycare Toddler (1.5 - 3 Tahun)</option>
@@ -503,11 +536,13 @@ const Contact: React.FC = () => {
                     <select 
                       id="form-location" 
                       name="location" 
-                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition"
+                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition disabled:bg-slate-50"
+                      disabled={isSubmitting}
                     >
                       <option value="Cisauk (Serpong Garden 1)">Cisauk (Serpong Garden 1)</option>
-                      <option value="Layanan Area Rumpin Bogor">Layanan Area Rumpin Bogor</option>
+                      <option value="Citra Garden Serpong">Citra Garden Serpong</option>
                       <option value="Area Sekitar BSD City">Area Sekitar BSD City</option>
+                      <option value="Layanan Area Rumpin Bogor">Layanan Area Rumpin Bogor</option>
                     </select>
                   </div>
 
@@ -519,7 +554,8 @@ const Contact: React.FC = () => {
                       type="date" 
                       id="form-date" 
                       name="preferredDate" 
-                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition bg-white" 
+                      className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition bg-white disabled:bg-slate-50" 
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -533,7 +569,8 @@ const Contact: React.FC = () => {
                     name="message" 
                     rows={3} 
                     placeholder="Contoh: Usia anak 20 bulan, berencana masuk bulan depan, mohon info rincian biaya..." 
-                    className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
+                    className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                    disabled={isSubmitting}
                     required
                   ></textarea>
                 </div>
@@ -541,10 +578,19 @@ const Contact: React.FC = () => {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 active:scale-[0.99] transition shadow-md flex items-center justify-center gap-2"
+                  className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 active:scale-[0.99] transition shadow-md flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-4 h-4 text-amber-400" />
-                  <span>{isSubmitting ? 'Mengirim Data Formulir...' : 'Kirim Permintaan Survei & Konsultasi'}</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                      <span>Sedang Mengirim Data Formulir...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 text-amber-400" />
+                      <span>Kirim Permintaan Survei & Konsultasi</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}

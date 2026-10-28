@@ -32,7 +32,9 @@ import {
   FlaskConical,
   Languages,
   LogIn,
-  Lock
+  Lock,
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -40,11 +42,13 @@ const Home: React.FC = () => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [selectedReviewScreenshot, setSelectedReviewScreenshot] = useState<{ src: string; name: string; code: string } | null>(null);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
     const target = e.target as typeof e.target & {
       name: { value: string };
       email: { value: string };
@@ -65,7 +69,7 @@ const Home: React.FC = () => {
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting form: ", error);
-      alert("Terjadi kendala saat mengirimkan pesan. Silakan coba sesaat lagi.");
+      setSubmitError("Terjadi kendala saat mengirimkan data formulir. Silakan coba kembali atau hubungi kami langsung via WhatsApp.");
     } finally {
       setIsSubmitting(false);
     }
@@ -73,14 +77,15 @@ const Home: React.FC = () => {
 
   const openContactModal = () => {
     setIsSubmitted(false);
+    setSubmitError(null);
     setShowContactForm(true);
   };
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900">
       <SEO 
-        title="Mannazentrum - Daycare, Preschool & Sahabat Tumbuh Kembang Buah Hati" 
-        description="Mannazentrum hadir sebagai mitra orang tua dalam mengasuh dan mendidik buah hati dengan penuh kasih sayang. Layanan Daycare, Preschool resmi berizin di Cisauk, Rumpin & sekitarnya."
+        title="Daycare Premium di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin | Mannazentrum" 
+        description="Mannazentrum: Layanan Daycare Premium dan Pendidikan Anak Usia Dini (PAUD & Preschool) di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin. Fasilitas steril UV, CCTV 24 jam, rasio terpantau, menu gizi 4 bintang, dan kurikulum STEM dwibahasa."
         canonicalPath="/"
       />
 
@@ -158,16 +163,30 @@ const Home: React.FC = () => {
             
             <div className="p-8 md:p-10">
               {isSubmitted ? (
-                 <div className="text-center py-10">
-                  <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">✓</div>
-                  <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Terima Kasih!</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">Pesan dan informasi Anda telah kami terima. Tim konselor Mannazentrum akan segera menghubungi Anda melalui WhatsApp.</p>
-                  <button 
-                    onClick={() => setShowContactForm(false)}
-                    className="mt-6 bg-slate-900 text-white px-8 py-2.5 rounded-full text-sm font-medium hover:bg-slate-800 transition"
-                  >
-                    Selesai
-                  </button>
+                 <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-emerald-200">✓</div>
+                  <span className="text-emerald-700 font-semibold uppercase tracking-[0.2em] text-[11px] block mb-1">Formulir Terkirim</span>
+                  <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Terima Kasih, Ayah & Bunda!</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed max-w-sm mx-auto">
+                    Data pendaftaran / survei telah berhasil kami terima. Tim konselor Mannazentrum akan segera menghubungi Anda melalui WhatsApp untuk konfirmasi jadwal.
+                  </p>
+                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button 
+                      onClick={() => setShowContactForm(false)}
+                      className="w-full sm:w-auto bg-slate-900 text-white px-7 py-3 rounded-full text-xs font-semibold hover:bg-slate-800 transition"
+                    >
+                      Selesai
+                    </button>
+                    <a
+                      href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20sudah%20mengisi%20formulir%20di%20website%20dan%20ingin%20konfirmasi%20jadwal."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full text-xs font-semibold transition inline-flex items-center justify-center gap-1.5 shadow-sm"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>Konfirmasi Cepat via WA</span>
+                    </a>
+                  </div>
                 </div>
               ) : (
                 <>
@@ -177,6 +196,23 @@ const Home: React.FC = () => {
                     <p className="text-slate-500 text-xs mt-1">Lengkapi data berikut untuk pendaftaran anak atau pertanyaan kemitraan korporat.</p>
                   </div>
 
+                  {submitError && (
+                    <div className="mb-4 p-3.5 bg-rose-50 border border-rose-200 rounded-2xl text-xs text-rose-800 flex items-start gap-2.5 animate-fadeIn">
+                      <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="font-semibold">{submitError}</p>
+                        <a
+                          href="https://wa.me/6287881110807?text=Halo%20Mannazentrum,%20saya%20ingin%20konsultasi%20langsung."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-1 text-emerald-700 underline font-medium inline-block"
+                        >
+                          Hubungi Konselor via WhatsApp (+62 878-8111-0807) &rarr;
+                        </a>
+                      </div>
+                    </div>
+                  )}
+
                   <form onSubmit={handleFormSubmit} className="space-y-4 text-left">
                     <div>
                       <label htmlFor="name" className="block font-medium text-slate-700 text-xs uppercase tracking-wider mb-1">Nama Lengkap</label>
@@ -185,7 +221,8 @@ const Home: React.FC = () => {
                         id="name" 
                         name="name" 
                         placeholder="Nama Ayah / Bunda / Rekan Kemitraan" 
-                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                        disabled={isSubmitting}
                         required 
                       />
                     </div>
@@ -196,7 +233,8 @@ const Home: React.FC = () => {
                         id="email" 
                         name="email" 
                         placeholder="email@example.com" 
-                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                        disabled={isSubmitting}
                         required 
                       />
                     </div>
@@ -207,7 +245,8 @@ const Home: React.FC = () => {
                         id="phone" 
                         name="phone" 
                         placeholder="Contoh: 08123456789" 
-                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                        disabled={isSubmitting}
                         required 
                       />
                     </div>
@@ -218,7 +257,8 @@ const Home: React.FC = () => {
                         <select 
                           id="category" 
                           name="category" 
-                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition"
+                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition disabled:bg-slate-50"
+                          disabled={isSubmitting}
                         >
                           <option value="Orang Tua - Daycare">Orang Tua - Daycare</option>
                           <option value="Orang Tua - Preschool">Orang Tua - Preschool</option>
@@ -233,11 +273,13 @@ const Home: React.FC = () => {
                         <select 
                           id="location" 
                           name="location" 
-                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition"
+                          className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 bg-white transition disabled:bg-slate-50"
+                          disabled={isSubmitting}
                         >
                           <option value="Cisauk (Serpong Garden)">Cisauk (Serpong Garden)</option>
+                          <option value="Citra Garden Serpong">Citra Garden Serpong</option>
+                          <option value="BSD City / Serbaraja">BSD City / Serbaraja</option>
                           <option value="Rumpin & Sekitarnya (Bogor)">Rumpin & Sekitarnya (Bogor)</option>
-                          <option value="BSD City / Tangerang">BSD City / Tangerang</option>
                         </select>
                       </div>
                     </div>
@@ -249,22 +291,31 @@ const Home: React.FC = () => {
                         name="message" 
                         rows={3} 
                         placeholder="Tuliskan usia anak, paket yang diinginkan, atau proposal kemitraan..." 
-                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition" 
+                        className="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition disabled:bg-slate-50" 
+                        disabled={isSubmitting}
                         required
                       ></textarea>
                     </div>
                     <button 
                       type="submit" 
-                      className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 active:scale-[0.99] transition" 
+                      className="w-full bg-slate-900 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-slate-800 active:scale-[0.99] transition flex items-center justify-center gap-2 shadow-sm disabled:opacity-75 disabled:cursor-not-allowed" 
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? 'Mengirim Data...' : 'Kirim Formulir'}
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+                          <span>Sedang Mengirim Data Formulir...</span>
+                        </>
+                      ) : (
+                        <span>Kirim Formulir Konsultasi</span>
+                      )}
                     </button>
                   </form>
                   
                   <button 
                     onClick={() => setShowContactForm(false)}
                     className="mt-5 w-full text-slate-400 font-semibold text-[10px] uppercase tracking-[0.25em] hover:text-slate-900 transition"
+                    disabled={isSubmitting}
                   >
                     Batal
                   </button>
@@ -303,15 +354,15 @@ const Home: React.FC = () => {
         {/* Headline & High-Visibility Call-To-Action (Hero Section) */}
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-12 pb-12 md:pt-16 md:pb-16">
           <div className="max-w-4xl">
-            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs mb-2 block">
-              Mitra Terpercaya Tumbuh Kembang Buah Hati
+            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs sm:text-sm mb-2 block">
+              Pendidikan Anak Usia Dini & Sahabat Tumbuh Kembang Buah Hati
             </span>
             {/* SEO H1 Heading */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-slate-900 tracking-tight leading-none font-sans">
-              Show you care.
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-light text-slate-900 tracking-tight leading-tight font-sans">
+              Daycare Premium di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin
             </h1>
             <p className="mt-4 sm:mt-5 text-slate-600 text-base sm:text-lg md:text-xl font-light max-w-3xl leading-relaxed">
-              Menghadirkan lingkungan pengasuhan dan pendidikan usia dini yang aman, higienis, penuh kasih sayang, serta menumbuhkan kemandirian anak dengan hati di kawasan Cisauk, Rumpin & sekitarnya.
+              Show you care. Menghadirkan lingkungan pengasuhan dan pendidikan usia dini yang aman, higienis, penuh kasih sayang, serta menumbuhkan kemandirian anak dengan hati di kawasan Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin.
             </p>
 
             {/* Call to Action Utama (Hero Section - Jelas & Mencolok untuk Orang Tua) */}
@@ -355,7 +406,7 @@ const Home: React.FC = () => {
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Area <strong>Cisauk & Rumpin</strong></span>
+                <span>Area <strong>Cisauk, BSD & Rumpin</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -381,7 +432,7 @@ const Home: React.FC = () => {
               Panduan Cepat Orang Tua
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-slate-900 tracking-tight">
-              Informasi Inti Daycare & Preschool di Halaman Depan
+              Informasi Inti Daycare Premium di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin
             </h2>
             <p className="text-slate-500 font-light text-sm sm:text-base mt-3 leading-relaxed">
               Ringkasan penting yang langsung menjawab kebutuhan Ayah & Bunda: usia anak, jadwal operasional kerja, titik lokasi, dan keunggulan kurikulum.
@@ -626,7 +677,7 @@ const Home: React.FC = () => {
               Jalur Kebutuhan
             </span>
             <h2 className="text-3xl md:text-4xl font-light text-slate-900 tracking-tight">
-              Pilih Alur Akses Sesuai Kebutuhan Anda
+              Pilihan Program Daycare & Preschool di Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin
             </h2>
             <p className="text-slate-500 font-light text-sm mt-2">
               Kemudahan navigasi langsung bagi orang tua yang mencari pengasuhan anak maupun mitra bisnis & instansi.
@@ -646,11 +697,11 @@ const Home: React.FC = () => {
                 </div>
 
                 <h3 className="text-2xl sm:text-3xl font-light text-slate-900 tracking-tight mb-3">
-                  Mencari Daycare & Preschool Ramah Anak?
+                  Daycare Premium & Preschool Ramah Anak
                 </h3>
                 
                 <p className="text-slate-600 font-light text-sm leading-relaxed mb-6">
-                  Solusi penitipan anak profesional untuk orang tua bekerja di wilayah <strong>Cisauk, Serpong Garden, Rumpin & Bogor</strong>. Didukung ruang steril UV, pemantauan CCTV, menu gizi 4 bintang, dan kurikulum sensori motorik ceria.
+                  Solusi penitipan anak profesional untuk orang tua bekerja di wilayah <strong>Cisauk, Serpong Garden, Citra Garden, BSD & Rumpin Bogor</strong>. Didukung ruang steril UV, pemantauan CCTV, menu gizi 4 bintang, dan kurikulum sensori motorik ceria.
                 </p>
 
                 <div className="space-y-2.5 mb-8 text-xs font-medium text-slate-700">
