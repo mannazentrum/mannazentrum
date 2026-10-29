@@ -83,7 +83,7 @@ Hasilnya? Anak-anak yang tadinya enggan menyentuh buah di rumah, dengan lahap me
     author: 'Humas Mannazentrum',
     date: '05 Oktober 2026',
     readTime: '3 menit baca',
-    imageUrl: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/berita_artikel04.jpg',
   },
   {
     id: '5',
