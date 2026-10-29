@@ -933,7 +933,7 @@ const Home: React.FC = () => {
                   loading="lazy"
                 />
               </div>
-              <span className="text-xs font-semibold text-rose-600 uppercase tracking-wider mb-1">Eksplorasi Seni</span>
+              <span className="text-xs font-semibold text-rose-600 uppercase tracking-wider mb-1">Belajar & Eksplorasi</span>
               <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-rose-700 transition">
                 Malika Maliaki Store
               </h3>
