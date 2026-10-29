@@ -52,7 +52,7 @@ const About: React.FC = () => {
       {/* ========================================================
           STANDAR LEGALITAS RESMI & KEPATUHAN
          ======================================================== */}
-      <section className="bg-white pb-20 md:pb-28 px-6 sm:px-10 lg:px-16 border-b border-stone-200/40">
+      <section className="bg-[#FAF9F5] py-20 md:py-24 px-6 sm:px-10 lg:px-16 border-t border-b border-stone-200/50">
         <div className="max-w-7xl mx-auto">
           
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -70,7 +70,7 @@ const About: React.FC = () => {
           {/* Badges Legalitas & Izin Resmi */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div className="bg-[#FAF9F5] p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
                 <FileCheck2 className="w-6 h-6" />
               </div>
@@ -83,7 +83,7 @@ const About: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#FAF9F5] p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
               <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
                 <Award className="w-6 h-6" />
               </div>
@@ -96,7 +96,7 @@ const About: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#FAF9F5] p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
               <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
                 <Navigation className="w-6 h-6" />
               </div>
@@ -109,6 +109,71 @@ const About: React.FC = () => {
               </div>
             </div>
 
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================
+          FILOSOFI PENGASUHAN KAMI
+         ======================================================== */}
+      <section className="bg-white py-20 md:py-28 px-6 sm:px-10 lg:px-16 border-b border-stone-200/40">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          <div className="lg:col-span-6">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 items-end">
+              <div className="pt-12 sm:pt-16">
+                <div className="relative overflow-hidden shadow-sm bg-white rounded-2xl">
+                  <PhotoBadge code="beranda_filosofi01" position="top-left" />
+                  <img 
+                    data-photo-code="beranda_filosofi01"
+                    src="/images/beranda_filosofi01.jpg" 
+                    alt="Tim pengasuh dan pendidik berdedikasi Mannazentrum Daycare" 
+                    className="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              
+              <div className="-mt-8 sm:-mt-12">
+                <div className="relative overflow-hidden shadow-sm bg-white rounded-2xl">
+                  <PhotoBadge code="beranda_filosofi02" position="top-left" />
+                  <img 
+                    data-photo-code="beranda_filosofi02"
+                    src="/images/beranda_filosofi02.jpg" 
+                    alt="Kebersamaan hangat pendidik dan anak-anak di ruang aktivitas Mannazentrum Daycare" 
+                    className="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-6 space-y-6 lg:pl-6">
+            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block">
+              Filosofi Pengasuhan Kami
+            </span>
+            <h2 className="text-2xl md:text-3xl font-light text-slate-900 tracking-tight leading-tight">
+              The path to global change begins with a single child
+            </h2>
+            <div className="space-y-4 text-slate-600 font-light text-base md:text-lg leading-relaxed">
+              <p>
+                Setiap anak adalah anugerah tak ternilai. Mannazentrum Children's Foundation hadir mendampingi orang tua bekerja dengan memberikan perlindungan, stimulasi motorik, dan pendidikan holistik sejak usia dini.
+              </p>
+              <p>
+                Kami menciptakan ruang tumbuh yang hangat, higienis, serta dibimbing oleh para pengasuh dan pendidik bersertifikasi yang mengasuh dengan empati dan ketulusan hati.
+              </p>
+            </div>
+            <div className="pt-2">
+              <Link 
+                to="/daycare"
+                className="inline-flex items-center text-sm font-semibold text-slate-900 hover:text-amber-700 transition group"
+              >
+                <span>Lihat Program Daycare & Preschool Kami</span>
+                <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+              </Link>
+            </div>
           </div>
 
         </div>
