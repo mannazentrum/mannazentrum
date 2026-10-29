@@ -30,7 +30,7 @@ Berikut adalah 5 pendekatan berbasis pengasuhan positif yang diterapkan di Manna
     author: 'Tim Konselor Mannazentrum',
     date: '20 Oktober 2026',
     readTime: '4 menit baca',
-    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/berita_artikel01.jpg',
   },
   {
     id: '2',
@@ -47,7 +47,7 @@ Manfaat utama sensory play:
     author: 'Divisi Kurikulum Malika Maliaki',
     date: '15 Oktober 2026',
     readTime: '3 menit baca',
-    imageUrl: 'https://images.unsplash.com/photo-1596464716127-f2a829822391?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/berita_artikel02.jpg',
   },
   {
     id: '3',
@@ -64,7 +64,7 @@ Manfaat utama sensory play:
     author: 'Kepala Pengasuh Mannazentrum',
     date: '10 Oktober 2026',
     readTime: '5 menit baca',
-    imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/berita_artikel03.jpg',
   },
   {
     id: '4',
