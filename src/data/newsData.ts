@@ -99,6 +99,6 @@ Hasilnya? Anak-anak yang tadinya enggan menyentuh buah di rumah, dengan lahap me
     author: 'Tim Nutrisi & Kesehatan Anak',
     date: '28 September 2026',
     readTime: '4 menit baca',
-    imageUrl: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/berita_artikel05.jpg',
   },
 ];
