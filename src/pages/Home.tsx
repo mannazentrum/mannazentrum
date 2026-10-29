@@ -898,9 +898,9 @@ const Home: React.FC = () => {
                 <PhotoBadge code="beranda_pilar_preschool01" position="top-left" />
                 <img 
                   data-photo-code="beranda_pilar_preschool01"
-                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" 
+                  src="/images/beranda_pilar_preschool01.jpg" 
                   alt="Mannazentrum Preschool & Playgroup" 
-                  className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full aspect-[4/3] object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
               </div>
