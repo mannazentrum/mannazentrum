@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import FloatingCTA from '../components/FloatingCTA';
 import PhotoBadge from '../components/PhotoBadge';
-import { Shield, Target, Heart, Award, CheckCircle2, Building, Users } from 'lucide-react';
+import { Shield, Target, Heart, Award, CheckCircle2, Building, Users, FileCheck2, Navigation } from 'lucide-react';
 
 const About: React.FC = () => {
   useEffect(() => {
@@ -46,6 +46,71 @@ const About: React.FC = () => {
           <p className="mt-4 text-slate-500 text-base sm:text-lg md:text-xl font-light max-w-3xl leading-relaxed">
             PT. Elrafa Terang Sejahtera memayungi ekosistem terpadu pengasuhan anak usia dini (Mannazentrum Daycare & Preschool), stimulasi seni (Malika Maliaki), serta pembinaan tumbuh kembang generasi penerus bangsa.
           </p>
+        </div>
+      </section>
+
+      {/* ========================================================
+          STANDAR LEGALITAS RESMI & KEPATUHAN
+         ======================================================== */}
+      <section className="bg-white pb-20 md:pb-28 px-6 sm:px-10 lg:px-16 border-b border-stone-200/40">
+        <div className="max-w-7xl mx-auto">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-2">
+              Kepercayaan & Bukti Sosial
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-slate-900 tracking-tight">
+              Standar Legalitas Resmi & Kepuasan Orang Tua
+            </h2>
+            <p className="text-slate-500 font-light text-sm md:text-base mt-3">
+              Didirikan dengan kepatuhan hukum penuh, standar fasilitas higienis medis, dan komitmen pelayanan di wilayah Cisauk hingga Rumpin Bogor.
+            </p>
+          </div>
+
+          {/* Badges Legalitas & Izin Resmi */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div className="bg-[#FAF9F5] p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <FileCheck2 className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-semibold text-amber-600 uppercase tracking-widest block">Badan Hukum Resmi</span>
+                <h3 className="font-bold text-slate-900 text-base mt-0.5">PT. Elrafa Terang Sejahtera</h3>
+                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
+                  Terdaftar di Kemenkumham RI dengan NIB resmi operasional sektor pendidikan anak usia dini dan pengasuhan anak.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-[#FAF9F5] p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <Award className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-semibold text-emerald-600 uppercase tracking-widest block">Kualifikasi Pendidik</span>
+                <h3 className="font-bold text-slate-900 text-base mt-0.5">Tersertifikasi Basic Life Support</h3>
+                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
+                  Pengasuh dan guru terlatih penanganan pertolongan pertama anak, gizi MPASI, dan pemantauan tumbuh kembang holistik.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-[#FAF9F5] p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                <Navigation className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-semibold text-indigo-600 uppercase tracking-widest block">Cakupan Wilayah</span>
+                <h3 className="font-bold text-slate-900 text-base mt-0.5">Cisauk, Rumpin & Sekitar Bogor</h3>
+                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
+                  Pusat fasilitas di Serpong Garden 1 Cisauk, dengan layanan antar-jemput anak aman menjangkau wilayah Rumpin & perbatasan Bogor.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </section>
 

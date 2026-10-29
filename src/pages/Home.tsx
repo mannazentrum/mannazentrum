@@ -23,9 +23,6 @@ import {
   Building2,
   UserCheck,
   Star,
-  Award,
-  FileCheck2,
-  Navigation,
   Car,
   MessageCircle,
   MapPin,
@@ -821,7 +818,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* ========================================================
-          FASE 3: SOCIAL PROOF, LEGALITAS & MULTI-LOKASI SECTION
+          FASE 3: TESTIMONI & KEPUASAN ORANG TUA
          ======================================================== */}
       <section className="bg-[#FAF9F5] py-20 md:py-28 px-6 sm:px-10 lg:px-16 border-t border-b border-stone-200/50">
         <div className="max-w-7xl mx-auto">
@@ -831,59 +828,15 @@ const Home: React.FC = () => {
               Kepercayaan & Bukti Sosial
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-slate-900 tracking-tight">
-              Standar Legalitas Resmi & Kepuasan Orang Tua
+              Kepuasan & Ulasan Orang Tua
             </h2>
             <p className="text-slate-500 font-light text-sm md:text-base mt-3">
-              Didirikan dengan kepatuhan hukum penuh, standar fasilitas higienis medis, dan komitmen pelayanan di wilayah Cisauk hingga Rumpin Bogor.
+              Pengalaman nyata dan ulasan bintang 5 dari para orang tua yang mempercayakan pengasuhan dan tumbuh kembang buah hatinya kepada kami.
             </p>
           </div>
 
-          {/* Bagian 1: Badges Legalitas & Izin Resmi */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            
-            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                <FileCheck2 className="w-6 h-6" />
-              </div>
-              <div>
-                <span className="text-[10px] font-semibold text-amber-600 uppercase tracking-widest block">Badan Hukum Resmi</span>
-                <h3 className="font-bold text-slate-900 text-base mt-0.5">PT. Elrafa Terang Sejahtera</h3>
-                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
-                  Terdaftar di Kemenkumham RI dengan NIB resmi operasional sektor pendidikan anak usia dini dan pengasuhan anak.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                <Award className="w-6 h-6" />
-              </div>
-              <div>
-                <span className="text-[10px] font-semibold text-emerald-600 uppercase tracking-widest block">Kualifikasi Pendidik</span>
-                <h3 className="font-bold text-slate-900 text-base mt-0.5">Tersertifikasi Basic Life Support</h3>
-                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
-                  Pengasuh dan guru terlatih penanganan pertolongan pertama anak, gizi MPASI, dan pemantauan tumbuh kembang holistik.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white p-7 rounded-3xl border border-stone-200/60 shadow-sm flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-                <Navigation className="w-6 h-6" />
-              </div>
-              <div>
-                <span className="text-[10px] font-semibold text-indigo-600 uppercase tracking-widest block">Cakupan Wilayah</span>
-                <h3 className="font-bold text-slate-900 text-base mt-0.5">Cisauk, Rumpin & Sekitar Bogor</h3>
-                <p className="text-xs text-slate-500 font-light mt-1.5 leading-relaxed">
-                  Pusat fasilitas di Serpong Garden 1 Cisauk, dengan layanan antar-jemput anak aman menjangkau wilayah Rumpin & perbatasan Bogor.
-                </p>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Bagian 2: Testimoni Otentik Orang Tua (Slideshow Ulasan Bintang 5) */}
-          <div className="mb-12">
+          {/* Testimoni Otentik Orang Tua (Slideshow Ulasan Bintang 5) */}
+          <div className="mb-4">
             <TestimonialSlideshow onSelectScreenshot={setSelectedReviewScreenshot} />
           </div>
 
