@@ -15,6 +15,7 @@ import {
 import { CartItem } from './ShopCartDrawer';
 import { CurrencyKey, SHIPPING_DESTINATIONS } from '../../data/shopData';
 import { formatPrice } from '../../utils/shopCurrency';
+import { trackPurchase } from '../../utils/shopAnalytics';
 
 interface ShopCheckoutModalProps {
   isOpen: boolean;
@@ -104,6 +105,39 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
         totalAmountIdr: grandTotalIdr,
         shippingCostIdr: shippingCostIdr,
       });
+
+      // Save order for Admin & Employee CMS module
+      try {
+        const existingOrders = JSON.parse(localStorage.getItem('manna_shop_admin_orders_v1') || '[]');
+        const newRecord = {
+          orderId: generatedOrderId,
+          createdAt: new Date().toISOString(),
+          customerName,
+          customerPhone,
+          customerEmail: customerEmail || '-',
+          country: selectedCountry.nameId,
+          address: `${customerAddress}, ${customerCity} (${customerPostal})`,
+          items: cart.map(i => ({
+            id: i.product.id,
+            name: i.product.name,
+            quantity: i.quantity,
+            price: i.product.priceIdr
+          })),
+          subtotal: subtotalIdr,
+          discount: discountAmountIdr,
+          shipping: shippingCostIdr,
+          grandTotal: grandTotalIdr,
+          paymentMethod: paymentMethod.toUpperCase(),
+          status: 'Menunggu Konfirmasi',
+          trackingNumber: ''
+        };
+        localStorage.setItem('manna_shop_admin_orders_v1', JSON.stringify([newRecord, ...existingOrders]));
+      } catch (err) {
+        console.error('Failed to store order in local store history', err);
+      }
+
+      // Track E-commerce Analytics Event
+      trackPurchase(generatedOrderId, cart, grandTotalIdr, shippingCostIdr);
 
       // If user selected WhatsApp checkout or wants auto-open
       if (paymentMethod === 'wa') {

@@ -1,7 +1,30 @@
-# Robots.txt for Mannazentrum - PT. Elrafa Terang Sejahtera
+# Robots.txt for Mannazentrum & Manna Shop Eco-Family
+# https://mannazentrum.com & https://shop.mannazentrum.com
+
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /dashboard
+Disallow: /cms
 
-# Host & Sitemap
-Host: https://mannazentrum.com
+# AI Search & Crawlers Support (GEO - Generative Engine Optimization)
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemaps
 Sitemap: https://mannazentrum.com/sitemap.xml
+Sitemap: https://shop.mannazentrum.com/sitemap.xml

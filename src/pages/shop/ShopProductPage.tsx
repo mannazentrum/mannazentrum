@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useShop } from '../../context/ShopContext';
 import { ShopLayout } from '../../components/shop/ShopLayout';
 import SEO from '../../components/SEO';
+import { ShopStructuredData } from '../../components/shop/ShopStructuredData';
 import { 
   SHOP_PRODUCTS, 
   ShopProduct 
 } from '../../data/shopData';
 import { formatPrice } from '../../utils/shopCurrency';
+import { trackViewItem, trackAddToCart } from '../../utils/shopAnalytics';
 import { 
   ShoppingBag, 
   Star, 
@@ -19,7 +21,8 @@ import {
   Share2, 
   MessageCircle, 
   Info,
-  ArrowLeft
+  ArrowLeft,
+  HelpCircle
 } from 'lucide-react';
 
 export const ShopProductPage: React.FC = () => {
@@ -32,13 +35,20 @@ export const ShopProductPage: React.FC = () => {
 
   const product = SHOP_PRODUCTS.find((p) => p.slug === productSlug);
 
+  useEffect(() => {
+    if (product) {
+      trackViewItem(product);
+      window.scrollTo(0, 0);
+    }
+  }, [productSlug, product]);
+
   if (!product) {
     return (
       <ShopLayout>
         <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
           <h1 className="text-2xl font-bold text-slate-900">Produk Tidak Ditemukan</h1>
-          <p className="text-sm text-slate-500">
-            Produk yang Anda cari mungkin telah diperbarui atau dipindahkan.
+          <p className="text-sm text-slate-500 font-light">
+            Produk yang Anda cari mungkin telah diperbarui atau dipindahkan ke kategori lain.
           </p>
           <Link
             to="/category"
@@ -64,6 +74,16 @@ export const ShopProductPage: React.FC = () => {
     }
   };
 
+  const handleAddToCartClick = () => {
+    addToCart(product, quantity);
+    trackAddToCart(product, quantity);
+  };
+
+  const handleBuyNowClick = () => {
+    trackAddToCart(product, quantity);
+    directCheckout(product, quantity);
+  };
+
   const handleDirectWAOrder = () => {
     const waText = encodeURIComponent(
       `Halo Admin Mannazentrum Shop, saya tertarik memesan produk:\n*${product.name}*\nJumlah: ${quantity} unit\nMohon informasi stok & ongkir ke kota saya.`
@@ -71,12 +91,49 @@ export const ShopProductPage: React.FC = () => {
     window.open(`https://wa.me/6287881110807?text=${waText}`, '_blank');
   };
 
+  const productFaqs = [
+    {
+      question: `Bagaimana proteksi pengemasan produk ${product.name}?`,
+      answer: `Setiap produk dikemas dengan proteksi berlapis: bahan makanan dikemas kedap udara vakum 120 micron, cairan disegel ganda tahan tekanan kabin pesawat, dan benih dilindungi amplop aluminium foil anti-lembab.`
+    },
+    {
+      question: `Apakah pesanan ini bisa dikirim ke luar kota atau luar negeri (ASEAN)?`,
+      answer: `Ya, kami melayani pengiriman ke seluruh kota/kabupaten di Indonesia serta negara Asia Tenggara (Singapura, Malaysia, Brunei, Thailand, Filipina) dengan estimasi waktu 2-5 hari kerja.`
+    },
+    {
+      question: `Bagaimana jika paket saya tiba dalam kondisi rusak atau bocor?`,
+      answer: `Kami memberikan garansi penggantian 100% tanpa biaya tambahan. Cukup kirimkan foto unboxing singkat ke CS WhatsApp kami di +62 878-8111-0807 dan tim kami segera memproses kiriman pengganti.`
+    }
+  ];
+
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : `https://shop.mannazentrum.com/product/${product.slug}`;
+
   return (
     <ShopLayout activeCategory={product.category}>
       <SEO 
         title={`${product.name} - Mannazentrum Shop`}
         description={product.shortDescId}
         canonicalPath={`/product/${product.slug}`}
+      />
+
+      {/* Structured Data for Google Rich Snippets & AI Search */}
+      <ShopStructuredData 
+        type="product" 
+        product={product} 
+        url={currentUrl} 
+      />
+      <ShopStructuredData 
+        type="breadcrumb" 
+        items={[
+          { name: "Beranda", url: "https://shop.mannazentrum.com/" },
+          { name: "Kategori", url: "https://shop.mannazentrum.com/category" },
+          { name: product.categoryLabelId, url: `https://shop.mannazentrum.com/category/${product.category}` },
+          { name: product.name, url: currentUrl }
+        ]} 
+      />
+      <ShopStructuredData
+        type="faq"
+        faqs={productFaqs}
       />
 
       {/* Breadcrumb Navigation */}
@@ -182,6 +239,10 @@ export const ShopProductPage: React.FC = () => {
                 <span className="text-slate-500">{product.reviewCount} ulasan pembeli</span>
                 <span className="text-slate-300">•</span>
                 <span className="text-slate-500">
+                  SKU: <strong className="font-mono text-slate-700">{product.id.toUpperCase()}</strong>
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="text-slate-500">
                   Berat: {product.weightGrams >= 1000 ? `${(product.weightGrams / 1000).toFixed(1)} kg` : `${product.weightGrams} g`}
                 </span>
               </div>
@@ -262,7 +323,7 @@ export const ShopProductPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <button
-                    onClick={() => addToCart(product, quantity)}
+                    onClick={handleAddToCartClick}
                     className="w-full py-3.5 px-6 rounded-full border border-slate-900 text-slate-900 hover:bg-amber-50 font-semibold text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-xs"
                   >
                     <ShoppingBag className="w-4 h-4 text-amber-600" />
@@ -270,7 +331,7 @@ export const ShopProductPage: React.FC = () => {
                   </button>
 
                   <button
-                    onClick={() => directCheckout(product, quantity)}
+                    onClick={handleBuyNowClick}
                     className="w-full py-3.5 px-6 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-semibold text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-md"
                   >
                     <span>Beli Sekarang</span>
@@ -292,9 +353,33 @@ export const ShopProductPage: React.FC = () => {
 
         </div>
 
+        {/* Product FAQs Section */}
+        <div className="mt-16 pt-10 border-t border-stone-200 space-y-6">
+          <div className="space-y-1">
+            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block">
+              Tanya Jawab Produk
+            </span>
+            <h3 className="text-xl sm:text-2xl font-light text-slate-900">
+              Pertanyaan yang Sering Diajukan Seputar Produk Ini
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {productFaqs.map((faq, index) => (
+              <div key={index} className="bg-[#FAF9F5] p-5 rounded-2xl border border-stone-200/70 space-y-2">
+                <div className="flex items-start gap-2">
+                  <HelpCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <h4 className="font-bold text-slate-900 text-xs sm:text-sm leading-snug">{faq.question}</h4>
+                </div>
+                <p className="text-xs text-slate-500 font-light leading-relaxed pl-6">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div className="mt-20 pt-12 border-t border-stone-200">
+          <div className="mt-16 pt-10 border-t border-stone-200">
             <h3 className="text-xl sm:text-2xl font-light text-slate-900 mb-8">
               Produk Terkait di Kategori yang Sama
             </h3>

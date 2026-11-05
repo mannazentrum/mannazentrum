@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { ShopProduct, CurrencyKey, DISCOUNT_COUPONS } from '../../data/shopData';
 import { formatPrice } from '../../utils/shopCurrency';
+import { trackBeginCheckout } from '../../utils/shopAnalytics';
 
 export interface CartItem {
   product: ShopProduct;
@@ -258,7 +259,10 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
               {/* Action Buttons */}
               <div className="space-y-2 pt-2">
                 <button
-                  onClick={onProceedToCheckout}
+                  onClick={() => {
+                    trackBeginCheckout(cart, finalTotalIdr);
+                    onProceedToCheckout();
+                  }}
                   className="w-full py-3.5 px-4 bg-slate-900 hover:bg-amber-600 text-white rounded-full font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition active:scale-95"
                 >
                   <span>{language === 'id' ? 'Lanjut ke Pembayaran' : 'Proceed to Checkout'}</span>

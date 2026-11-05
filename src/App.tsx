@@ -23,6 +23,7 @@ const ShopContactPage = lazy(() => import('./pages/shop/ShopContactPage').then(m
 const ShopShippingPolicyPage = lazy(() => import('./pages/shop/ShopShippingPolicyPage').then(m => ({ default: m.ShopShippingPolicyPage })));
 const ShopReturnPolicyPage = lazy(() => import('./pages/shop/ShopReturnPolicyPage').then(m => ({ default: m.ShopReturnPolicyPage })));
 const ShopBlogPage = lazy(() => import('./pages/shop/ShopBlogPage').then(m => ({ default: m.ShopBlogPage })));
+const ShopAdminDashboard = lazy(() => import('./pages/shop/ShopAdminDashboard').then(m => ({ default: m.ShopAdminDashboard })));
 
 // Redirect helper to official shop subdomain
 const RedirectToShop: React.FC = () => {
@@ -88,6 +89,12 @@ const App: React.FC = () => {
 
                 <Route path="/blog" element={<ShopBlogPage />} />
                 <Route path="/blog/:postSlug" element={<ShopBlogPage />} />
+
+                {/* Portal Karyawan & Dashboard Manajemen Toko (CMS) */}
+                <Route path="/admin" element={<ShopAdminDashboard />} />
+                <Route path="/admin/shop" element={<ShopAdminDashboard />} />
+                <Route path="/dashboard" element={<ShopAdminDashboard />} />
+                <Route path="/cms" element={<Navigate to="/admin" replace />} />
 
                 {/* Aliases & Fallbacks Subdomain */}
                 <Route path="/toko" element={<Navigate to="/" replace />} />
