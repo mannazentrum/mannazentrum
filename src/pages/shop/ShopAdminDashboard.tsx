@@ -42,7 +42,10 @@ import {
   Save,
   RefreshCw,
   Eye,
-  Check
+  Check,
+  Upload,
+  Camera,
+  Image as ImageIcon
 } from 'lucide-react';
 
 export type UserRole = 'SUPER_ADMIN' | 'STORE_MANAGER' | 'CONTENT_EDITOR' | 'CUSTOMER_SERVICE' | 'FINANCE';
@@ -170,16 +173,59 @@ export const ShopAdminDashboard: React.FC = () => {
   // Coupons State
   const [couponsList] = useState(DISCOUNT_COUPONS);
 
-  // Product Edit Modal State
+  // Product Edit & Add State
   const [editingProduct, setEditingProduct] = useState<ShopProduct | null>(null);
   const [isAddProductOpen, setIsAddProductOpen] = useState(false);
+  const [newProductImage, setNewProductImage] = useState<string>('');
 
-  // Blog Edit Modal State
+  // Blog Edit & Add State
   const [editingBlog, setEditingBlog] = useState<ShopBlogPost | null>(null);
   const [isAddBlogOpen, setIsAddBlogOpen] = useState(false);
+  const [newBlogImage, setNewBlogImage] = useState<string>('');
 
   // Search filter in product manager
   const [productSearch, setProductSearch] = useState('');
+
+  // Direct Photo Processing & Auto-compression (max 900px, Web-optimized JPEG ~50KB)
+  const compressAndConvertImage = (file: File, callback: (base64Url: string) => void) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 900;
+        const MAX_HEIGHT = 900;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width = Math.round((width * MAX_HEIGHT) / height);
+            height = MAX_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressed = canvas.toDataURL('image/jpeg', 0.85);
+          callback(compressed);
+        } else {
+          callback(event.target?.result as string);
+        }
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Save orders state changes
   useEffect(() => {
@@ -1746,14 +1792,84 @@ export const ShopAdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="block font-medium text-slate-700 mb-1">URL Gambar Produk</label>
-                <input
-                  type="url"
-                  value={editingProduct.image}
-                  onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
-                  className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl"
-                />
+              {/* PENGGANTI FOTO LANGSUNG DARI PERANGKAT */}
+              <div className="space-y-2 p-3.5 bg-[#FAF9F5] rounded-2xl border border-stone-200">
+                <div className="flex items-center justify-between">
+                  <label className="block font-bold text-slate-800 text-xs">
+                    Foto Produk (Langsung dari Perangkat)
+                  </label>
+                  <span className="text-[10px] text-amber-700 font-semibold bg-amber-100 px-2 py-0.5 rounded-full">
+                    📷 File Upload
+                  </span>
+                </div>
+
+                {editingProduct.image ? (
+                  <div className="space-y-3">
+                    <div className="relative aspect-4/3 w-full max-w-xs mx-auto rounded-2xl overflow-hidden border border-stone-200 bg-white shadow-sm">
+                      <img
+                        src={editingProduct.image}
+                        alt="Preview Foto Produk"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        ✓ Foto Aktif
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-2">
+                      <label className="cursor-pointer inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-xs active:scale-95">
+                        <Camera className="w-3.5 h-3.5" />
+                        <span>Pilih Foto Baru dari HP / Laptop</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              compressAndConvertImage(file, (dataUrl) => {
+                                setEditingProduct({ ...editingProduct, image: dataUrl });
+                              });
+                            }
+                          }}
+                        />
+                      </label>
+
+                      <button
+                        type="button"
+                        onClick={() => setEditingProduct({ ...editingProduct, image: '' })}
+                        className="px-3 py-2 rounded-xl border border-stone-200 text-slate-500 hover:text-rose-600 hover:bg-rose-50 text-xs transition"
+                      >
+                        Hapus Foto
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer border-2 border-dashed border-stone-300 hover:border-amber-500 bg-white hover:bg-amber-50/40 rounded-2xl p-6 flex flex-col items-center justify-center text-center transition group block">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-2 group-hover:scale-105 transition">
+                      <Upload className="w-6 h-6 text-amber-700" />
+                    </div>
+                    <span className="font-bold text-slate-800 text-xs block group-hover:text-amber-800">
+                      Klik untuk Memilih Foto Langsung dari Galeri / Kamera
+                    </span>
+                    <span className="text-[11px] text-slate-400 font-light mt-0.5 block">
+                      Mendukung format JPG, PNG, WEBP langsung dari perangkat
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          compressAndConvertImage(file, (dataUrl) => {
+                            setEditingProduct({ ...editingProduct, image: dataUrl });
+                          });
+                        }
+                      }}
+                    />
+                  </label>
+                )}
               </div>
 
               <div>
@@ -1816,7 +1932,7 @@ export const ShopAdminDashboard: React.FC = () => {
                   rating: 5.0,
                   reviewCount: 1,
                   stock: Number(target.stock.value || 50),
-                  image: target.image.value || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
+                  image: newProductImage || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
                   badges: ['Produk Baru'],
                   isBestSeller: false,
                   isAseanReady: true,
@@ -1827,6 +1943,7 @@ export const ShopAdminDashboard: React.FC = () => {
                   specs: [{ labelId: 'Kondisi', labelEn: 'Condition', value: 'Baru & Segel' }]
                 };
                 addProduct(newProd);
+                setNewProductImage('');
                 setIsAddProductOpen(false);
               }}
               className="space-y-3 text-xs"
@@ -1864,9 +1981,84 @@ export const ShopAdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="block font-medium text-slate-700 mb-1">URL Gambar Produk (Unsplash / CDN)</label>
-                <input name="image" type="url" placeholder="https://images.unsplash.com/..." className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+              {/* UNGGAH FOTO LANGSUNG DARI PERANGKAT */}
+              <div className="space-y-2 p-3.5 bg-[#FAF9F5] rounded-2xl border border-stone-200">
+                <div className="flex items-center justify-between">
+                  <label className="block font-bold text-slate-800 text-xs">
+                    Foto Produk (Pilih Langsung dari Perangkat)
+                  </label>
+                  <span className="text-[10px] text-amber-700 font-semibold bg-amber-100 px-2 py-0.5 rounded-full">
+                    📷 File Upload
+                  </span>
+                </div>
+
+                {newProductImage ? (
+                  <div className="space-y-3">
+                    <div className="relative aspect-4/3 w-full max-w-xs mx-auto rounded-2xl overflow-hidden border border-stone-200 bg-white shadow-sm">
+                      <img
+                        src={newProductImage}
+                        alt="Preview Foto Produk Baru"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-2 right-2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        ✓ Foto Terpilih
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-2">
+                      <label className="cursor-pointer inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-xs active:scale-95">
+                        <Camera className="w-3.5 h-3.5" />
+                        <span>Ganti Foto</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              compressAndConvertImage(file, (dataUrl) => {
+                                setNewProductImage(dataUrl);
+                              });
+                            }
+                          }}
+                        />
+                      </label>
+
+                      <button
+                        type="button"
+                        onClick={() => setNewProductImage('')}
+                        className="px-3 py-2 rounded-xl border border-stone-200 text-slate-500 hover:text-rose-600 hover:bg-rose-50 text-xs transition"
+                      >
+                        Hapus
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer border-2 border-dashed border-stone-300 hover:border-amber-500 bg-white hover:bg-amber-50/40 rounded-2xl p-6 flex flex-col items-center justify-center text-center transition group block">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-2 group-hover:scale-105 transition">
+                      <Upload className="w-6 h-6 text-amber-700" />
+                    </div>
+                    <span className="font-bold text-slate-800 text-xs block group-hover:text-amber-800">
+                      Klik untuk Memilih Foto Langsung dari HP / Laptop
+                    </span>
+                    <span className="text-[11px] text-slate-400 font-light mt-0.5 block">
+                      Pilih dari Galeri, Kamera, atau File Komputer (Otomatis dioptimalkan)
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          compressAndConvertImage(file, (dataUrl) => {
+                            setNewProductImage(dataUrl);
+                          });
+                        }
+                      }}
+                    />
+                  </label>
+                )}
               </div>
 
               <div>
@@ -1916,14 +2108,15 @@ export const ShopAdminDashboard: React.FC = () => {
                   category: target.category.value,
                   date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
                   readTime: `${target.readTime.value || '4'} min baca`,
-                  image: target.image.value || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
+                  image: newBlogImage || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
                   excerptId: target.excerpt.value,
                   excerptEn: target.excerpt.value,
                   contentId: [target.content.value],
                   contentEn: [target.content.value],
-                  relatedProductSlug: 'beras-organik-pandan-wangi'
+                  relatedProductSlug: ''
                 };
                 addBlogPost(newPost);
+                setNewBlogImage('');
                 setIsAddBlogOpen(false);
               }}
               className="space-y-3 text-xs"
@@ -1949,9 +2142,77 @@ export const ShopAdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="block font-medium text-slate-700 mb-1">URL Gambar Sampul (Unsplash / CDN)</label>
-                <input name="image" type="url" placeholder="https://images.unsplash.com/..." className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+              {/* UNGGAH GAMBAR ARTIKEL LANGSUNG DARI PERANGKAT */}
+              <div className="space-y-2 p-3 bg-[#FAF9F5] rounded-2xl border border-stone-200">
+                <div className="flex items-center justify-between">
+                  <label className="block font-bold text-slate-800 text-xs">
+                    Gambar Sampul Artikel
+                  </label>
+                  <span className="text-[10px] text-amber-700 font-semibold bg-amber-100 px-2 py-0.5 rounded-full">
+                    📷 File Upload
+                  </span>
+                </div>
+
+                {newBlogImage ? (
+                  <div className="space-y-2">
+                    <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-stone-200 bg-white">
+                      <img
+                        src={newBlogImage}
+                        alt="Preview Sampul Blog"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex justify-center gap-2">
+                      <label className="cursor-pointer inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[11px] transition shadow-xs">
+                        <Camera className="w-3 h-3" />
+                        <span>Ganti Gambar</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              compressAndConvertImage(file, (dataUrl) => {
+                                setNewBlogImage(dataUrl);
+                              });
+                            }
+                          }}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setNewBlogImage('')}
+                        className="px-2.5 py-1.5 rounded-lg border border-stone-200 text-slate-500 hover:text-rose-600 text-[11px]"
+                      >
+                        Hapus
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer border-2 border-dashed border-stone-300 hover:border-amber-500 bg-white hover:bg-amber-50/40 rounded-xl p-4 flex flex-col items-center justify-center text-center transition group block">
+                    <Upload className="w-5 h-5 text-amber-700 mb-1 group-hover:scale-105 transition" />
+                    <span className="font-bold text-slate-800 text-xs block group-hover:text-amber-800">
+                      Pilih Foto Sampul dari HP / Laptop
+                    </span>
+                    <span className="text-[10px] text-slate-400">
+                      Otomatis dioptimalkan untuk web
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          compressAndConvertImage(file, (dataUrl) => {
+                            setNewBlogImage(dataUrl);
+                          });
+                        }
+                      }}
+                    />
+                  </label>
+                )}
               </div>
 
               <div>
