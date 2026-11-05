@@ -33,7 +33,9 @@ const RedirectToReportPortal: React.FC = () => {
 const App: React.FC = () => {
   const isShopSubdomain = typeof window !== 'undefined' && (
     window.location.hostname === 'shop.mannazentrum.com' ||
-    window.location.hostname.startsWith('shop.')
+    window.location.hostname.startsWith('shop.') ||
+    window.location.search.includes('view=shop') ||
+    window.location.search.includes('shop=1')
   );
 
   const isReportSubdomain = typeof window !== 'undefined' && (
