@@ -17,12 +17,16 @@ import {
 } from 'lucide-react';
 
 export const ShopAboutPage: React.FC = () => {
-  const { aboutContent } = useShop();
+  const { aboutContent, language } = useShop();
   return (
     <ShopLayout>
       <SEO 
-        title="Tentang Kami - Mannazentrum Shop | Keperluan Keluarga Indonesia & Asia Tenggara"
-        description="Mengenal Mannazentrum Shop: Toko online kebutuhan harian keluarga modern yang berfokus pada pakaian katun organik, sembako sehat beras & madu mentah, benih tanaman pekarangan, dan produk ramah lingkungan."
+        title={language === 'en' 
+          ? "About Us - Mannazentrum Shop | Family Essentials Indonesia & Southeast Asia"
+          : "Tentang Kami - Mannazentrum Shop | Keperluan Keluarga Indonesia & Asia Tenggara"}
+        description={language === 'en'
+          ? "Learn about Mannazentrum Shop: Curated daily living essentials for conscious modern families across Indonesia and Southeast Asia."
+          : "Mengenal Mannazentrum Shop: Toko online kebutuhan harian keluarga modern yang berfokus pada pakaian katun organik, sembako sehat beras & madu mentah, benih tanaman pekarangan, dan produk ramah lingkungan."}
         canonicalPath="/about-us"
       />
 
@@ -31,13 +35,17 @@ export const ShopAboutPage: React.FC = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center space-y-5 relative z-10">
           <span className="text-amber-400 font-semibold uppercase tracking-[0.2em] text-xs block">
-            {aboutContent?.badge || 'Mengenal Manna Shop'}
+            {language === 'en' ? 'About Mannazentrum Shop' : (aboutContent?.badge || 'Mengenal Manna Shop')}
           </span>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-light text-white tracking-tight leading-tight">
-            {aboutContent?.title || 'Menyemai Gaya Hidup Sehat & Alami untuk Seluruh Keluarga'}
+            {language === 'en' 
+              ? 'Nurturing Healthy & Wholesome Living for Every Family' 
+              : (aboutContent?.title || 'Menyemai Gaya Hidup Sehat & Alami untuk Seluruh Keluarga')}
           </h1>
           <p className="text-slate-300 font-light text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-            {aboutContent?.subtitle || 'Hadir sebagai pusat perlengkapan keluarga harian terpadu: dari pakaian serat alami lembut anak, bahan pangan pokok organik, hingga bibit tanaman untuk ketahanan pangan mandiri di pekarangan rumah.'}
+            {language === 'en'
+              ? 'An integrated destination for daily family living: from gentle natural fiber kids apparel, organic vacuum-sealed staples, to certified seeds for home garden food self-sufficiency.'
+              : (aboutContent?.subtitle || 'Hadir sebagai pusat perlengkapan keluarga harian terpadu: dari pakaian serat alami lembut anak, bahan pangan pokok organik, hingga bibit tanaman untuk ketahanan pangan mandiri di pekarangan rumah.')}
           </p>
         </div>
       </section>
@@ -48,20 +56,28 @@ export const ShopAboutPage: React.FC = () => {
           
           <div className="lg:col-span-6 space-y-6">
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block">
-              Cerita & Filosofi Kami
+              {language === 'en' ? 'Our Story & Philosophy' : 'Cerita & Filosofi Kami'}
             </span>
             <h2 className="text-2xl sm:text-4xl font-light text-slate-900 tracking-tight leading-snug">
-              {aboutContent?.storyTitle || 'Berasal dari Kepedulian Nyata akan Kualitas Hidup Si Kecil & Rumah Tangga'}
+              {language === 'en'
+                ? 'Born from a Deep Care for Childhood Health and Conscious Homes'
+                : (aboutContent?.storyTitle || 'Berasal dari Kepedulian Nyata akan Kualitas Hidup Si Kecil & Rumah Tangga')}
             </h2>
             <div className="space-y-4 text-slate-600 font-light text-sm sm:text-base leading-relaxed">
               <p>
-                {aboutContent?.storyParagraph1 || 'Manna Shop lahir dari kesadaran mendalam bahwa kesehatan keluarga dimulai dari apa yang dipakai, apa yang dimakan, dan bagaimana lingkungan sekitar rumah dirawat setiap hari.'}
+                {language === 'en'
+                  ? 'Mannazentrum Shop was born from the firm belief that family wellbeing begins with what touches children skin, the purity of food on the dining table, and how our home environment is cared for daily.'
+                  : (aboutContent?.storyParagraph1 || 'Manna Shop lahir dari kesadaran mendalam bahwa kesehatan keluarga dimulai dari apa yang dipakai, apa yang dimakan, dan bagaimana lingkungan sekitar rumah dirawat setiap hari.')}
               </p>
               <p>
-                {aboutContent?.storyParagraph2 || 'Banyak keluarga di perkotaan menghadapi tantangan paparan residu pestisida pada bahan pangan pokok, pakaian anak berbahan sintetis panas yang memicu alergi kulit tropis, serta keterbatasan ruang pekarangan untuk berkebun.'}
+                {language === 'en'
+                  ? 'Modern families across Southeast Asia face synthetic fabrics that irritate tropical sensitive skin, pesticide residues in everyday staples, and a lack of access to fresh seeds for small balcony or backyard gardening.'
+                  : (aboutContent?.storyParagraph2 || 'Banyak keluarga di perkotaan menghadapi tantangan paparan residu pestisida pada bahan pangan pokok, pakaian anak berbahan sintetis panas yang memicu alergi kulit tropis, serta keterbatasan ruang pekarangan untuk berkebun.')}
               </p>
               <p>
-                {aboutContent?.storyParagraph3 || 'Melalui Manna Shop, kami menghadirkan kurasi produk yang telah melewati standar ketat, bermitra langsung dengan kelompok tani organik lokal nusantara dan pengrajin tekstil ramah lingkungan.'}
+                {language === 'en'
+                  ? 'Through rigorous quality checks, direct partnerships with organic farming communities, and vacuum-sealed logistics, we provide peace of mind to homes throughout Indonesia, Singapore, Malaysia, and neighboring countries.'
+                  : (aboutContent?.storyParagraph3 || 'Melalui Manna Shop, kami menghadirkan kurasi produk yang telah melewati standar ketat, bermitra langsung dengan kelompok tani organik lokal nusantara dan pengrajin tekstil ramah lingkungan.')}
               </p>
             </div>
 
@@ -70,7 +86,7 @@ export const ShopAboutPage: React.FC = () => {
                 to="/category"
                 className="inline-flex items-center gap-2 bg-slate-900 text-white px-7 py-3 rounded-full text-xs font-medium hover:bg-amber-600 transition shadow-sm"
               >
-                <span>Jelajahi Produk Pilihan</span>
+                <span>{language === 'en' ? 'Explore Curated Catalog' : 'Jelajahi Produk Pilihan'}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -95,10 +111,10 @@ export const ShopAboutPage: React.FC = () => {
           
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs">
-              4 Pilar Standar Kualitas
+              {language === 'en' ? '4 Core Quality Standards' : '4 Pilar Standar Kualitas'}
             </span>
             <h3 className="text-2xl sm:text-4xl font-light text-slate-900 tracking-tight">
-              Komitmen Kami pada Setiap Paket yang Dikirim
+              {language === 'en' ? 'Our Commitment in Every Parcel Shipped' : 'Komitmen Kami pada Setiap Paket yang Dikirim'}
             </h3>
           </div>
 
@@ -108,9 +124,13 @@ export const ShopAboutPage: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 🌱
               </div>
-              <h4 className="font-bold text-slate-900 text-base">Alami & Ramah Lingkungan</h4>
+              <h4 className="font-bold text-slate-900 text-base">
+                {language === 'en' ? 'Natural & Hypoallergenic' : 'Alami & Ramah Lingkungan'}
+              </h4>
               <p className="text-xs text-slate-500 font-light leading-relaxed">
-                Bebas dari bahan pengawet kimia berbahaya, pewarna tekstil beracun, serta busa deterjen detergen sintetis berlebih.
+                {language === 'en'
+                  ? 'Free from hazardous chemical preservatives, toxic azo textile dyes, and aggressive synthetic foaming agents.'
+                  : 'Bebas dari bahan pengawet kimia berbahaya, pewarna tekstil beracun, serta busa deterjen detergen sintetis berlebih.'}
               </p>
             </div>
 
@@ -118,9 +138,13 @@ export const ShopAboutPage: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 🌾
               </div>
-              <h4 className="font-bold text-slate-900 text-base">Mitra Petani Nusantara</h4>
+              <h4 className="font-bold text-slate-900 text-base">
+                {language === 'en' ? 'Ethical Local Farmers' : 'Mitra Petani Nusantara'}
+              </h4>
               <p className="text-xs text-slate-500 font-light leading-relaxed">
-                Membeli langsung dari petani lokal binaan dengan harga yang adil, menjaga ekosistem tanah dan perairan alami.
+                {language === 'en'
+                  ? 'Direct partnerships with smallholder regenerative organic farmers at guaranteed fair trade prices.'
+                  : 'Membeli langsung dari petani lokal binaan dengan harga yang adil, menjaga ekosistem tanah dan perairan alami.'}
               </p>
             </div>
 
@@ -128,9 +152,13 @@ export const ShopAboutPage: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 📦
               </div>
-              <h4 className="font-bold text-slate-900 text-base">Standar Vakum Ekspor</h4>
+              <h4 className="font-bold text-slate-900 text-base">
+                {language === 'en' ? 'Export Vacuum Packaging' : 'Standar Vakum Ekspor'}
+              </h4>
               <p className="text-xs text-slate-500 font-light leading-relaxed">
-                Kemasan kedap udara tebal menjamin beras, madu, dan rempah tetap bersih higienis dan awet dalam perjalanan jarak jauh.
+                {language === 'en'
+                  ? 'Airtight multi-layer food-grade packaging preserves aroma, nutrition, and cleanliness on extended transit.'
+                  : 'Kemasan kedap udara tebal menjamin beras, madu, dan rempah tetap bersih higienis dan awet dalam perjalanan jarak jauh.'}
               </p>
             </div>
 
@@ -138,9 +166,13 @@ export const ShopAboutPage: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 🌏
               </div>
-              <h4 className="font-bold text-slate-900 text-base">Jangkauan Indonesia & ASEAN</h4>
+              <h4 className="font-bold text-slate-900 text-base">
+                {language === 'en' ? 'ID & ASEAN Reach' : 'Jangkauan Indonesia & ASEAN'}
+              </h4>
               <p className="text-xs text-slate-500 font-light leading-relaxed">
-                Dukungan multi-mata uang, jalur kurir kilat udara, dan kemudahan konfirmasi pesanan langsung via WhatsApp.
+                {language === 'en'
+                  ? 'Multi-currency checkout, express air freight options, and immediate customer care assistance.'
+                  : 'Dukungan multi-mata uang, jalur kurir kilat udara, dan kemudahan konfirmasi pesanan langsung via WhatsApp.'}
               </p>
             </div>
 
@@ -153,23 +185,25 @@ export const ShopAboutPage: React.FC = () => {
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
         <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 text-center space-y-5 border border-slate-800">
           <h3 className="text-2xl sm:text-3xl font-light tracking-tight">
-            Siap Menghadirkan Kebaikan Alami ke Rumah Anda?
+            {language === 'en' ? 'Ready to Bring Pure Goodness to Your Home?' : 'Siap Menghadirkan Kebaikan Alami ke Rumah Anda?'}
           </h3>
           <p className="text-slate-300 font-light text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
-            Pesan hari ini dan rasakan perbedaannya. Tim layanan pelanggan kami siap membantu konsultasi produk keluarga dan pengiriman setiap saat.
+            {language === 'en'
+              ? 'Order today and experience the difference. Our customer care team is always here to assist with product inquiries and shipping.'
+              : 'Pesan hari ini dan rasakan perbedaannya. Tim layanan pelanggan kami siap membantu konsultasi produk keluarga dan pengiriman setiap saat.'}
           </p>
           <div className="flex flex-wrap justify-center gap-3 pt-2">
             <Link
               to="/category"
               className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-7 py-3 rounded-full text-xs transition shadow-md"
             >
-              Mulai Belanja
+              {language === 'en' ? 'Start Shopping' : 'Mulai Belanja'}
             </Link>
             <Link
               to="/contact"
               className="bg-slate-800 hover:bg-slate-700 text-white font-medium px-6 py-3 rounded-full text-xs transition border border-slate-700"
             >
-              Hubungi Layanan Pelanggan
+              {language === 'en' ? 'Contact Customer Care' : 'Hubungi Layanan Pelanggan'}
             </Link>
           </div>
         </div>

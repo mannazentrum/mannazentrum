@@ -100,35 +100,45 @@ const Store: React.FC = () => {
             <span className="text-amber-400 font-semibold uppercase tracking-[0.2em] text-xs inline-flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               <span>
-                {homeContent?.heroBadge || (language === 'id' 
-                  ? 'Toko Online Kebutuhan Harian Keluarga' 
-                  : 'Integrated Family Daily Living Store'
-                )}
+                {language === 'en' 
+                  ? 'Integrated Family Daily Living Store' 
+                  : (homeContent?.heroBadge || 'Toko Online Kebutuhan Harian Keluarga')}
               </span>
             </span>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-tight">
-              {homeContent?.heroTitle || (language === 'id' ? (
-                <>
-                  Keperluan Keluarga Harian: <br />
-                  <span className="font-semibold text-amber-300">
-                    Pakaian, Sembako Sehat & Bibit Tanaman
-                  </span>
-                </>
-              ) : (
+              {language === 'en' ? (
                 <>
                   Wholesome Family Living: <br />
                   <span className="font-semibold text-amber-300">
                     Apparel, Organic Groceries & Seeds
                   </span>
                 </>
-              ))}
+              ) : (
+                homeContent?.heroTitle ? (
+                  homeContent.heroTitle.includes(':') ? (
+                    <>
+                      {homeContent.heroTitle.split(':')[0]}: <br />
+                      <span className="font-semibold text-amber-300">
+                        {homeContent.heroTitle.split(':')[1]}
+                      </span>
+                    </>
+                  ) : homeContent.heroTitle
+                ) : (
+                  <>
+                    Keperluan Keluarga Harian: <br />
+                    <span className="font-semibold text-amber-300">
+                      Pakaian, Sembako Sehat & Bibit Tanaman
+                    </span>
+                  </>
+                )
+              )}
             </h1>
 
             <p className="text-slate-300 font-light text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              {homeContent?.heroSubtitle || (language === 'id'
-                ? 'Koleksi pilihan berbahan alam yang dirancang untuk mendukung gaya hidup sehat keluarga. Melayani pemesanan cepat dengan proteksi kemasan vakum ke seluruh pelosok Indonesia dan negara tetangga (Singapura, Malaysia, Brunei, Thailand).'
-                : 'Curated natural essentials for conscious family living. Vacuum-sealed and safely shipped across Indonesia and ASEAN neighbor countries.')}
+              {language === 'en'
+                ? 'Curated natural essentials for conscious family living. Vacuum-sealed and safely shipped across Indonesia and ASEAN neighbor countries.'
+                : (homeContent?.heroSubtitle || 'Koleksi pilihan berbahan alam yang dirancang untuk mendukung gaya hidup sehat keluarga. Melayani pemesanan cepat dengan proteksi kemasan vakum ke seluruh pelosok Indonesia dan negara tetangga (Singapura, Malaysia, Brunei, Thailand).')}
             </p>
 
             {/* Quick Actions */}
@@ -138,7 +148,7 @@ const Store: React.FC = () => {
                 className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-7 py-3 rounded-full text-xs sm:text-sm transition shadow-lg shadow-amber-500/20 active:scale-95 flex items-center gap-2"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>{homeContent?.heroCtaText || (language === 'id' ? 'Lihat Katalog Produk' : 'Shop Essentials')}</span>
+                <span>{language === 'en' ? 'Shop Essentials' : (homeContent?.heroCtaText || 'Lihat Katalog Produk')}</span>
               </a>
 
               <Link
@@ -154,15 +164,15 @@ const Store: React.FC = () => {
             <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-slate-400">
               <div className="flex items-center gap-1.5">
                 <Check className="w-4 h-4 text-amber-400" />
-                <span>Bahan Pilihan Alami & Bebas Kimia</span>
+                <span>{language === 'en' ? '100% Pure, Natural & Chemical-Free' : 'Bahan Pilihan Alami & Bebas Kimia'}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Check className="w-4 h-4 text-amber-400" />
-                <span>Kemasan Vakum Kedap Udara</span>
+                <span>{language === 'en' ? 'Airtight Vacuum Packaging' : 'Kemasan Vakum Kedap Udara'}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Check className="w-4 h-4 text-amber-400" />
-                <span>Garansi Penggantian Kerusakan 100%</span>
+                <span>{language === 'en' ? '100% Damage Replacement Guarantee' : 'Garansi Penggantian Kerusakan 100%'}</span>
               </div>
             </div>
 
@@ -180,7 +190,9 @@ const Store: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-                    <span className="text-[11px] font-bold text-white">Sembako Sehat</span>
+                    <span className="text-[11px] font-bold text-white">
+                      {language === 'en' ? 'Healthy Groceries' : 'Sembako Sehat'}
+                    </span>
                   </div>
                 </Link>
 
@@ -191,7 +203,9 @@ const Store: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-                    <span className="text-[11px] font-bold text-white">Bibit Tanaman</span>
+                    <span className="text-[11px] font-bold text-white">
+                      {language === 'en' ? 'Plants & Seeds' : 'Bibit Tanaman'}
+                    </span>
                   </div>
                 </Link>
 
@@ -202,7 +216,9 @@ const Store: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-                    <span className="text-[11px] font-bold text-white">Pakaian Katun</span>
+                    <span className="text-[11px] font-bold text-white">
+                      {language === 'en' ? 'Cotton Apparel' : 'Pakaian Katun'}
+                    </span>
                   </div>
                 </Link>
 
@@ -213,7 +229,9 @@ const Store: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-                    <span className="text-[11px] font-bold text-white">Kebutuhan Harian</span>
+                    <span className="text-[11px] font-bold text-white">
+                      {language === 'en' ? 'Daily Living' : 'Kebutuhan Harian'}
+                    </span>
                   </div>
                 </Link>
               </div>
@@ -223,8 +241,12 @@ const Store: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <Tag className="w-4 h-4 text-amber-400 shrink-0" />
                   <div>
-                    <span className="font-bold text-amber-300 block">Kupon Hemat: ASEANFAM</span>
-                    <span className="text-[11px] text-slate-300">Diskon 15% kiriman Indonesia & Asia Tenggara</span>
+                    <span className="font-bold text-amber-300 block">
+                      {language === 'en' ? 'Savings Coupon: ASEANFAM' : 'Kupon Hemat: ASEANFAM'}
+                    </span>
+                    <span className="text-[11px] text-slate-300">
+                      {language === 'en' ? '15% discount for ID & ASEAN deliveries' : 'Diskon 15% kiriman Indonesia & Asia Tenggara'}
+                    </span>
                   </div>
                 </div>
                 <button
@@ -234,7 +256,7 @@ const Store: React.FC = () => {
                   }}
                   className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-[10px] uppercase tracking-wider shrink-0 transition"
                 >
-                  Klaim Kupon
+                  {language === 'en' ? 'Claim Promo' : 'Klaim Kupon'}
                 </button>
               </div>
 
@@ -257,8 +279,12 @@ const Store: React.FC = () => {
               <Shirt className="w-5 h-5" />
             </div>
             <div>
-              <span className="font-bold text-xs sm:text-sm block text-slate-900 group-hover:text-amber-600">Pakaian Keluarga</span>
-              <span className="text-[10px] block text-slate-400">Katun & Serat Bambu</span>
+              <span className="font-bold text-xs sm:text-sm block text-slate-900 group-hover:text-amber-600">
+                {language === 'en' ? 'Family Apparel' : 'Pakaian Keluarga'}
+              </span>
+              <span className="text-[10px] block text-slate-400">
+                {language === 'en' ? 'Cotton & Bamboo Fiber' : 'Katun & Serat Bambu'}
+              </span>
             </div>
           </Link>
 
@@ -270,8 +296,12 @@ const Store: React.FC = () => {
               <Apple className="w-5 h-5" />
             </div>
             <div>
-              <span className="font-bold text-xs sm:text-sm block text-slate-900 group-hover:text-amber-600">Bahan Makanan Sehat</span>
-              <span className="text-[10px] block text-slate-400">Beras Organik & Madu</span>
+              <span className="font-bold text-xs sm:text-sm block text-slate-900 group-hover:text-amber-600">
+                {language === 'en' ? 'Healthy Groceries' : 'Bahan Makanan Sehat'}
+              </span>
+              <span className="text-[10px] block text-slate-400">
+                {language === 'en' ? 'Organic Rice & Raw Honey' : 'Beras Organik & Madu'}
+              </span>
             </div>
           </Link>
 
@@ -283,8 +313,12 @@ const Store: React.FC = () => {
               <Leaf className="w-5 h-5" />
             </div>
             <div>
-              <span className="font-bold text-xs sm:text-sm block text-slate-900 group-hover:text-amber-600">Tanaman & Bibit</span>
-              <span className="text-[10px] block text-slate-400">Benih Panen & Pupuk</span>
+              <span className="font-bold text-xs sm:text-sm block text-slate-900 group-hover:text-amber-600">
+                {language === 'en' ? 'Plants & Seeds' : 'Tanaman & Bibit'}
+              </span>
+              <span className="text-[10px] block text-slate-400">
+                {language === 'en' ? 'Certified Seeds & Plant Food' : 'Benih Panen & Pupuk'}
+              </span>
             </div>
           </Link>
 
@@ -296,8 +330,12 @@ const Store: React.FC = () => {
               <HomeIcon className="w-5 h-5" />
             </div>
             <div>
-              <span className="font-bold text-xs sm:text-sm block text-slate-900 group-hover:text-amber-600">Kebutuhan Harian</span>
-              <span className="text-[10px] block text-slate-400">Sabun & Perawatan</span>
+              <span className="font-bold text-xs sm:text-sm block text-slate-900 group-hover:text-amber-600">
+                {language === 'en' ? 'Daily Essentials' : 'Kebutuhan Harian'}
+              </span>
+              <span className="text-[10px] block text-slate-400">
+                {language === 'en' ? 'Natural Soap & Home Care' : 'Sabun & Perawatan'}
+              </span>
             </div>
           </Link>
 
@@ -469,7 +507,7 @@ const Store: React.FC = () => {
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
                   <div>
                     <span className="text-[10px] uppercase tracking-wider text-slate-400 block font-medium">
-                      Harga
+                      {language === 'en' ? 'Price' : 'Harga'}
                     </span>
                     <span className="font-bold text-slate-900 text-base leading-none">
                       {formatPrice(product.priceIdr, currency)}
@@ -481,18 +519,18 @@ const Store: React.FC = () => {
                     <Link
                       to={`/product/${product.slug}`}
                       className="px-3 py-2 rounded-full border border-stone-200 text-slate-700 hover:bg-stone-50 text-xs font-medium transition"
-                      title="Lihat Halaman Produk"
+                      title={language === 'en' ? 'View Details' : 'Lihat Halaman Produk'}
                     >
-                      Detail
+                      {language === 'en' ? 'Detail' : 'Detail'}
                     </Link>
 
                     <button
                       onClick={() => addToCart(product, 1)}
-                      className="bg-slate-900 hover:bg-amber-600 text-white p-2 sm:px-3.5 sm:py-2 rounded-full text-xs font-medium transition flex items-center gap-1 shadow-sm active:scale-95"
-                      aria-label="Tambah ke Keranjang"
+                      className="bg-slate-900 hover:bg-amber-600 text-white p-2 sm:px-3.5 sm:py-2 rounded-full text-xs font-medium transition flex items-center gap-1 shadow-sm active:scale-95 cursor-pointer"
+                      aria-label={language === 'en' ? 'Add to Cart' : 'Tambah ke Keranjang'}
                     >
                       <ShoppingBag className="w-3.5 h-3.5 text-amber-300" />
-                      <span className="hidden sm:inline">+ Pesan</span>
+                      <span className="hidden sm:inline">{language === 'en' ? '+ Add' : '+ Pesan'}</span>
                     </button>
                   </div>
 
@@ -513,13 +551,17 @@ const Store: React.FC = () => {
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
             <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs">
-              Jaminan Mutu & Keamanan
+              {language === 'en' ? 'Quality & Purity Assurance' : 'Jaminan Mutu & Keamanan'}
             </span>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-light text-slate-900 tracking-tight">
-              Standar Kualitas Tertinggi untuk Keluarga Indonesia & Asia Tenggara
+              {language === 'en' 
+                ? 'Highest Standard for Indonesian & Southeast Asian Families' 
+                : 'Standar Kualitas Tertinggi untuk Keluarga Indonesia & Asia Tenggara'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
-              Setiap produk dipilih dan dikurasi dengan ketat: tanpa pengawet sintetik berbahaya pada makanan, serat alami aman alergi pada pakaian anak, dan benih segar berdaya tumbuh tinggi.
+              {language === 'en'
+                ? 'Every essential is mindfully curated: chemical-free organic groceries, hypoallergenic natural fibers for kids, and certified fresh seeds with high germination.'
+                : 'Setiap produk dipilih dan dikurasi dengan ketat: tanpa pengawet sintetik berbahaya pada makanan, serat alami aman alergi pada pakaian anak, dan benih segar berdaya tumbuh tinggi.'}
             </p>
           </div>
 
@@ -528,9 +570,13 @@ const Store: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 🌾
               </div>
-              <h4 className="font-bold text-slate-900 text-base">Bahan Pangan Organik & Vakum</h4>
+              <h4 className="font-bold text-slate-900 text-base">
+                {language === 'en' ? 'Organic & Vacuum Sealed' : 'Bahan Pangan Organik & Vakum'}
+              </h4>
               <p className="text-xs text-slate-500 font-light leading-relaxed">
-                Beras dan madu dikemas dengan standar kedap udara food-grade, menjaga aroma, nutrisi, dan kebersihan prima hingga berminggu-minggu selama perjalanan.
+                {language === 'en'
+                  ? 'Airtight food-grade vacuum packing keeps organic rice and pure honey fresh, nutritious, and pristine throughout transit.'
+                  : 'Beras dan madu dikemas dengan standar kedap udara food-grade, menjaga aroma, nutrisi, dan kebersihan prima hingga berminggu-minggu selama perjalanan.'}
               </p>
             </div>
 
@@ -538,9 +584,13 @@ const Store: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 🌱
               </div>
-              <h4 className="font-bold text-slate-900 text-base">Benih Cepat Panen & Lolos Uji</h4>
+              <h4 className="font-bold text-slate-900 text-base">
+                {language === 'en' ? 'High-Yield Tested Seeds' : 'Benih Cepat Panen & Lolos Uji'}
+              </h4>
               <p className="text-xs text-slate-500 font-light leading-relaxed">
-                Tingkat keberhasilan tumbuh di atas 85%, cocok untuk pekarangan rumah, pot, atau hidroponik sederhana di perkotaan Asia Tenggara.
+                {language === 'en'
+                  ? 'Over 85% germination rate, ideal for family backyard gardening, planters, or urban hydroponics in tropical climates.'
+                  : 'Tingkat keberhasilan tumbuh di atas 85%, cocok untuk pekarangan rumah, pot, atau hidroponik sederhana di perkotaan Asia Tenggara.'}
               </p>
             </div>
 
@@ -548,9 +598,13 @@ const Store: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 ✈️
               </div>
-              <h4 className="font-bold text-slate-900 text-base">Jaringan Ekspedisi Kilat ASEAN</h4>
+              <h4 className="font-bold text-slate-900 text-base">
+                {language === 'en' ? 'Express ASEAN Cargo Network' : 'Jaringan Ekspedisi Kilat ASEAN'}
+              </h4>
               <p className="text-xs text-slate-500 font-light leading-relaxed">
-                Bekerja sama dengan kurir kargo udara terpercaya (Pos Indonesia EMS, DHL, RaySpeed) dengan pelacakan nomor resi otomatis secara real-time.
+                {language === 'en'
+                  ? 'Direct partnerships with trusted air couriers (EMS, DHL, RaySpeed) featuring automated real-time tracking.'
+                  : 'Bekerja sama dengan kurir kargo udara terpercaya (Pos Indonesia EMS, DHL, RaySpeed) dengan pelacakan nomor resi otomatis secara real-time.'}
               </p>
             </div>
           </div>

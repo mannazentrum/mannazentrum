@@ -78,9 +78,13 @@ export const ShopCategoryPage: React.FC = () => {
       {/* Breadcrumb Navigation */}
       <div className="bg-[#FAF9F5] border-b border-stone-200/60 py-3 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center space-x-2 text-xs text-slate-500">
-          <Link to="/" className="hover:text-amber-600 transition">Beranda Toko</Link>
+          <Link to="/" className="hover:text-amber-600 transition">
+            {language === 'en' ? 'Store Home' : 'Beranda Toko'}
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <Link to="/category" className="hover:text-amber-600 transition">Kategori</Link>
+          <Link to="/category" className="hover:text-amber-600 transition">
+            {language === 'en' ? 'Categories' : 'Kategori'}
+          </Link>
           {currentCategory && (
             <>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
@@ -98,7 +102,9 @@ export const ShopCategoryPage: React.FC = () => {
           
           <div className="md:col-span-8 space-y-3">
             <span className="text-amber-400 text-xs font-semibold uppercase tracking-[0.2em] block">
-              {currentCategory ? 'Kategori Belanja' : 'Daftar Kategori Lengkap'}
+              {currentCategory 
+                ? (language === 'en' ? 'Shopping Category' : 'Kategori Belanja') 
+                : (language === 'en' ? 'Full Category Index' : 'Daftar Kategori Lengkap')}
             </span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-white tracking-tight">
               {currentCategory 
@@ -109,7 +115,9 @@ export const ShopCategoryPage: React.FC = () => {
             <p className="text-slate-300 font-light text-sm sm:text-base leading-relaxed max-w-2xl">
               {currentCategory 
                 ? (language === 'id' ? currentCategory.descId : currentCategory.descEn)
-                : 'Penuhi segala keperluan harian dengan bahan alami, kemasan higienis, dan pengiriman kilat se-Indonesia & Asia Tenggara.'
+                : (language === 'en' 
+                    ? 'Fulfill everyday family living with chemical-free natural essentials, vacuum-sealed freshness, and rapid delivery across Indonesia and Southeast Asia.'
+                    : 'Penuhi segala keperluan harian dengan bahan alami, kemasan higienis, dan pengiriman kilat se-Indonesia & Asia Tenggara.')
               }
             </p>
           </div>
@@ -118,10 +126,12 @@ export const ShopCategoryPage: React.FC = () => {
             <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700/80 text-xs text-slate-300 space-y-2">
               <div className="flex items-center gap-2 text-amber-300 font-bold">
                 <Truck className="w-4 h-4 text-amber-400" />
-                <span>Pengiriman Siap Kirim</span>
+                <span>{language === 'en' ? 'Dispatch Ready' : 'Pengiriman Siap Kirim'}</span>
               </div>
               <p className="text-[11px] text-slate-400 font-light">
-                Seluruh produk kategori ini dilindungi kemasan berlapis dan garansi penggantian kerusakan 100%.
+                {language === 'en'
+                  ? 'All essentials in this category travel with export vacuum packaging and 100% safe arrival guarantee.'
+                  : 'Seluruh produk kategori ini dilindungi kemasan berlapis dan garansi penggantian kerusakan 100%.'}
               </p>
             </div>
           </div>

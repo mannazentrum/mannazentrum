@@ -133,32 +133,34 @@ export const ShopFooter: React.FC<ShopFooterProps> = ({
           {/* Kategori Cepat (category/...) */}
           <div className="space-y-3">
             <h6 className="font-medium text-white text-xs uppercase tracking-widest text-slate-300">
-              <Link to="/category" className="hover:text-amber-400 transition">Kategori Produk</Link>
+              <Link to="/category" className="hover:text-amber-400 transition">
+                {language === 'en' ? 'Product Categories' : 'Kategori Produk'}
+              </Link>
             </h6>
             <ul className="space-y-2.5 text-xs text-slate-400 font-light">
               <li>
                 <Link to="/category/pakaian" className="hover:text-amber-400 transition block">
-                  Pakaian & Fashion Keluarga
+                  {language === 'en' ? 'Family Cotton Apparel' : 'Pakaian & Fashion Keluarga'}
                 </Link>
               </li>
               <li>
                 <Link to="/category/makanan" className="hover:text-amber-400 transition block">
-                  Beras & Sembako Organik
+                  {language === 'en' ? 'Organic Rice & Pantry' : 'Beras & Sembako Organik'}
                 </Link>
               </li>
               <li>
                 <Link to="/category/tanaman" className="hover:text-amber-400 transition block">
-                  Bibit Sayuran & Tanaman Hidup
+                  {language === 'en' ? 'Seeds & Live Herbs' : 'Bibit Sayuran & Tanaman Hidup'}
                 </Link>
               </li>
               <li>
                 <Link to="/category/harian" className="hover:text-amber-400 transition block">
-                  Perawatan Alami & Rumah
+                  {language === 'en' ? 'Natural Body & Home Care' : 'Perawatan Alami & Rumah'}
                 </Link>
               </li>
               <li>
                 <Link to="/category/paket" className="hover:text-amber-400 transition block">
-                  Paket Bundling Hemat
+                  {language === 'en' ? 'Value Family Bundles' : 'Paket Bundling Hemat'}
                 </Link>
               </li>
             </ul>
@@ -167,32 +169,32 @@ export const ShopFooter: React.FC<ShopFooterProps> = ({
           {/* Jangkauan & Kebijakan (shipping-policy, return-policy, blog, about-us) */}
           <div className="space-y-3">
             <h6 className="font-medium text-white text-xs uppercase tracking-widest text-slate-300">
-              Informasi & Kebijakan
+              {language === 'en' ? 'Policy & Information' : 'Informasi & Kebijakan'}
             </h6>
             <ul className="space-y-2.5 text-xs text-slate-400 font-light">
               <li>
                 <Link to="/about-us" className="hover:text-amber-400 transition block">
-                  Tentang Kami (About Us)
+                  {language === 'en' ? 'About Us (Our Story)' : 'Tentang Kami (About Us)'}
                 </Link>
               </li>
               <li>
                 <Link to="/shipping-policy" className="hover:text-amber-400 transition block">
-                  Kebijakan Pengiriman (Shipping Policy)
+                  {language === 'en' ? 'Shipping Policy & Rates' : 'Kebijakan Pengiriman (Shipping Policy)'}
                 </Link>
               </li>
               <li>
                 <Link to="/return-policy" className="hover:text-amber-400 transition block">
-                  Kebijakan Retur & Garansi
+                  {language === 'en' ? 'Returns & Replacement Guarantee' : 'Kebijakan Retur & Garansi'}
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="hover:text-amber-400 transition block">
-                  Blog & Tips Belanja Keluarga
+                  {language === 'en' ? 'Blog & Family Living Guides' : 'Blog & Tips Belanja Keluarga'}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-amber-400 transition block">
-                  Hubungi Kami (Contact)
+                  {language === 'en' ? 'Contact Customer Care' : 'Hubungi Kami (Contact)'}
                 </Link>
               </li>
             </ul>

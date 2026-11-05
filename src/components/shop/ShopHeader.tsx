@@ -43,10 +43,20 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
   onChangeLanguage,
   onOpenShippingInfo,
 }) => {
-  const { siteSettings } = useShop();
+  const { siteSettings, showToast } = useShop();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const navigate = useNavigate();
+
+  const handleToggleLanguage = (target?: 'id' | 'en') => {
+    const nextLang = target || (language === 'id' ? 'en' : 'id');
+    onChangeLanguage(nextLang);
+    if (nextLang === 'en') {
+      showToast('🌐 Website translated to English');
+    } else {
+      showToast('🌐 Bahasa dialihkan ke Bahasa Indonesia');
+    }
+  };
 
   const categories = [
     { id: 'semua', slug: 'semua', labelId: 'Semua Produk', labelEn: 'All Products', href: '/category' },
@@ -104,19 +114,31 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
               <span>{language === 'id' ? 'Info Ongkir' : 'Shipping'}</span>
             </Link>
 
-            {/* Language Selector */}
-            <div className="flex items-center gap-1 bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">
-              <Globe className="w-3 h-3 text-slate-400" />
+            {/* Language Selector & Instant Translate */}
+            <div className="flex items-center bg-slate-800 p-0.5 rounded-md border border-slate-700 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => handleToggleLanguage(language === 'id' ? 'en' : 'id')}
+                className="flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold text-slate-300 hover:text-white hover:bg-slate-700/60 transition cursor-pointer"
+                title={language === 'id' ? 'Klik untuk terjemahkan ke Bahasa Inggris' : 'Click to translate to Indonesian'}
+              >
+                <Globe className={`w-3.5 h-3.5 ${language === 'en' ? 'text-amber-300' : 'text-slate-400'}`} />
+                <span className="hidden md:inline">{language === 'en' ? 'English' : 'Terjemah'}</span>
+              </button>
+              <div className="h-3 w-px bg-slate-700 mx-0.5" />
               <button 
-                onClick={() => onChangeLanguage('id')} 
-                className={`px-1 font-semibold rounded text-[10px] transition ${language === 'id' ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white'}`}
+                type="button"
+                onClick={() => handleToggleLanguage('id')} 
+                className={`px-1.5 py-0.5 font-bold rounded text-[10px] transition cursor-pointer ${language === 'id' ? 'bg-amber-500 text-slate-950 shadow-xs' : 'text-slate-400 hover:text-white'}`}
+                title="Bahasa Indonesia"
               >
                 ID
               </button>
-              <span className="text-slate-600 text-[10px]">|</span>
               <button 
-                onClick={() => onChangeLanguage('en')} 
-                className={`px-1 font-semibold rounded text-[10px] transition ${language === 'en' ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white'}`}
+                type="button"
+                onClick={() => handleToggleLanguage('en')} 
+                className={`px-1.5 py-0.5 font-bold rounded text-[10px] transition cursor-pointer ${language === 'en' ? 'bg-amber-500 text-slate-950 shadow-xs' : 'text-slate-400 hover:text-white'}`}
+                title="Terjemahkan ke Bahasa Inggris (Translate to English)"
               >
                 EN
               </button>
@@ -232,6 +254,18 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
             <MessageCircle className="w-4 h-4 text-amber-600" />
             <span>{language === 'id' ? 'CS WhatsApp' : 'WhatsApp CS'}</span>
           </a>
+
+          {/* Quick Translate Button on Main Navbar */}
+          <button
+            type="button"
+            onClick={() => handleToggleLanguage(language === 'id' ? 'en' : 'id')}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full border border-stone-200 hover:border-amber-400 bg-stone-50 hover:bg-amber-50/80 text-slate-700 hover:text-amber-900 transition text-xs font-semibold cursor-pointer active:scale-95"
+            title={language === 'id' ? 'Klik untuk terjemahkan ke Bahasa Inggris' : 'Click to translate to Indonesian'}
+          >
+            <Globe className={`w-3.5 h-3.5 ${language === 'en' ? 'text-amber-600' : 'text-slate-500'}`} />
+            <span className="hidden sm:inline">{language === 'en' ? '🇬🇧 English' : '🇮🇩 Terjemah'}</span>
+            <span className="sm:hidden text-[11px] font-bold uppercase">{language === 'en' ? 'EN' : 'EN'}</span>
+          </button>
 
           {/* Cart Button */}
           <button
@@ -379,6 +413,34 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
               >
                 Kontak Layanan Pelanggan
               </Link>
+            </div>
+          </div>
+
+          {/* Mobile Language Selector */}
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+              <Globe className="w-4 h-4 text-amber-600" />
+              <span>{language === 'id' ? 'Bahasa / Terjemahan:' : 'Language:'}</span>
+            </span>
+            <div className="flex items-center gap-1 bg-stone-100 p-0.5 rounded-xl border border-stone-200">
+              <button
+                type="button"
+                onClick={() => handleToggleLanguage('id')}
+                className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                  language === 'id' ? 'bg-amber-500 text-slate-950 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                🇮🇩 ID
+              </button>
+              <button
+                type="button"
+                onClick={() => handleToggleLanguage('en')}
+                className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                  language === 'en' ? 'bg-amber-500 text-slate-950 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                🇬🇧 EN
+              </button>
             </div>
           </div>
 
