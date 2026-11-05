@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   ShoppingBag, 
   Search, 
@@ -7,13 +8,16 @@ import {
   MessageCircle, 
   X, 
   Menu,
-  ChevronDown
+  ChevronDown,
+  BookOpen,
+  Info,
+  Phone
 } from 'lucide-react';
 import { CurrencyKey, CURRENCY_RATES } from '../../data/shopData';
 
 interface ShopHeaderProps {
-  currentCategory: string;
-  onSelectCategory: (category: string) => void;
+  currentCategory?: string;
+  onSelectCategory?: (category: string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
   cartCount: number;
@@ -26,7 +30,7 @@ interface ShopHeaderProps {
 }
 
 export const ShopHeader: React.FC<ShopHeaderProps> = ({
-  currentCategory,
+  currentCategory = 'semua',
   onSelectCategory,
   searchQuery,
   onSearchChange,
@@ -40,24 +44,28 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const categories = [
-    { id: 'semua', labelId: 'Semua Produk', labelEn: 'All Products' },
-    { id: 'pakaian', labelId: 'Pakaian Keluarga', labelEn: 'Family Apparel' },
-    { id: 'makanan', labelId: 'Bahan Makanan Sehat', labelEn: 'Healthy Food & Groceries' },
-    { id: 'tanaman', labelId: 'Tanaman & Bibit', labelEn: 'Plants & Seeds' },
-    { id: 'harian', labelId: 'Kebutuhan Harian', labelEn: 'Daily Essentials' },
-    { id: 'paket', labelId: 'Paket Bundling Hemat', labelEn: 'Value Bundles' },
+    { id: 'semua', slug: 'semua', labelId: 'Semua Produk', labelEn: 'All Products', href: '/category' },
+    { id: 'pakaian', slug: 'pakaian', labelId: 'Pakaian Keluarga', labelEn: 'Family Apparel', href: '/category/pakaian' },
+    { id: 'makanan', slug: 'makanan', labelId: 'Bahan Makanan Sehat', labelEn: 'Healthy Food & Groceries', href: '/category/makanan' },
+    { id: 'tanaman', slug: 'tanaman', labelId: 'Tanaman & Bibit', labelEn: 'Plants & Seeds', href: '/category/tanaman' },
+    { id: 'harian', slug: 'harian', labelId: 'Kebutuhan Harian', labelEn: 'Daily Essentials', href: '/category/harian' },
+    { id: 'paket', slug: 'paket', labelId: 'Paket Bundling Hemat', labelEn: 'Value Bundles', href: '/category/paket' },
   ];
 
-  const handleCategoryClick = (catId: string) => {
-    onSelectCategory(catId);
+  const handleCategoryClick = (cat: typeof categories[0]) => {
+    if (onSelectCategory) {
+      onSelectCategory(cat.slug);
+    }
+    navigate(cat.href);
     setMobileMenuOpen(false);
   };
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-xs font-sans border-b border-slate-100 transition-all">
-      {/* Top Banner: Regional ASEAN Scope & Quick Controls (Matching Mannazentrum Slate-900 / Amber Bar) */}
+      {/* Top Banner: Regional ASEAN Scope & Sub-Pages */}
       <div className="bg-slate-900 text-white text-[11px] sm:text-xs py-2 px-4 sm:px-6 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           
@@ -74,15 +82,26 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-4 ml-auto">
+          <div className="flex items-center gap-3 sm:gap-4 ml-auto">
+            {/* Quick Links */}
+            <Link to="/about-us" className="hidden lg:inline text-slate-400 hover:text-amber-300 transition text-[11px]">
+              {language === 'id' ? 'Tentang Kami' : 'About Us'}
+            </Link>
+            <Link to="/blog" className="hidden lg:inline text-slate-400 hover:text-amber-300 transition text-[11px]">
+              {language === 'id' ? 'Blog & Tips' : 'Blog'}
+            </Link>
+            <Link to="/contact" className="hidden lg:inline text-slate-400 hover:text-amber-300 transition text-[11px]">
+              {language === 'id' ? 'Kontak' : 'Contact'}
+            </Link>
+
             {/* Shipping Info Trigger */}
-            <button 
-              onClick={onOpenShippingInfo}
-              className="hidden md:flex items-center gap-1 hover:text-amber-300 transition text-[11px] text-slate-300 underline decoration-dotted"
+            <Link 
+              to="/shipping-policy"
+              className="flex items-center gap-1 hover:text-amber-300 transition text-[11px] text-slate-300 underline decoration-dotted"
             >
               <Truck className="w-3.5 h-3.5 text-amber-400" />
-              <span>{language === 'id' ? 'Info Ongkir & Ekspor' : 'Shipping & Customs'}</span>
-            </button>
+              <span>{language === 'id' ? 'Info Ongkir' : 'Shipping'}</span>
+            </Link>
 
             {/* Language Selector */}
             <div className="flex items-center gap-1 bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">
@@ -139,10 +158,10 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
       {/* Main Bar: Logo, Search, CS, Cart Button */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
         
-        {/* Brand Logo for shop.mannazentrum.com (Matching Mannazentrum's Slate-900 / Amber Emblem Style) */}
+        {/* Brand Logo for shop.mannazentrum.com */}
         <div className="flex items-center gap-3">
-          <button 
-            onClick={() => handleCategoryClick('semua')}
+          <Link 
+            to="/"
             className="flex items-center gap-3 text-left group"
           >
             <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:bg-amber-600 transition-colors">
@@ -161,10 +180,10 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
                 {language === 'id' ? 'Keperluan Harian Keluarga Nusantara & ASEAN' : 'Daily Family Essentials & Natural Goods'}
               </p>
             </div>
-          </button>
+          </Link>
         </div>
 
-        {/* Search Bar (Desktop & Tablet) */}
+        {/* Search Bar */}
         <div className="hidden md:flex flex-1 max-w-md mx-4">
           <div className="relative w-full">
             <input
@@ -190,7 +209,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
           </div>
         </div>
 
-        {/* Action Controls: CS WhatsApp & Cart Drawer Trigger */}
+        {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
           
           {/* WhatsApp CS Toko */}
@@ -201,7 +220,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
             className="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-full border border-amber-200 text-amber-900 bg-amber-50/70 hover:bg-amber-100 transition text-xs font-semibold"
           >
             <MessageCircle className="w-4 h-4 text-amber-600" />
-            <span>{language === 'id' ? 'CS WhatsApp Toko' : 'Store WhatsApp CS'}</span>
+            <span>{language === 'id' ? 'CS WhatsApp' : 'WhatsApp CS'}</span>
           </a>
 
           {/* Cart Button */}
@@ -256,15 +275,15 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
         </div>
       </div>
 
-      {/* Dedicated E-Commerce Navigation Tabs (INDEPENDENT from domain utama, styled with Mannazentrum's warm aesthetics) */}
+      {/* Dedicated E-Commerce Navigation Tabs (INDEPENDENT from domain utama) */}
       <div className="border-t border-slate-100 bg-[#FAF9F5] overflow-x-auto scrollbar-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center space-x-1 sm:space-x-2 py-2">
           {categories.map((cat) => {
-            const isActive = currentCategory === cat.id;
+            const isActive = currentCategory === cat.slug;
             return (
               <button
                 key={cat.id}
-                onClick={() => handleCategoryClick(cat.id)}
+                onClick={() => handleCategoryClick(cat)}
                 className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-semibold transition duration-150 flex-shrink-0 ${
                   isActive
                     ? 'bg-slate-900 text-white shadow-xs'
@@ -276,51 +295,97 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
             );
           })}
 
-          <button
-            onClick={onOpenShippingInfo}
+          <Link
+            to="/shipping-policy"
             className="whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium text-amber-900 bg-amber-100/70 hover:bg-amber-100 transition flex items-center gap-1.5 flex-shrink-0 ml-auto border border-amber-300/60"
           >
             <Truck className="w-3.5 h-3.5 text-amber-700" />
             <span>{language === 'id' ? 'Kirim Se-Indonesia & ASEAN' : 'Indonesia & ASEAN Delivery'}</span>
-          </button>
+          </Link>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu for categories */}
+      {/* Mobile Drawer Menu for categories & pages */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-slate-200 px-4 py-4 space-y-2 shadow-lg animate-in slide-in-from-top duration-200">
-          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
-            {language === 'id' ? 'Kategori Produk Toko' : 'Store Product Categories'}
-          </p>
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => handleCategoryClick(cat.id)}
-              className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition ${
-                currentCategory === cat.id
-                  ? 'bg-amber-50 text-amber-900 font-bold border border-amber-200/60'
-                  : 'text-slate-700 hover:bg-slate-50'
-              }`}
-            >
-              {language === 'id' ? cat.labelId : cat.labelEn}
-            </button>
-          ))}
+        <div className="md:hidden bg-white border-t border-slate-200 px-4 py-4 space-y-3 shadow-lg animate-in slide-in-from-top duration-200">
+          <div>
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+              {language === 'id' ? 'Kategori Produk' : 'Product Categories'}
+            </p>
+            <div className="space-y-1">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => handleCategoryClick(cat)}
+                  className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition ${
+                    currentCategory === cat.slug
+                      ? 'bg-amber-50 text-amber-900 font-bold border border-amber-200/60'
+                      : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  {language === 'id' ? cat.labelId : cat.labelEn}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-3 border-t border-slate-100">
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+              Halaman Toko
+            </p>
+            <div className="space-y-1 text-sm font-medium text-slate-700">
+              <Link
+                to="/about-us"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-1.5 rounded-lg hover:bg-slate-50"
+              >
+                Tentang Kami (About Us)
+              </Link>
+              <Link
+                to="/shipping-policy"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-1.5 rounded-lg hover:bg-slate-50"
+              >
+                Kebijakan Pengiriman (Shipping Policy)
+              </Link>
+              <Link
+                to="/return-policy"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-1.5 rounded-lg hover:bg-slate-50"
+              >
+                Kebijakan Retur & Garansi
+              </Link>
+              <Link
+                to="/blog"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-1.5 rounded-lg hover:bg-slate-50"
+              >
+                Blog & Panduan Keluarga
+              </Link>
+              <Link
+                to="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-1.5 rounded-lg hover:bg-slate-50"
+              >
+                Kontak Layanan Pelanggan
+              </Link>
+            </div>
+          </div>
+
           <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-            <button
-              onClick={() => {
-                onOpenShippingInfo();
-                setMobileMenuOpen(false);
-              }}
+            <Link
+              to="/shipping-policy"
+              onClick={() => setMobileMenuOpen(false)}
               className="text-xs text-amber-800 font-semibold flex items-center gap-1.5"
             >
               <Truck className="w-4 h-4 text-amber-600" />
-              <span>{language === 'id' ? 'Informasi Kirim ASEAN' : 'ASEAN Shipping Details'}</span>
-            </button>
+              <span>Info Pengiriman ASEAN</span>
+            </Link>
             <a
               href="https://wa.me/6287881110807"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-full font-semibold hover:bg-amber-600 transition"
+              className="text-xs bg-slate-900 text-white px-3.5 py-1.5 rounded-full font-semibold hover:bg-amber-600 transition"
             >
               WA Toko
             </a>

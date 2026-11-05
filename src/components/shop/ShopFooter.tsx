@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { 
   ShoppingBag, 
   Truck, 
@@ -13,7 +14,7 @@ import {
 interface ShopFooterProps {
   language: 'id' | 'en';
   onOpenShippingInfo: () => void;
-  onSelectCategory: (cat: string) => void;
+  onSelectCategory?: (cat: string) => void;
 }
 
 export const ShopFooter: React.FC<ShopFooterProps> = ({
@@ -24,65 +25,65 @@ export const ShopFooter: React.FC<ShopFooterProps> = ({
   return (
     <footer className="bg-slate-900 text-slate-300 font-sans border-t border-slate-800">
       
-      {/* 4 Pillar Badges (Matching Mannazentrum's Slate-900 & Amber accent style) */}
+      {/* 4 Pillar Badges */}
       <div className="border-b border-slate-800 bg-slate-950/60 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-slate-800 text-amber-400 flex items-center justify-center shrink-0 border border-slate-700">
+          <Link to="/shipping-policy" className="flex items-start gap-3 group">
+            <div className="w-10 h-10 rounded-xl bg-slate-800 text-amber-400 flex items-center justify-center shrink-0 border border-slate-700 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
               <Truck className="w-5 h-5" />
             </div>
             <div>
-              <h5 className="font-bold text-white text-xs sm:text-sm">
+              <h5 className="font-bold text-white text-xs sm:text-sm group-hover:text-amber-400 transition">
                 {language === 'id' ? 'Kirim Se-Indonesia & ASEAN' : 'ASEAN & Domestic Shipping'}
               </h5>
               <p className="text-[11px] text-slate-400 font-light mt-0.5">
                 {language === 'id' ? 'Layanan cepat ke Malaysia, SG, & nusantara' : 'Reliable air courier to ID, SG, MY & ASEAN'}
               </p>
             </div>
-          </div>
+          </Link>
 
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-slate-800 text-amber-400 flex items-center justify-center shrink-0 border border-slate-700">
+          <Link to="/about-us" className="flex items-start gap-3 group">
+            <div className="w-10 h-10 rounded-xl bg-slate-800 text-amber-400 flex items-center justify-center shrink-0 border border-slate-700 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h5 className="font-bold text-white text-xs sm:text-sm">
+              <h5 className="font-bold text-white text-xs sm:text-sm group-hover:text-amber-400 transition">
                 {language === 'id' ? '100% Produk Alami & Aman' : '100% Pure & Safe Quality'}
               </h5>
               <p className="text-[11px] text-slate-400 font-light mt-0.5">
                 {language === 'id' ? 'Beras organik, madu mentah, benih unggul' : 'Certified organic pantry, non-toxic apparel'}
               </p>
             </div>
-          </div>
+          </Link>
 
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-slate-800 text-amber-400 flex items-center justify-center shrink-0 border border-slate-700">
+          <Link to="/return-policy" className="flex items-start gap-3 group">
+            <div className="w-10 h-10 rounded-xl bg-slate-800 text-amber-400 flex items-center justify-center shrink-0 border border-slate-700 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
               <RotateCcw className="w-5 h-5" />
             </div>
             <div>
-              <h5 className="font-bold text-white text-xs sm:text-sm">
+              <h5 className="font-bold text-white text-xs sm:text-sm group-hover:text-amber-400 transition">
                 {language === 'id' ? 'Garansi Pengiriman Prima' : 'Safe Arrival Guarantee'}
               </h5>
               <p className="text-[11px] text-slate-400 font-light mt-0.5">
                 {language === 'id' ? 'Ganti baru jika kemasan rusak saat sampai' : 'Free item replacement if damaged on arrival'}
               </p>
             </div>
-          </div>
+          </Link>
 
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-slate-800 text-amber-400 flex items-center justify-center shrink-0 border border-slate-700">
+          <Link to="/contact" className="flex items-start gap-3 group">
+            <div className="w-10 h-10 rounded-xl bg-slate-800 text-amber-400 flex items-center justify-center shrink-0 border border-slate-700 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
               <MessageCircle className="w-5 h-5" />
             </div>
             <div>
-              <h5 className="font-bold text-white text-xs sm:text-sm">
+              <h5 className="font-bold text-white text-xs sm:text-sm group-hover:text-amber-400 transition">
                 {language === 'id' ? 'Layanan Ramah Pelanggan' : 'Responsive Customer Care'}
               </h5>
               <p className="text-[11px] text-slate-400 font-light mt-0.5">
                 {language === 'id' ? 'Konsultasi produk via WhatsApp aktif' : 'Direct product help via WhatsApp desk'}
               </p>
             </div>
-          </div>
+          </Link>
 
         </div>
       </div>
@@ -91,10 +92,10 @@ export const ShopFooter: React.FC<ShopFooterProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           
-          {/* Brand Info (Aligned with Mannazentrum Logo Style) */}
+          {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-white text-slate-900 rounded-xl flex items-center justify-center font-bold text-lg shadow-sm">
+            <Link to="/" className="flex items-center space-x-3 group">
+              <div className="w-10 h-10 bg-white text-slate-900 rounded-xl flex items-center justify-center font-bold text-lg shadow-sm group-hover:bg-amber-500 transition">
                 M
               </div>
               <div>
@@ -105,7 +106,7 @@ export const ShopFooter: React.FC<ShopFooterProps> = ({
                   PT. Elrafa Terang Sejahtera
                 </span>
               </div>
-            </div>
+            </Link>
 
             <p className="text-xs text-slate-400 font-light leading-relaxed max-w-sm">
               {language === 'id'
@@ -129,75 +130,70 @@ export const ShopFooter: React.FC<ShopFooterProps> = ({
             </div>
           </div>
 
-          {/* Kategori Cepat */}
+          {/* Kategori Cepat (category/...) */}
           <div className="space-y-3">
             <h6 className="font-medium text-white text-xs uppercase tracking-widest text-slate-300">
-              {language === 'id' ? 'Kategori Produk' : 'Product Categories'}
+              <Link to="/category" className="hover:text-amber-400 transition">Kategori Produk</Link>
             </h6>
             <ul className="space-y-2.5 text-xs text-slate-400 font-light">
               <li>
-                <button onClick={() => onSelectCategory('pakaian')} className="hover:text-amber-400 transition text-left">
-                  {language === 'id' ? 'Pakaian & Fashion Keluarga' : 'Family Daily Apparel'}
-                </button>
+                <Link to="/category/pakaian" className="hover:text-amber-400 transition block">
+                  Pakaian & Fashion Keluarga
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('makanan')} className="hover:text-amber-400 transition text-left">
-                  {language === 'id' ? 'Beras & Sembako Organik' : 'Organic Groceries & Honey'}
-                </button>
+                <Link to="/category/makanan" className="hover:text-amber-400 transition block">
+                  Beras & Sembako Organik
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('tanaman')} className="hover:text-amber-400 transition text-left">
-                  {language === 'id' ? 'Bibit Sayuran & Tanaman Hidup' : 'Live Plants & Seeds Pack'}
-                </button>
+                <Link to="/category/tanaman" className="hover:text-amber-400 transition block">
+                  Bibit Sayuran & Tanaman Hidup
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('harian')} className="hover:text-amber-400 transition text-left">
-                  {language === 'id' ? 'Perawatan Alami & Rumah' : 'Eco-Friendly Home Supplies'}
-                </button>
+                <Link to="/category/harian" className="hover:text-amber-400 transition block">
+                  Perawatan Alami & Rumah
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('paket')} className="hover:text-amber-400 transition text-left">
-                  {language === 'id' ? 'Paket Bundling Hemat' : 'Value Family Bundles'}
-                </button>
+                <Link to="/category/paket" className="hover:text-amber-400 transition block">
+                  Paket Bundling Hemat
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Jangkauan & Bantuan */}
+          {/* Jangkauan & Kebijakan (shipping-policy, return-policy, blog, about-us) */}
           <div className="space-y-3">
             <h6 className="font-medium text-white text-xs uppercase tracking-widest text-slate-300">
-              {language === 'id' ? 'Pengiriman & Layanan' : 'Shipping & Policies'}
+              Informasi & Kebijakan
             </h6>
             <ul className="space-y-2.5 text-xs text-slate-400 font-light">
               <li>
-                <button onClick={onOpenShippingInfo} className="hover:text-amber-400 transition text-left">
-                  {language === 'id' ? 'Jalur Pengiriman ASEAN' : 'ASEAN Logistics Coverage'}
-                </button>
+                <Link to="/about-us" className="hover:text-amber-400 transition block">
+                  Tentang Kami (About Us)
+                </Link>
               </li>
               <li>
-                <button onClick={onOpenShippingInfo} className="hover:text-amber-400 transition text-left">
-                  {language === 'id' ? 'Standar Kemasan Vakum & Ekspor' : 'Vacuum Packaging Standards'}
-                </button>
+                <Link to="/shipping-policy" className="hover:text-amber-400 transition block">
+                  Kebijakan Pengiriman (Shipping Policy)
+                </Link>
               </li>
               <li>
-                <a 
-                  href="https://wa.me/6287881110807?text=Halo%20Admin%20Mannazentrum%20Shop,%20saya%20ingin%20tanya%20kebijakan%20retur%20dan%20klaim." 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="hover:text-amber-400 transition inline-block"
-                >
-                  {language === 'id' ? 'Klaim Garansi Kerusakan' : 'Replacement Guarantee'}
-                </a>
+                <Link to="/return-policy" className="hover:text-amber-400 transition block">
+                  Kebijakan Retur & Garansi
+                </Link>
               </li>
               <li>
-                <a 
-                  href="https://wa.me/6287881110807?text=Halo%20Admin%20Mannazentrum%20Shop,%20kami%20tertarik%20pembelian%20grosir%20atau%20ekspor." 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="hover:text-amber-400 transition inline-block"
-                >
-                  {language === 'id' ? 'Pemesanan Grosir / Reseller' : 'Wholesale & Bulk Orders'}
-                </a>
+                <Link to="/blog" className="hover:text-amber-400 transition block">
+                  Blog & Tips Belanja Keluarga
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-amber-400 transition block">
+                  Hubungi Kami (Contact)
+                </Link>
               </li>
             </ul>
           </div>

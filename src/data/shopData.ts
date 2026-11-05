@@ -1,5 +1,6 @@
 export interface ShopProduct {
   id: string;
+  slug: string;
   name: string;
   nameEn: string;
   category: 'pakaian' | 'makanan' | 'tanaman' | 'harian' | 'paket';
@@ -33,6 +34,31 @@ export interface ReviewItem {
   productName: string;
 }
 
+export interface ShopCategory {
+  slug: string;
+  nameId: string;
+  nameEn: string;
+  descId: string;
+  descEn: string;
+  iconName: string;
+  bannerImage: string;
+}
+
+export interface ShopBlogPost {
+  slug: string;
+  titleId: string;
+  titleEn: string;
+  category: string;
+  author: string;
+  date: string;
+  readTime: string;
+  image: string;
+  excerptId: string;
+  excerptEn: string;
+  contentId: string;
+  contentEn: string;
+}
+
 export const CURRENCY_RATES = {
   IDR: { symbol: 'Rp', rate: 1, label: 'IDR (Rp)' },
   SGD: { symbol: 'S$', rate: 0.000084, label: 'SGD (S$)' },
@@ -42,10 +68,59 @@ export const CURRENCY_RATES = {
 
 export type CurrencyKey = keyof typeof CURRENCY_RATES;
 
+export const SHOP_CATEGORIES: ShopCategory[] = [
+  {
+    slug: 'pakaian',
+    nameId: 'Pakaian Keluarga',
+    nameEn: 'Family Apparel',
+    descId: 'Pakaian harian anak, balita, dan orang tua berbahan katun organik & serat bambu yang adem, higienis, dan ramah kulit sensitif tropis.',
+    descEn: 'Breathable, non-toxic organic cotton and bamboo daily wear for children and parents.',
+    iconName: 'Shirt',
+    bannerImage: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=1200'
+  },
+  {
+    slug: 'makanan',
+    nameId: 'Bahan Makanan Sehat',
+    nameEn: 'Healthy Food & Groceries',
+    descId: 'Beras organik kemasan vakum tahan lama, madu mentah hutan liar nusantara, VCO perasan dingin, dan rempah bumbu dapur alami tanpa MSG.',
+    descEn: 'Vacuum-packed organic rice, wild raw forest honey, cold-pressed VCO, and pure kitchen spices.',
+    iconName: 'Apple',
+    bannerImage: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=1200'
+  },
+  {
+    slug: 'tanaman',
+    nameId: 'Tanaman & Bibit',
+    nameEn: 'Plants & Seeds',
+    descId: 'Benih sayuran cepat panen dengan daya tumbuh >85%, starter kit berkebun keluarga, bibit herbal hidup, dan pupuk organik hayati.',
+    descEn: 'High-germination edible seeds, potted live culinary herbs, and organic microbial liquid fertilizers.',
+    iconName: 'Leaf',
+    bannerImage: 'https://images.unsplash.com/photo-1592417817098-8f3d6910985b?auto=format&fit=crop&q=80&w=1200'
+  },
+  {
+    slug: 'harian',
+    nameId: 'Kebutuhan Harian',
+    nameEn: 'Daily Essentials',
+    descId: 'Sabun alami bebas SLS untuk kulit sensitif bayi, cairan pembersih botol bio-enzim food grade, dan beeswax food wrap pengganti plastik.',
+    descEn: 'Hypoallergenic botanical soaps, plant enzyme cleansers, and reusable beeswax food wraps.',
+    iconName: 'Home',
+    bannerImage: 'https://images.unsplash.com/photo-1607006314584-c74743c069c8?auto=format&fit=crop&q=80&w=1200'
+  },
+  {
+    slug: 'paket',
+    nameId: 'Paket Bundling Hemat',
+    nameEn: 'Value Bundles',
+    descId: 'Paket kurasi lengkap kombinasi sembako sehat, benih sayuran, dan pakaian harian dengan diskon istimewa hingga 20%.',
+    descEn: 'All-in-one curated wellness bundles combining organic staples, seeds, and soft tees.',
+    iconName: 'Package',
+    bannerImage: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1200'
+  }
+];
+
 export const SHOP_PRODUCTS: ShopProduct[] = [
   // --- PAKAIAN & FASHION KELUARGA ---
   {
     id: 'app-01',
+    slug: 'set-piyama-katun-organik-anak',
     name: 'Set Piyama Katun Organik Anak & Balita',
     nameEn: 'Organic Cotton Kids & Toddler Pajamas Set',
     category: 'pakaian',
@@ -75,6 +150,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'app-02',
+    slug: 'kaos-polos-serat-bambu-premium',
     name: 'Kaos Polos Serat Bambu Premium Sejuk (Dewasa/Unisex)',
     nameEn: 'Premium Bamboo Fiber Daily T-Shirt (Unisex)',
     category: 'pakaian',
@@ -101,6 +177,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'app-03',
+    slug: 'homewear-set-daster-rayon-sejuk',
     name: 'Homewear Set Daster Rayon Sejuk Ibu Rumah Tangga',
     nameEn: 'Breathable Rayon Daily Homewear Set for Moms',
     category: 'pakaian',
@@ -127,6 +204,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'app-04',
+    slug: 'apron-kanvas-katun-dapur-kebun',
     name: 'Apron Kanvas Katun Tahan Percikan Dapur & Kebun',
     nameEn: 'Heavy Cotton Canvas Kitchen & Gardening Apron',
     category: 'pakaian',
@@ -153,6 +231,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   // --- BAHAN MAKANAN & SEMBAKO SEHAT ---
   {
     id: 'food-01',
+    slug: 'beras-organik-pandan-wangi',
     name: 'Beras Organik Pandan Wangi Pilihan (Kemasan Vakum 2.5 kg)',
     nameEn: 'Organic Pandan Wangi Rice (Vacuum Packed 2.5 kg)',
     category: 'makanan',
@@ -181,6 +260,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'food-02',
+    slug: 'madu-hutan-liar-murni-nusantara',
     name: 'Madu Hutan Liar Murni Nusantara (Raw Honey 500g)',
     nameEn: 'Pure Wild Forest Honey (Raw Honey 500g)',
     category: 'makanan',
@@ -206,6 +286,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'food-03',
+    slug: 'minyak-kelapa-murni-vco-500ml',
     name: 'Minyak Kelapa Murni (Extra Virgin Coconut Oil / VCO 500ml)',
     nameEn: 'Cold-Pressed Extra Virgin Coconut Oil (VCO 500ml)',
     category: 'makanan',
@@ -230,6 +311,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'food-04',
+    slug: 'paket-rempah-dapur-nusantara-organik',
     name: 'Paket Rempah Dapur Nusantara Organik (Set 5 Toples Bumbu)',
     nameEn: 'Organic Indonesian Kitchen Spices Gift Set (5 Jars)',
     category: 'makanan',
@@ -256,6 +338,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   // --- TANAMAN & BIBIT BERKUALITAS ---
   {
     id: 'plant-01',
+    slug: 'paket-benih-sayuran-cepat-panen',
     name: 'Paket Benih Sayuran Cepat Panen 8 Varietas (Sayur Keluarga)',
     nameEn: 'Quick-Harvest Home Vegetable Seeds Pack (8 Varieties)',
     category: 'tanaman',
@@ -284,6 +367,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'plant-02',
+    slug: 'kit-starter-berkebun-rumah-lengkap',
     name: 'Kit Starter Berkebun Rumah Lengkap + Media Tanam Organik',
     nameEn: 'Complete Home Gardening Starter Kit + Organic Soil',
     category: 'tanaman',
@@ -309,6 +393,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'plant-03',
+    slug: 'bibit-tanaman-herbal-aromaterapi',
     name: 'Bibit Tanaman Herbal Aromaterapi (Mint, Rosemary, Lavender)',
     nameEn: 'Live Potted Culinary & Aromatherapy Herbs Trio',
     category: 'tanaman',
@@ -335,6 +420,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'plant-04',
+    slug: 'pupuk-organik-cair-hayati-plus',
     name: 'Pupuk Organik Cair Hayati Plus Mikroba Subur (Botol 500ml)',
     nameEn: 'Bio-Organic Liquid Fertilizer & Soil Booster (500ml)',
     category: 'tanaman',
@@ -361,6 +447,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   // --- KEBUTUHAN HARIAN & PERAWATAN RAMAH LINGKUNGAN ---
   {
     id: 'daily-01',
+    slug: 'sabun-mandi-alami-calendula-zaitun',
     name: 'Sabun Mandi Batang Alami Ekstrak Calendula & Zaitun (3 Bar Pack)',
     nameEn: 'Natural Handmade Calendula & Olive Oil Soap (Pack of 3)',
     category: 'harian',
@@ -386,6 +473,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'daily-02',
+    slug: 'pembersih-piring-botol-bayi-bio-enzim',
     name: 'Pembersih Piring & Botol Bayi Bio-Enzim Alami (Refill 1 Liter)',
     nameEn: 'Natural Bio-Enzyme Dish & Baby Bottle Cleanser (1 Liter)',
     category: 'harian',
@@ -410,6 +498,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   },
   {
     id: 'daily-03',
+    slug: 'beeswax-food-wrap-organik-reusable',
     name: 'Beeswax Food Wrap Organik Reusable (Set 4 Lembar Multi-Ukuran)',
     nameEn: 'Reusable Organic Beeswax Food Wraps (Pack of 4 Sizes)',
     category: 'harian',
@@ -435,6 +524,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   // --- PAKET BUNDLING HEMAT ---
   {
     id: 'pack-01',
+    slug: 'paket-bundling-keluarga-sehat-mandiri',
     name: 'Paket Bundling Keluarga Sehat Mandiri (Sembako + Bibit + Kaos)',
     nameEn: 'Family Healthy Living Essentials Bundle',
     category: 'paket',
@@ -513,3 +603,67 @@ export const DISCOUNT_COUPONS: Record<string, { percent: number; minOrder: numbe
   'ASEANFAM': { percent: 15, minOrder: 250000, label: 'Diskon 15% Khusus Keluarga ASEAN' },
   'HEMATSEHAT': { percent: 5, minOrder: 50000, label: 'Diskon 5% Belanja Sehat' }
 };
+
+export const SHOP_BLOG_POSTS: ShopBlogPost[] = [
+  {
+    slug: '5-manfaat-beras-organik-untuk-imunitas-keluarga',
+    titleId: '5 Manfaat Beras Organik Pandan Wangi untuk Kesehatan Anak & Imunitas Keluarga',
+    titleEn: '5 Benefits of Organic Fragrant Rice for Kids Health & Family Immunity',
+    category: 'Nutrisi & Makanan Sehat',
+    author: 'Tim Nutrisi Manna Shop',
+    date: '4 November 2026',
+    readTime: '4 menit baca',
+    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=800',
+    excerptId: 'Mengapa beralih ke beras organik tanpa pestisida kimia dapat menurunkan risiko alergi pada balita dan meningkatkan stamina harian keluarga.',
+    excerptEn: 'Why shifting to chemical-free organic rice significantly reduces allergy risks in toddlers and improves family daily stamina.',
+    contentId: `Beras adalah makanan pokok harian jutaan keluarga di Indonesia dan Asia Tenggara. Namun, sebagian besar beras konvensional yang beredar di pasaran telah melalui proses pemupukan kimia sintetis dan penyemprotan pestisida berkala.
+
+Berikut adalah 5 alasan utama mengapa keluarga modern kini memilih beras organik:
+1. Bebas Residu Logam Berat & Pestisida: Anak-anak memiliki organ hati yang masih sensitif. Makanan bebas racun kimia adalah pondasi imunitas utama mereka.
+2. Kandungan Serat & Mineral Utuh: Beras organik diproses secara minimal sehingga aleuron dan lapisan bekatul kaya vitamin B kompleks tetap terjaga.
+3. Wangi Alami Menggugah Selera Makan Anak: Tanpa pewangi buatan, aroma daun pandan alami membuat si kecil makan lebih lahap tanpa perlu dipaksa.
+4. Kemasan Kedap Udara Vakum: Bebas dari kutu beras dan jamur meski disimpan berbulan-bulan di iklim tropis lembab.
+5. Mendukung Petani Lokal yang Berkelanjutan: Pembelian beras organik menjaga kelestarian tanah dan air tanah di pedesaan Indonesia.`,
+    contentEn: `Rice is the heart of family dining across Southeast Asia. Discover why conscious families choose pesticide-free fragrant vacuum-packed rice to safeguard their kids' growing immunity and promote sustainable local agriculture.`
+  },
+  {
+    slug: 'panduan-mudah-menanam-sayuran-cepat-panen-di-rumah',
+    titleId: 'Panduan Mudah Menanam Sayuran Cepat Panen di Pekarangan Rumah',
+    titleEn: 'A Beginner Guide to Quick-Harvest Urban Backyard Gardening',
+    category: 'Berkebun & Tanaman',
+    author: 'Agro Edukasi Manna',
+    date: '28 Oktober 2026',
+    readTime: '5 menit baca',
+    image: 'https://images.unsplash.com/photo-1592417817098-8f3d6910985b?auto=format&fit=crop&q=80&w=800',
+    excerptId: 'Langkah praktis mengajak buah hati menanam kangkung, pakcoy, dan selada dalam pot di balkon atau teras sempit dalam 30 hari panen.',
+    excerptEn: 'Practical steps to grow water spinach, bok choy, and lettuce in pots or balconies with 30-day harvest cycles.',
+    contentId: `Berkebun di rumah bukan hanya tentang menghasilkan sayuran segar bebas bahan kimia, melainkan sarana stimulasi sensorik dan pendidikan karakter bagi anak-anak.
+
+Langkah-langkah memulai kebun sayur mini:
+1. Pilih Benih Berdaya Tumbuh Tinggi (>85%): Gunakan benih segar tersegel yang tahan iklim tropis seperti kangkung, bayam, dan pakcoy.
+2. Siapkan Media Tanam Bernutrisi: Campuran tanah subur, kompos matang, dan sekam bakar dengan perbandingan seimbang menjamin aerasi akar yang sehat.
+3. Siram Lembut Pagi & Sore: Jangan gunakan semprotan terlalu deras agar benih yang baru berkecambah tidak hanyut atau patah.
+4. Sinar Matahari yang Cukup: Letakkan pot di tempat yang terkena sinar matahari minimal 4 jam sehari.
+5. Panen Bersama: Dalam 25-35 hari, sayuran siap dipetik segar untuk hidangan makan malam keluarga tercinta!`,
+    contentEn: `Gardening is a wonderful screen-free family ritual that teaches children patience, biology, and healthy eating habits right from their home balcony.`
+  },
+  {
+    slug: 'mengapa-serat-bambu-menjadi-pilihan-terbaik-pakaian-anak-tropis',
+    titleId: 'Mengapa Serat Bambu Alami Pilihan Terbaik untuk Pakaian Anak di Iklim Tropis',
+    titleEn: 'Why Natural Bamboo Fiber Is the Ultimate Choice for Tropical Kids Wear',
+    category: 'Gaya Hidup & Busana',
+    author: 'Tim Tekstil Alami Manna',
+    date: '20 Oktober 2026',
+    readTime: '3 menit baca',
+    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800',
+    excerptId: 'Karakteristik sejuk alami, daya serap keringat tinggi, dan serat hipoalergenik yang menjaga anak tetap ceria tanpa biang keringat.',
+    excerptEn: 'Natural cooling properties, superior moisture-wicking, and hypoallergenic fibers that keep children rash-free in hot weather.',
+    contentId: `Suhu udara yang hangat dan kelembaban tinggi di Indonesia, Malaysia, dan Singapura seringkali memicu biang keringat serta rasa gerah pada balita dan anak-anak.
+
+Serat bambu alami menawarkan solusi inovatif:
+- Efek Dingin Alami: Terasa 2-3 derajat lebih sejuk di kulit dibandingkan katun biasa.
+- Anti-Bakteri Alami (Bamboo Kun): Mencegah bau apek keringat meski anak beraktivitas aktif seharian.
+- Kelembutan Setara Sutra: Sangat lembut sehingga tidak menimbulkan gesekan kasar pada lipatan leher atau ketiak anak.`,
+    contentEn: `Learn about the thermal-regulating science behind bamboo apparel and why it has become the standard for children daily comfort across ASEAN.`
+  }
+];
