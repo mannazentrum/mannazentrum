@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { 
-  SHOP_PRODUCTS, 
   SHOP_REVIEWS, 
   SHOP_CATEGORIES 
 } from '../data/shopData';
@@ -35,16 +34,26 @@ const categoryIconMap: Record<string, React.ReactNode> = {
 };
 
 const Store: React.FC = () => {
-  const { currency, language, addToCart, applyCoupon, setCartDrawerOpen, setShippingInfoModalOpen } = useShop();
+  const { 
+    currency, 
+    language, 
+    addToCart, 
+    applyCoupon, 
+    setCartDrawerOpen, 
+    setShippingInfoModalOpen,
+    products,
+    homeContent
+  } = useShop();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('semua');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'popular' | 'price-low' | 'price-high' | 'rating'>('popular');
   const [filterAseanOnly, setFilterAseanOnly] = useState<boolean>(false);
 
-  // Filtered and Sorted Products
+  // Filtered and Sorted Products from dynamic store state
   const filteredProducts = useMemo(() => {
-    return SHOP_PRODUCTS.filter((product) => {
+    const list = products && products.length > 0 ? products : [];
+    return list.filter((product) => {
       if (selectedCategory !== 'semua' && product.category !== selectedCategory) {
         return false;
       }
@@ -91,15 +100,15 @@ const Store: React.FC = () => {
             <span className="text-amber-400 font-semibold uppercase tracking-[0.2em] text-xs inline-flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               <span>
-                {language === 'id' 
+                {homeContent?.heroBadge || (language === 'id' 
                   ? 'Toko Online Kebutuhan Harian Keluarga' 
                   : 'Integrated Family Daily Living Store'
-                }
+                )}
               </span>
             </span>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-tight">
-              {language === 'id' ? (
+              {homeContent?.heroTitle || (language === 'id' ? (
                 <>
                   Keperluan Keluarga Harian: <br />
                   <span className="font-semibold text-amber-300">
@@ -113,23 +122,23 @@ const Store: React.FC = () => {
                     Apparel, Organic Groceries & Seeds
                   </span>
                 </>
-              )}
+              ))}
             </h1>
 
             <p className="text-slate-300 font-light text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              {language === 'id'
+              {homeContent?.heroSubtitle || (language === 'id'
                 ? 'Koleksi pilihan berbahan alam yang dirancang untuk mendukung gaya hidup sehat keluarga. Melayani pemesanan cepat dengan proteksi kemasan vakum ke seluruh pelosok Indonesia dan negara tetangga (Singapura, Malaysia, Brunei, Thailand).'
-                : 'Curated natural essentials for conscious family living. Vacuum-sealed and safely shipped across Indonesia and ASEAN neighbor countries.'}
+                : 'Curated natural essentials for conscious family living. Vacuum-sealed and safely shipped across Indonesia and ASEAN neighbor countries.')}
             </p>
 
             {/* Quick Actions */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
               <a
-                href="#katalog-produk"
+                href={homeContent?.heroCtaLink || '#katalog-produk'}
                 className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-7 py-3 rounded-full text-xs sm:text-sm transition shadow-lg shadow-amber-500/20 active:scale-95 flex items-center gap-2"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>{language === 'id' ? 'Lihat Katalog Produk' : 'Shop Essentials'}</span>
+                <span>{homeContent?.heroCtaText || (language === 'id' ? 'Lihat Katalog Produk' : 'Shop Essentials')}</span>
               </a>
 
               <Link

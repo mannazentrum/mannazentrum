@@ -18,9 +18,10 @@ import { formatPrice } from '../../utils/shopCurrency';
 
 export const ShopBlogPage: React.FC = () => {
   const { postSlug } = useParams<{ postSlug?: string }>();
-  const { currency, addToCart } = useShop();
+  const { currency, addToCart, blogPosts } = useShop();
 
-  const currentPost = SHOP_BLOG_POSTS.find((p) => p.slug === postSlug);
+  const postsList = blogPosts && blogPosts.length > 0 ? blogPosts : SHOP_BLOG_POSTS;
+  const currentPost = postsList.find((p) => p.slug === postSlug);
 
   // If viewing single blog post
   if (postSlug && currentPost) {
@@ -146,7 +147,7 @@ export const ShopBlogPage: React.FC = () => {
       {/* Blog Cards Grid */}
       <section className="py-14 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {SHOP_BLOG_POSTS.map((post) => (
+          {postsList.map((post) => (
             <article
               key={post.slug}
               className="bg-white rounded-3xl border border-stone-200/80 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col group"

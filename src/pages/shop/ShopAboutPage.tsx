@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShopLayout } from '../../components/shop/ShopLayout';
 import SEO from '../../components/SEO';
+import { useShop } from '../../context/ShopContext';
 import { 
   Heart, 
   ShieldCheck, 
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export const ShopAboutPage: React.FC = () => {
+  const { aboutContent } = useShop();
   return (
     <ShopLayout>
       <SEO 
@@ -29,13 +31,13 @@ export const ShopAboutPage: React.FC = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center space-y-5 relative z-10">
           <span className="text-amber-400 font-semibold uppercase tracking-[0.2em] text-xs block">
-            Mengenal Mannazentrum Shop
+            {aboutContent?.badge || 'Mengenal Manna Shop'}
           </span>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-light text-white tracking-tight leading-tight">
-            Menyemai Gaya Hidup Sehat & Alami untuk Seluruh Keluarga
+            {aboutContent?.title || 'Menyemai Gaya Hidup Sehat & Alami untuk Seluruh Keluarga'}
           </h1>
           <p className="text-slate-300 font-light text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-            Hadir sebagai pusat perlengkapan keluarga harian terpadu: dari pakaian serat alami lembut anak, bahan pangan pokok organik, hingga bibit tanaman untuk ketahanan pangan mandiri di pekarangan rumah.
+            {aboutContent?.subtitle || 'Hadir sebagai pusat perlengkapan keluarga harian terpadu: dari pakaian serat alami lembut anak, bahan pangan pokok organik, hingga bibit tanaman untuk ketahanan pangan mandiri di pekarangan rumah.'}
           </p>
         </div>
       </section>
@@ -49,17 +51,17 @@ export const ShopAboutPage: React.FC = () => {
               Cerita & Filosofi Kami
             </span>
             <h2 className="text-2xl sm:text-4xl font-light text-slate-900 tracking-tight leading-snug">
-              Berasal dari Kepedulian Nyata akan Kualitas Hidup Si Kecil & Rumah Tangga
+              {aboutContent?.storyTitle || 'Berasal dari Kepedulian Nyata akan Kualitas Hidup Si Kecil & Rumah Tangga'}
             </h2>
             <div className="space-y-4 text-slate-600 font-light text-sm sm:text-base leading-relaxed">
               <p>
-                Mannazentrum Shop lahir dari kesadaran mendalam bahwa kesehatan keluarga dimulai dari apa yang dipakai, apa yang dimakan, dan bagaimana lingkungan sekitar rumah dirawat setiap hari.
+                {aboutContent?.storyParagraph1 || 'Manna Shop lahir dari kesadaran mendalam bahwa kesehatan keluarga dimulai dari apa yang dipakai, apa yang dimakan, dan bagaimana lingkungan sekitar rumah dirawat setiap hari.'}
               </p>
               <p>
-                Banyak keluarga di perkotaan menghadapi tantangan paparan residu pestisida pada bahan pangan pokok, pakaian anak berbahan sintetis panas yang memicu alergi kulit tropis, serta keterbatasan ruang pekarangan untuk berkebun.
+                {aboutContent?.storyParagraph2 || 'Banyak keluarga di perkotaan menghadapi tantangan paparan residu pestisida pada bahan pangan pokok, pakaian anak berbahan sintetis panas yang memicu alergi kulit tropis, serta keterbatasan ruang pekarangan untuk berkebun.'}
               </p>
               <p>
-                Oleh karena itu, kami mengkurasi secara ketat produk-produk kebutuhan pokok keluarga: beras pandan wangi tanpa zat kimia, madu liar mentah kaya enzim, pakaian katun combed & serat bambu bersertifikasi, serta kit benih sayuran cepat panen yang siap kirim ke seluruh kota di Indonesia maupun lintas negara ke Asia Tenggara (Singapura, Malaysia, Brunei, dan sekitarnya).
+                {aboutContent?.storyParagraph3 || 'Melalui Manna Shop, kami menghadirkan kurasi produk yang telah melewati standar ketat, bermitra langsung dengan kelompok tani organik lokal nusantara dan pengrajin tekstil ramah lingkungan.'}
               </p>
             </div>
 

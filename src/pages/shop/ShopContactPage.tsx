@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ShopLayout } from '../../components/shop/ShopLayout';
 import SEO from '../../components/SEO';
+import { useShop } from '../../context/ShopContext';
 import { 
   MessageCircle, 
   Mail, 
@@ -13,18 +14,22 @@ import {
 } from 'lucide-react';
 
 export const ShopContactPage: React.FC = () => {
+  const { contactContent, siteSettings } = useShop();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
+  const waNum = siteSettings?.whatsappNumber || '6287881110807';
+  const waDisplay = siteSettings?.whatsappDisplay || '+62 878-8111-0807';
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const text = encodeURIComponent(
       `*PESAN DARI WEBSITE SHOP.MANNAZENTRUM.COM*\nNama: ${name}\nEmail: ${email}\nNo HP: ${phone}\nPesan: ${message}`
     );
-    window.open(`https://wa.me/6287881110807?text=${text}`, '_blank');
+    window.open(`https://wa.me/${waNum}?text=${text}`, '_blank');
     setSubmitted(true);
   };
 
@@ -72,7 +77,7 @@ export const ShopContactPage: React.FC = () => {
             <div className="space-y-4 pt-2">
               
               <a
-                href="https://wa.me/6287881110807?text=Halo%20Admin%20Mannazentrum%20Shop,%20saya%20ingin%20konsultasi%20pemesanan."
+                href={`https://wa.me/${waNum}?text=Halo%20Admin%20Mannazentrum%20Shop,%20saya%20ingin%20konsultasi%20pemesanan.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-5 rounded-3xl bg-[#FAF9F5] border border-stone-200/80 hover:border-amber-400 transition flex items-start gap-4 group block"
@@ -82,10 +87,10 @@ export const ShopContactPage: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm group-hover:text-amber-600 transition">
-                    WhatsApp Customer Care (Utama)
+                    {contactContent?.whatsappLabel || 'WhatsApp Customer Care (Utama)'}
                   </h4>
                   <p className="text-xs text-slate-500 font-light mt-0.5">
-                    +62 878-8111-0807 (Respon cepat)
+                    {waDisplay} (Respon cepat)
                   </p>
                   <span className="text-[11px] font-semibold text-amber-700 block mt-1">
                     Buka WhatsApp →
@@ -99,10 +104,10 @@ export const ShopContactPage: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm">
-                    Surat Elektronik (Email)
+                    {contactContent?.emailLabel || 'Surat Elektronik (Email)'}
                   </h4>
                   <p className="text-xs text-slate-500 font-light mt-0.5">
-                    shop@mannazentrum.com
+                    {siteSettings?.email || 'shop@mannazentrum.com'}
                   </p>
                   <span className="text-[11px] text-slate-400 block mt-1">
                     Untuk penawaran grosir & kemitraan ekspor
@@ -116,13 +121,13 @@ export const ShopContactPage: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm">
-                    Jam Operasional & Dispatch
+                    {contactContent?.hoursLabel || 'Jam Operasional & Dispatch'}
                   </h4>
                   <p className="text-xs text-slate-500 font-light mt-0.5">
-                    Senin - Sabtu: 08.00 - 18.00 WIB
+                    {siteSettings?.operatingHoursWeekday || 'Senin - Sabtu: 08.00 - 18.00 WIB'}
                   </p>
                   <span className="text-[11px] text-slate-400 block mt-1">
-                    Pesanan sebelum jam 14.00 WIB dikirim pada hari yang sama
+                    {siteSettings?.operatingHoursWeekend || 'Pesanan sebelum jam 14.00 WIB dikirim pada hari yang sama'}
                   </span>
                 </div>
               </div>
@@ -133,10 +138,10 @@ export const ShopContactPage: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm">
-                    Pusat Distribusi & Pergudangan
+                    {contactContent?.warehouseTitle || 'Pusat Distribusi & Pergudangan'}
                   </h4>
                   <p className="text-xs text-slate-500 font-light mt-0.5 leading-relaxed">
-                    Kawasan Cisauk / Serpong Garden, Tangerang, Banten 15345, Indonesia.
+                    {contactContent?.warehouseAddress || siteSettings?.address || 'Sentra Logistik Manna Zentrum, Jl. Kemang Timur No. 12, Jakarta Selatan, 12730, Indonesia'}
                   </p>
                 </div>
               </div>

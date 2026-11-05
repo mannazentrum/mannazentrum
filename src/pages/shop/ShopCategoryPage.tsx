@@ -35,7 +35,7 @@ const categoryIconMap: Record<string, React.ReactNode> = {
 
 export const ShopCategoryPage: React.FC = () => {
   const { categorySlug } = useParams<{ categorySlug?: string }>();
-  const { currency, language, addToCart, setSelectedProduct } = useShop();
+  const { currency, language, addToCart, setSelectedProduct, products } = useShop();
 
   const [sortBy, setSortBy] = useState<'popular' | 'price-low' | 'price-high' | 'rating'>('popular');
   const [filterAseanOnly, setFilterAseanOnly] = useState<boolean>(false);
@@ -44,7 +44,7 @@ export const ShopCategoryPage: React.FC = () => {
   const currentCategory = SHOP_CATEGORIES.find((c) => c.slug === categorySlug);
 
   const filteredProducts = useMemo(() => {
-    let prods = SHOP_PRODUCTS;
+    let prods = products && products.length > 0 ? products : SHOP_PRODUCTS;
     if (categorySlug) {
       prods = prods.filter((p) => p.category === categorySlug);
     }

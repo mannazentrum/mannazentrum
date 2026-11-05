@@ -28,12 +28,13 @@ import {
 export const ShopProductPage: React.FC = () => {
   const { productSlug } = useParams<{ productSlug: string }>();
   const navigate = useNavigate();
-  const { currency, language, addToCart, directCheckout } = useShop();
+  const { currency, language, addToCart, directCheckout, products } = useShop();
 
   const [quantity, setQuantity] = useState(1);
   const [copied, setCopied] = useState(false);
 
-  const product = SHOP_PRODUCTS.find((p) => p.slug === productSlug);
+  const productList = products && products.length > 0 ? products : SHOP_PRODUCTS;
+  const product = productList.find((p) => p.slug === productSlug);
 
   useEffect(() => {
     if (product) {

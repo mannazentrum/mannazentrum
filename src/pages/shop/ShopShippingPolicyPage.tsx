@@ -16,7 +16,7 @@ import { useShop } from '../../context/ShopContext';
 import { formatPrice } from '../../utils/shopCurrency';
 
 export const ShopShippingPolicyPage: React.FC = () => {
-  const { currency } = useShop();
+  const { currency, shippingPolicyContent } = useShop();
 
   return (
     <ShopLayout>
@@ -30,13 +30,13 @@ export const ShopShippingPolicyPage: React.FC = () => {
       <section className="bg-slate-900 text-white py-14 md:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <span className="text-amber-400 font-semibold uppercase tracking-[0.2em] text-xs block">
-            Jalur Logistik & Ekspedisi
+            {shippingPolicyContent?.badge || 'Jalur Logistik & Ekspedisi'}
           </span>
           <h1 className="text-3xl sm:text-5xl font-light text-white tracking-tight">
-            Kebijakan & Panduan Pengiriman
+            {shippingPolicyContent?.title || 'Kebijakan & Panduan Pengiriman'}
           </h1>
           <p className="text-slate-300 font-light text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Melayani pengantaran cepat, higienis, dan aman ke seluruh pelosok Indonesia serta negara mitra di Asia Tenggara.
+            {shippingPolicyContent?.subtitle || 'Melayani pengantaran cepat, higienis, dan aman ke seluruh pelosok Indonesia serta negara mitra di Asia Tenggara.'}
           </p>
         </div>
       </section>

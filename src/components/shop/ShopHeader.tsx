@@ -14,6 +14,7 @@ import {
   Phone
 } from 'lucide-react';
 import { CurrencyKey, CURRENCY_RATES } from '../../data/shopData';
+import { useShop } from '../../context/ShopContext';
 
 interface ShopHeaderProps {
   currentCategory?: string;
@@ -42,6 +43,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
   onChangeLanguage,
   onOpenShippingInfo,
 }) => {
+  const { siteSettings } = useShop();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -75,10 +77,9 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
               <span>🇮🇩</span><span>🇸🇬</span><span>🇲🇾</span> ASEAN Delivery
             </span>
             <span className="hidden sm:inline text-slate-300">
-              {language === 'id' 
+              {siteSettings?.announcementBarText || (language === 'id' 
                 ? 'Melayani pengiriman keperluan keluarga ke seluruh Indonesia & Asia Tenggara.'
-                : 'Delivering daily family essentials across Indonesia & Southeast Asia.'
-              }
+                : 'Delivering daily family essentials across Indonesia & Southeast Asia.')}
             </span>
           </div>
 
@@ -149,6 +150,15 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
                 </div>
               )}
             </div>
+
+            {/* Admin Panel Direct Link */}
+            <Link
+              to="/admin/shop"
+              className="hidden sm:inline-flex items-center gap-1 bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 px-2.5 py-0.5 rounded-md border border-amber-500/40 text-[10px] font-bold transition"
+              title="Akses Panel Admin & Pengelola Halaman Toko"
+            >
+              <span>⚙️ Admin Toko</span>
+            </Link>
 
           </div>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShopLayout } from '../../components/shop/ShopLayout';
 import SEO from '../../components/SEO';
+import { useShop } from '../../context/ShopContext';
 import { 
   RotateCcw, 
   ShieldCheck, 
@@ -12,6 +13,8 @@ import {
 } from 'lucide-react';
 
 export const ShopReturnPolicyPage: React.FC = () => {
+  const { returnPolicyContent } = useShop();
+
   return (
     <ShopLayout>
       <SEO 
@@ -24,13 +27,13 @@ export const ShopReturnPolicyPage: React.FC = () => {
       <section className="bg-slate-900 text-white py-14 md:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <span className="text-amber-400 font-semibold uppercase tracking-[0.2em] text-xs block">
-            Jaminan Kepuasan & Retur
+            {returnPolicyContent?.badge || 'Jaminan Kepuasan & Retur'}
           </span>
           <h1 className="text-3xl sm:text-5xl font-light text-white tracking-tight">
-            Kebijakan Pengembalian & Garansi
+            {returnPolicyContent?.title || 'Kebijakan Pengembalian & Garansi'}
           </h1>
           <p className="text-slate-300 font-light text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Kepuasan dan ketenangan berbelanja keluarga Anda adalah prioritas utama kami. Kami menyediakan garansi penggantian tanpa proses birokrasi berbelit.
+            {returnPolicyContent?.subtitle || 'Kepuasan dan ketenangan berbelanja keluarga Anda adalah prioritas utama kami. Kami menyediakan garansi penggantian tanpa proses birokrasi berbelit.'}
           </p>
         </div>
       </section>

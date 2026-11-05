@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../../components/SEO';
 import { 
-  SHOP_PRODUCTS, 
   SHOP_CATEGORIES, 
-  SHOP_BLOG_POSTS, 
   DISCOUNT_COUPONS,
   ShopProduct,
   ShopBlogPost
 } from '../../data/shopData';
+import { useShop } from '../../context/ShopContext';
 import { formatPrice } from '../../utils/shopCurrency';
 import { 
   LayoutDashboard, 
@@ -34,7 +33,16 @@ import {
   X,
   AlertTriangle,
   ExternalLink,
-  MessageCircle
+  MessageCircle,
+  Layers,
+  Home,
+  Phone,
+  RotateCcw,
+  Settings,
+  Save,
+  RefreshCw,
+  Eye,
+  Check
 } from 'lucide-react';
 
 export type UserRole = 'SUPER_ADMIN' | 'STORE_MANAGER' | 'CONTENT_EDITOR' | 'CUSTOMER_SERVICE' | 'FINANCE';
@@ -55,6 +63,31 @@ const PRESET_ACCOUNTS: { email: string; role: UserRole; roleLabel: string; name:
 ];
 
 export const ShopAdminDashboard: React.FC = () => {
+  const {
+    products,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+    blogPosts,
+    addBlogPost,
+    updateBlogPost,
+    deleteBlogPost,
+    siteSettings,
+    updateSiteSettings,
+    homeContent,
+    updateHomeContent,
+    aboutContent,
+    updateAboutContent,
+    contactContent,
+    updateContactContent,
+    shippingPolicyContent,
+    updateShippingPolicyContent,
+    returnPolicyContent,
+    updateReturnPolicyContent,
+    resetAllContentToDefault,
+    showToast
+  } = useShop();
+
   // Auth State
   const [currentUser, setCurrentUser] = useState<AdminUser | null>(() => {
     if (typeof window !== 'undefined') {
@@ -63,21 +96,30 @@ export const ShopAdminDashboard: React.FC = () => {
         try { return JSON.parse(saved); } catch (e) { }
       }
     }
-    return null;
+    // Default logged in as Owner for convenience
+    return PRESET_ACCOUNTS[0];
   });
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'orders' | 'customers' | 'marketing' | 'content' | 'seo' | 'reports'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'pages' | 'products' | 'orders' | 'customers' | 'marketing' | 'content' | 'seo' | 'reports'>('pages');
 
-  // Products Data State (Initialized from SHOP_PRODUCTS or LocalStorage)
-  const [productsList, setProductsList] = useState<ShopProduct[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('manna_shop_admin_products_v1');
-      if (saved) {
-        try { return JSON.parse(saved); } catch (e) { }
-      }
-    }
-    return SHOP_PRODUCTS;
-  });
+  // Sub-tab for Page CMS
+  const [activePageTab, setActivePageTab] = useState<'home' | 'about' | 'contact' | 'shipping' | 'return' | 'global'>('home');
+
+  // Local draft states for Page CMS editing
+  const [draftHome, setDraftHome] = useState(homeContent);
+  const [draftAbout, setDraftAbout] = useState(aboutContent);
+  const [draftContact, setDraftContact] = useState(contactContent);
+  const [draftShipping, setDraftShipping] = useState(shippingPolicyContent);
+  const [draftReturn, setDraftReturn] = useState(returnPolicyContent);
+  const [draftSettings, setDraftSettings] = useState(siteSettings);
+
+  // Sync draft states with context when context loads
+  useEffect(() => { setDraftHome(homeContent); }, [homeContent]);
+  useEffect(() => { setDraftAbout(aboutContent); }, [aboutContent]);
+  useEffect(() => { setDraftContact(contactContent); }, [contactContent]);
+  useEffect(() => { setDraftShipping(shippingPolicyContent); }, [shippingPolicyContent]);
+  useEffect(() => { setDraftReturn(returnPolicyContent); }, [returnPolicyContent]);
+  useEffect(() => { setDraftSettings(siteSettings); }, [siteSettings]);
 
   // Orders State (Stored in LocalStorage)
   const [ordersList, setOrdersList] = useState<any[]>(() => {
@@ -87,7 +129,6 @@ export const ShopAdminDashboard: React.FC = () => {
         try { return JSON.parse(saved); } catch (e) { }
       }
     }
-    // Initial sample orders for fresh look
     return [
       {
         orderId: 'MNZ-842911',
@@ -127,19 +168,18 @@ export const ShopAdminDashboard: React.FC = () => {
   });
 
   // Coupons State
-  const [couponsList, setCouponsList] = useState(DISCOUNT_COUPONS);
-
-  // Blog Posts State
-  const [blogList, setBlogList] = useState<ShopBlogPost[]>(SHOP_BLOG_POSTS);
+  const [couponsList] = useState(DISCOUNT_COUPONS);
 
   // Product Edit Modal State
   const [editingProduct, setEditingProduct] = useState<ShopProduct | null>(null);
   const [isAddProductOpen, setIsAddProductOpen] = useState(false);
 
-  // Save product state changes
-  useEffect(() => {
-    localStorage.setItem('manna_shop_admin_products_v1', JSON.stringify(productsList));
-  }, [productsList]);
+  // Blog Edit Modal State
+  const [editingBlog, setEditingBlog] = useState<ShopBlogPost | null>(null);
+  const [isAddBlogOpen, setIsAddBlogOpen] = useState(false);
+
+  // Search filter in product manager
+  const [productSearch, setProductSearch] = useState('');
 
   // Save orders state changes
   useEffect(() => {
@@ -168,7 +208,7 @@ export const ShopAdminDashboard: React.FC = () => {
     const role = currentUser.role;
     if (role === 'SUPER_ADMIN') return true;
     if (role === 'STORE_MANAGER') return tab !== 'seo';
-    if (role === 'CONTENT_EDITOR') return tab === 'overview' || tab === 'content' || tab === 'marketing' || tab === 'seo';
+    if (role === 'CONTENT_EDITOR') return tab === 'overview' || tab === 'pages' || tab === 'content' || tab === 'marketing' || tab === 'seo';
     if (role === 'CUSTOMER_SERVICE') return tab === 'overview' || tab === 'orders' || tab === 'customers';
     if (role === 'FINANCE') return tab === 'overview' || tab === 'orders' || tab === 'reports';
     return false;
@@ -177,11 +217,13 @@ export const ShopAdminDashboard: React.FC = () => {
   // Update order status
   const handleUpdateOrderStatus = (orderId: string, newStatus: string) => {
     setOrdersList(prev => prev.map(order => order.orderId === orderId ? { ...order, status: newStatus } : order));
+    showToast(`Status pesanan ${orderId} diubah menjadi "${newStatus}"`);
   };
 
   // Update tracking number
   const handleUpdateTracking = (orderId: string, trackingNumber: string) => {
     setOrdersList(prev => prev.map(order => order.orderId === orderId ? { ...order, trackingNumber } : order));
+    showToast(`Nomor resi untuk pesanan ${orderId} berhasil disimpan`);
   };
 
   // Export orders to CSV
@@ -210,14 +252,21 @@ export const ShopAdminDashboard: React.FC = () => {
 
   // Calculations for Overview Dashboard
   const totalRevenueIdr = ordersList.reduce((sum, o) => sum + (o.grandTotal || 0), 0);
-  const lowStockCount = productsList.filter(p => p.stock < 30).length;
+  const lowStockCount = products.filter(p => p.stock < 30).length;
 
-  // IF NOT LOGGED IN -> SHOW EMPLOYEE LOGIN SCREEN
+  // Filtered Products for Catalog Table
+  const displayProducts = products.filter(p => {
+    if (!productSearch.trim()) return true;
+    const q = productSearch.toLowerCase();
+    return p.name.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+  });
+
+  // IF NOT LOGGED IN -> SHOW LOGIN SCREEN
   if (!currentUser) {
     return (
       <div className="min-h-screen bg-[#FAF9F5] flex flex-col justify-center items-center p-4 font-sans text-slate-800">
         <SEO 
-          title="Staff Login - Mannazentrum Shop Employee CMS"
+          title="Staff Login - Mannazentrum Shop Admin CMS"
           description="Portal masuk staf dan pengelola toko online Mannazentrum Shop."
           canonicalPath="/admin/shop"
         />
@@ -228,10 +277,10 @@ export const ShopAdminDashboard: React.FC = () => {
               M
             </div>
             <h1 className="text-2xl font-light text-slate-900 tracking-tight">
-              Portal Staf Mannazentrum Shop
+              Portal Admin & CMS Manna Shop
             </h1>
             <p className="text-xs text-slate-500 font-light">
-              Pilih peran akun karyawan Anda untuk mengelola inventaris, pesanan, dan operasional toko harian:
+              Pilih peran akun Anda untuk mengelola konten halaman website, produk, pesanan, dan operasional toko:
             </p>
           </div>
 
@@ -270,13 +319,13 @@ export const ShopAdminDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-stone-50 font-sans text-slate-800 flex flex-col">
       <SEO 
-        title="Admin & Employee CMS - Mannazentrum Shop"
-        description="Pusat kendali dan manajemen operasional e-commerce Mannazentrum Shop."
+        title="Admin & Page CMS - Manna Shop (shop.mannazentrum.com)"
+        description="Pusat kendali konten halaman website dan manajemen operasional e-commerce Manna Shop."
         canonicalPath="/admin/shop"
       />
 
       {/* Top Admin Navbar */}
-      <header className="bg-slate-900 text-white px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between border-b border-slate-800 sticky top-0 z-40">
+      <header className="bg-slate-900 text-white px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between border-b border-slate-800 sticky top-0 z-40 shadow-sm">
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-xl bg-white text-slate-900 font-bold flex items-center justify-center text-sm group-hover:bg-amber-400 transition">
@@ -284,9 +333,9 @@ export const ShopAdminDashboard: React.FC = () => {
             </div>
             <div>
               <span className="font-bold text-sm text-white block leading-tight">
-                Mannazentrum <span className="text-amber-400 font-light">CMS</span>
+                Manna Shop <span className="text-amber-400 font-light">Admin CMS</span>
               </span>
-              <span className="text-[9px] uppercase tracking-wider text-slate-400">Employee Portal</span>
+              <span className="text-[9px] uppercase tracking-wider text-slate-400">Pengelola Toko & Konten Halaman</span>
             </div>
           </Link>
         </div>
@@ -294,7 +343,7 @@ export const ShopAdminDashboard: React.FC = () => {
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
             <span className="font-bold text-xs text-white block">{currentUser.name}</span>
-            <span className="text-[10px] text-amber-300 font-semibold bg-slate-800 px-2 py-0.5 rounded-full inline-block">
+            <span className="text-[10px] text-amber-300 font-semibold bg-slate-800 px-2 py-0.5 rounded-full inline-block border border-slate-700">
               {currentUser.roleLabel}
             </span>
           </div>
@@ -302,10 +351,11 @@ export const ShopAdminDashboard: React.FC = () => {
           <Link
             to="/"
             target="_blank"
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition"
-            title="Lihat Website Toko Langsung"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 hover:text-white transition text-xs font-semibold border border-slate-700"
+            title="Buka Website Toko Langsung di Tab Baru"
           >
-            <ExternalLink className="w-4 h-4" />
+            <Eye className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">Buka Toko</span>
           </Link>
 
           <button
@@ -322,10 +372,28 @@ export const ShopAdminDashboard: React.FC = () => {
       <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Navigation Sidebar */}
-        <nav className="lg:col-span-3 space-y-1 bg-white p-3.5 rounded-3xl border border-stone-200/80 shadow-xs h-fit">
+        <nav className="lg:col-span-3 space-y-1.5 bg-white p-3.5 rounded-3xl border border-stone-200/80 shadow-xs h-fit">
           <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-3 py-2">
-            Modul Operasional Toko
+            Menu Utama CMS
           </p>
+
+          {/* TAB 1: KELOLA HALAMAN WEBSITE (HIGHLIGHTED USER REQUEST) */}
+          <button
+            onClick={() => setActiveTab('pages')}
+            className={`w-full flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs font-bold transition ${
+              activeTab === 'pages'
+                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                : 'text-slate-800 hover:bg-amber-50/70 border border-amber-200/60 bg-amber-50/30'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Layers className="w-4 h-4 text-slate-950" />
+              <span>1. Kelola Halaman Web</span>
+            </div>
+            <span className="text-[10px] bg-slate-900 text-white font-bold px-1.5 py-0.5 rounded-md">
+              CMS
+            </span>
+          </button>
 
           <button
             onClick={() => setActiveTab('overview')}
@@ -336,7 +404,7 @@ export const ShopAdminDashboard: React.FC = () => {
             }`}
           >
             <LayoutDashboard className="w-4 h-4 text-amber-400" />
-            <span>A. Overview Dashboard</span>
+            <span>2. Ringkasan Bisnis</span>
           </button>
 
           <button
@@ -351,9 +419,11 @@ export const ShopAdminDashboard: React.FC = () => {
           >
             <div className="flex items-center gap-2.5">
               <Package className="w-4 h-4 text-amber-400" />
-              <span>B. Produk & Stok</span>
+              <span>3. Katalog Produk & Stok</span>
             </div>
-            {!canAccess('products') && <Lock className="w-3 h-3 text-slate-400" />}
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-stone-100 text-slate-700">
+              {products.length}
+            </span>
           </button>
 
           <button
@@ -368,45 +438,11 @@ export const ShopAdminDashboard: React.FC = () => {
           >
             <div className="flex items-center gap-2.5">
               <ShoppingCart className="w-4 h-4 text-amber-400" />
-              <span>C. Pesanan Masuk</span>
+              <span>4. Pesanan & Resi Kirim</span>
             </div>
             <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-900">
               {ordersList.length}
             </span>
-          </button>
-
-          <button
-            onClick={() => canAccess('customers') && setActiveTab('customers')}
-            disabled={!canAccess('customers')}
-            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition ${
-              !canAccess('customers') ? 'opacity-40 cursor-not-allowed text-slate-400' :
-              activeTab === 'customers'
-                ? 'bg-slate-900 text-white shadow-xs'
-                : 'text-slate-600 hover:bg-stone-50'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <Users className="w-4 h-4 text-amber-400" />
-              <span>D. Pelanggan</span>
-            </div>
-            {!canAccess('customers') && <Lock className="w-3 h-3 text-slate-400" />}
-          </button>
-
-          <button
-            onClick={() => canAccess('marketing') && setActiveTab('marketing')}
-            disabled={!canAccess('marketing')}
-            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition ${
-              !canAccess('marketing') ? 'opacity-40 cursor-not-allowed text-slate-400' :
-              activeTab === 'marketing'
-                ? 'bg-slate-900 text-white shadow-xs'
-                : 'text-slate-600 hover:bg-stone-50'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <Tag className="w-4 h-4 text-amber-400" />
-              <span>E. Kupon & Promo</span>
-            </div>
-            {!canAccess('marketing') && <Lock className="w-3 h-3 text-slate-400" />}
           </button>
 
           <button
@@ -421,9 +457,27 @@ export const ShopAdminDashboard: React.FC = () => {
           >
             <div className="flex items-center gap-2.5">
               <FileText className="w-4 h-4 text-amber-400" />
-              <span>F. Blog & Edukasi</span>
+              <span>5. Artikel Edukasi & Blog</span>
             </div>
-            {!canAccess('content') && <Lock className="w-3 h-3 text-slate-400" />}
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-stone-100 text-slate-700">
+              {blogPosts.length}
+            </span>
+          </button>
+
+          <button
+            onClick={() => canAccess('marketing') && setActiveTab('marketing')}
+            disabled={!canAccess('marketing')}
+            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition ${
+              !canAccess('marketing') ? 'opacity-40 cursor-not-allowed text-slate-400' :
+              activeTab === 'marketing'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'text-slate-600 hover:bg-stone-50'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Tag className="w-4 h-4 text-amber-400" />
+              <span>6. Kupon & Promosi</span>
+            </div>
           </button>
 
           <button
@@ -438,9 +492,8 @@ export const ShopAdminDashboard: React.FC = () => {
           >
             <div className="flex items-center gap-2.5">
               <Globe className="w-4 h-4 text-amber-400" />
-              <span>G. SEO & Meta Search</span>
+              <span>7. SEO & AI Search</span>
             </div>
-            {!canAccess('seo') && <Lock className="w-3 h-3 text-slate-400" />}
           </button>
 
           <button
@@ -455,161 +508,917 @@ export const ShopAdminDashboard: React.FC = () => {
           >
             <div className="flex items-center gap-2.5">
               <BarChart3 className="w-4 h-4 text-amber-400" />
-              <span>H. Laporan & Kinerja</span>
+              <span>8. Laporan Penjualan</span>
             </div>
-            {!canAccess('reports') && <Lock className="w-3 h-3 text-slate-400" />}
           </button>
 
+          <div className="pt-4 border-t border-stone-200/80 px-2">
+            <button
+              onClick={() => {
+                if (window.confirm('Apakah Anda yakin ingin mengembalikan seluruh konten halaman website ke teks standar awal?')) {
+                  resetAllContentToDefault();
+                }
+              }}
+              className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-stone-200 text-slate-500 hover:text-rose-700 hover:bg-rose-50 transition text-[11px]"
+              title="Reset Semua Konten ke Teks Awal Pabrikan"
+            >
+              <RefreshCw className="w-3 h-3" />
+              <span>Reset ke Teks Awal</span>
+            </button>
+          </div>
         </nav>
 
-        {/* Content Panel Area */}
+        {/* Content Area */}
         <main className="lg:col-span-9 space-y-6">
-          
-          {/* TAB A: OVERVIEW DASHBOARD */}
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
+
+          {/* ========================================================================= */}
+          {/* TAB 1: KELOLA HALAMAN WEBSITE (CMS VISUAL LANGSUNG)                      */}
+          {/* ========================================================================= */}
+          {activeTab === 'pages' && (
+            <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-6">
               
-              {/* Metric Cards Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-white p-5 rounded-3xl border border-stone-200/80 shadow-xs space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Pendapatan</span>
-                  <span className="text-xl sm:text-2xl font-bold text-slate-900 block">
-                    Rp {totalRevenueIdr.toLocaleString('id-ID')}
-                  </span>
-                  <span className="text-[10px] text-amber-700 font-medium">Berdasarkan pesanan masuk</span>
+              {/* Header Tab */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-100 pb-5">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="p-1.5 rounded-xl bg-amber-100 text-amber-900">
+                      <Layers className="w-5 h-5 text-amber-700" />
+                    </span>
+                    <h3 className="text-xl font-bold text-slate-900">Kelola Halaman Website Toko</h3>
+                  </div>
+                  <p className="text-xs text-slate-500 font-light mt-1">
+                    Ubah teks judul, banner promo, alamat, nomor WhatsApp, dan isi halaman pada <strong className="text-slate-800">shop.mannazentrum.com</strong> secara langsung tanpa perlu ubah kode.
+                  </p>
                 </div>
 
-                <div className="bg-white p-5 rounded-3xl border border-stone-200/80 shadow-xs space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Pesanan</span>
-                  <span className="text-xl sm:text-2xl font-bold text-slate-900 block">
-                    {ordersList.length} Order
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-light">Domestik ID & ASEAN</span>
-                </div>
-
-                <div className="bg-white p-5 rounded-3xl border border-stone-200/80 shadow-xs space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Katalog Produk</span>
-                  <span className="text-xl sm:text-2xl font-bold text-slate-900 block">
-                    {productsList.length} Produk
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-light">5 Kategori Aktif</span>
-                </div>
-
-                <div className="bg-white p-5 rounded-3xl border border-stone-200/80 shadow-xs space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Stok Menipis</span>
-                  <span className="text-xl sm:text-2xl font-bold text-amber-600 block">
-                    {lowStockCount} Produk
-                  </span>
-                  <span className="text-[10px] text-amber-700 font-medium">Perlu restock segera</span>
-                </div>
+                {/* Direct Link to View Page */}
+                <a
+                  href={
+                    activePageTab === 'home' ? '/' :
+                    activePageTab === 'about' ? '/about-us' :
+                    activePageTab === 'contact' ? '/contact' :
+                    activePageTab === 'shipping' ? '/shipping-policy' :
+                    activePageTab === 'return' ? '/return-policy' : '/'
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-full border border-stone-200 text-xs font-semibold text-slate-700 hover:bg-stone-50 flex items-center gap-1.5 shrink-0 self-start sm:self-auto"
+                >
+                  <Eye className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Lihat Halaman Ini Live →</span>
+                </a>
               </div>
 
-              {/* Recent Orders in Overview */}
-              <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-slate-900">Pesanan Pelanggan Terbaru</h3>
-                  <button
-                    onClick={() => setActiveTab('orders')}
-                    className="text-xs text-amber-700 font-semibold hover:underline"
-                  >
-                    Lihat Semua ({ordersList.length}) →
-                  </button>
-                </div>
+              {/* Sub-tab Navigation Bar */}
+              <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-2 border-b border-stone-100 text-xs">
+                <button
+                  onClick={() => setActivePageTab('home')}
+                  className={`px-4 py-2 rounded-2xl font-bold transition flex items-center gap-2 shrink-0 ${
+                    activePageTab === 'home'
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-stone-100 text-slate-600 hover:bg-stone-200/70'
+                  }`}
+                >
+                  <Home className="w-3.5 h-3.5 text-amber-400" />
+                  <span>🏠 Beranda (Home)</span>
+                </button>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead>
-                      <tr className="border-b border-stone-100 text-slate-400 uppercase text-[10px]">
-                        <th className="py-2.5 font-bold">No. Order</th>
-                        <th className="py-2.5 font-bold">Pelanggan</th>
-                        <th className="py-2.5 font-bold">Negara</th>
-                        <th className="py-2.5 font-bold">Total</th>
-                        <th className="py-2.5 font-bold">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-stone-100">
-                      {ordersList.slice(0, 5).map(o => (
-                        <tr key={o.orderId} className="hover:bg-stone-50">
-                          <td className="py-3 font-mono font-bold text-slate-900">{o.orderId}</td>
-                          <td className="py-3 font-medium text-slate-800">{o.customerName}</td>
-                          <td className="py-3 text-slate-600">{o.country}</td>
-                          <td className="py-3 font-bold text-slate-900">Rp {o.grandTotal.toLocaleString('id-ID')}</td>
-                          <td className="py-3">
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900">
-                              {o.status}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <button
+                  onClick={() => setActivePageTab('about')}
+                  className={`px-4 py-2 rounded-2xl font-bold transition flex items-center gap-2 shrink-0 ${
+                    activePageTab === 'about'
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-stone-100 text-slate-600 hover:bg-stone-200/70'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5 text-amber-400" />
+                  <span>ℹ️ Tentang Kami</span>
+                </button>
+
+                <button
+                  onClick={() => setActivePageTab('contact')}
+                  className={`px-4 py-2 rounded-2xl font-bold transition flex items-center gap-2 shrink-0 ${
+                    activePageTab === 'contact'
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-stone-100 text-slate-600 hover:bg-stone-200/70'
+                  }`}
+                >
+                  <Phone className="w-3.5 h-3.5 text-amber-400" />
+                  <span>📞 Kontak & CS</span>
+                </button>
+
+                <button
+                  onClick={() => setActivePageTab('shipping')}
+                  className={`px-4 py-2 rounded-2xl font-bold transition flex items-center gap-2 shrink-0 ${
+                    activePageTab === 'shipping'
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-stone-100 text-slate-600 hover:bg-stone-200/70'
+                  }`}
+                >
+                  <Truck className="w-3.5 h-3.5 text-amber-400" />
+                  <span>🚚 Kebijakan Pengiriman</span>
+                </button>
+
+                <button
+                  onClick={() => setActivePageTab('return')}
+                  className={`px-4 py-2 rounded-2xl font-bold transition flex items-center gap-2 shrink-0 ${
+                    activePageTab === 'return'
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-stone-100 text-slate-600 hover:bg-stone-200/70'
+                  }`}
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
+                  <span>🔄 Kebijakan Retur & Garansi</span>
+                </button>
+
+                <button
+                  onClick={() => setActivePageTab('global')}
+                  className={`px-4 py-2 rounded-2xl font-bold transition flex items-center gap-2 shrink-0 ${
+                    activePageTab === 'global'
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-stone-100 text-slate-600 hover:bg-stone-200/70'
+                  }`}
+                >
+                  <Settings className="w-3.5 h-3.5 text-amber-400" />
+                  <span>⚙️ Pengaturan Global & Running Text</span>
+                </button>
               </div>
+
+              {/* ------------------------------------------------------------- */}
+              {/* SUB-TAB A: EDIT BERANDA (HOMEPAGE)                            */}
+              {/* ------------------------------------------------------------- */}
+              {activePageTab === 'home' && (
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    updateHomeContent(draftHome);
+                  }}
+                  className="space-y-6 text-xs"
+                >
+                  {/* Hero Banner Section */}
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                        <span>🌟 Hero Banner Utama (Paling Atas)</span>
+                      </h4>
+                      <span className="text-[10px] text-slate-400">Tampil di halaman depan</span>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Badge Kecil (Pojok Atas Hero)</label>
+                      <input
+                        type="text"
+                        value={draftHome.heroBadge}
+                        onChange={(e) => setDraftHome({ ...draftHome, heroBadge: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl"
+                        placeholder="e.g. ECO-LIVING & FAMILY ESSENTIALS"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Judul Utama Hero (Heading 1)</label>
+                      <input
+                        type="text"
+                        value={draftHome.heroTitle}
+                        onChange={(e) => setDraftHome({ ...draftHome, heroTitle: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-semibold"
+                        placeholder="e.g. Kebutuhan Harian Alami & Berkualitas untuk Keluarga Tercinta"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Subjudul / Paragraf Deskripsi Hero</label>
+                      <textarea
+                        rows={3}
+                        value={draftHome.heroSubtitle}
+                        onChange={(e) => setDraftHome({ ...draftHome, heroSubtitle: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl leading-relaxed"
+                        placeholder="Deskripsi singkat tentang apa yang dijual dan jangkauan wilayah..."
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Teks Tombol Aksi (CTA)</label>
+                        <input
+                          type="text"
+                          value={draftHome.heroCtaText}
+                          onChange={(e) => setDraftHome({ ...draftHome, heroCtaText: e.target.value })}
+                          className="w-full px-3.5 py-2 bg-white border border-stone-200 rounded-xl"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Tautan Tombol Aksi (Link)</label>
+                        <input
+                          type="text"
+                          value={draftHome.heroCtaLink}
+                          onChange={(e) => setDraftHome({ ...draftHome, heroCtaLink: e.target.value })}
+                          className="w-full px-3.5 py-2 bg-white border border-stone-200 rounded-xl font-mono"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Promo Section */}
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                        <span>🎁 Seksi Spanduk Promo Unggulan</span>
+                      </h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Judul Promo</label>
+                        <input
+                          type="text"
+                          value={draftHome.promoTitle}
+                          onChange={(e) => setDraftHome({ ...draftHome, promoTitle: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="block font-bold text-slate-700 mb-1">Kode Voucher</label>
+                          <input
+                            type="text"
+                            value={draftHome.promoCoupon}
+                            onChange={(e) => setDraftHome({ ...draftHome, promoCoupon: e.target.value })}
+                            className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-mono uppercase font-bold text-amber-800"
+                          />
+                        </div>
+                        <div>
+                          <label className="block font-bold text-slate-700 mb-1">Diskon (%)</label>
+                          <input
+                            type="number"
+                            value={draftHome.promoDiscountPercent}
+                            onChange={(e) => setDraftHome({ ...draftHome, promoDiscountPercent: Number(e.target.value) })}
+                            className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-bold"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Subjudul / Keterangan Promo</label>
+                      <textarea
+                        rows={2}
+                        value={draftHome.promoSubtitle}
+                        onChange={(e) => setDraftHome({ ...draftHome, promoSubtitle: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl"
+                      />
+                    </div>
+                  </div>
+
+                  {/* 4 Pilar Kualitas */}
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm">🛡️ 4 Pilar Keunggulan Toko</h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="p-3 bg-white rounded-xl border border-stone-200 space-y-2">
+                        <label className="block font-bold text-slate-800">Pilar 1</label>
+                        <input
+                          type="text"
+                          value={draftHome.pillar1Title}
+                          onChange={(e) => setDraftHome({ ...draftHome, pillar1Title: e.target.value })}
+                          className="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg font-medium"
+                        />
+                        <textarea
+                          rows={2}
+                          value={draftHome.pillar1Desc}
+                          onChange={(e) => setDraftHome({ ...draftHome, pillar1Desc: e.target.value })}
+                          className="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-[11px]"
+                        />
+                      </div>
+
+                      <div className="p-3 bg-white rounded-xl border border-stone-200 space-y-2">
+                        <label className="block font-bold text-slate-800">Pilar 2</label>
+                        <input
+                          type="text"
+                          value={draftHome.pillar2Title}
+                          onChange={(e) => setDraftHome({ ...draftHome, pillar2Title: e.target.value })}
+                          className="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg font-medium"
+                        />
+                        <textarea
+                          rows={2}
+                          value={draftHome.pillar2Desc}
+                          onChange={(e) => setDraftHome({ ...draftHome, pillar2Desc: e.target.value })}
+                          className="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-[11px]"
+                        />
+                      </div>
+
+                      <div className="p-3 bg-white rounded-xl border border-stone-200 space-y-2">
+                        <label className="block font-bold text-slate-800">Pilar 3</label>
+                        <input
+                          type="text"
+                          value={draftHome.pillar3Title}
+                          onChange={(e) => setDraftHome({ ...draftHome, pillar3Title: e.target.value })}
+                          className="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg font-medium"
+                        />
+                        <textarea
+                          rows={2}
+                          value={draftHome.pillar3Desc}
+                          onChange={(e) => setDraftHome({ ...draftHome, pillar3Desc: e.target.value })}
+                          className="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-[11px]"
+                        />
+                      </div>
+
+                      <div className="p-3 bg-white rounded-xl border border-stone-200 space-y-2">
+                        <label className="block font-bold text-slate-800">Pilar 4</label>
+                        <input
+                          type="text"
+                          value={draftHome.pillar4Title}
+                          onChange={(e) => setDraftHome({ ...draftHome, pillar4Title: e.target.value })}
+                          className="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg font-medium"
+                        />
+                        <textarea
+                          rows={2}
+                          value={draftHome.pillar4Desc}
+                          onChange={(e) => setDraftHome({ ...draftHome, pillar4Desc: e.target.value })}
+                          className="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-lg text-[11px]"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Save Button */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-3 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
+                    >
+                      <Save className="w-4 h-4 text-amber-300" />
+                      <span>Simpan Perubahan Beranda</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* ------------------------------------------------------------- */}
+              {/* SUB-TAB B: EDIT TENTANG KAMI (/about-us)                      */}
+              {/* ------------------------------------------------------------- */}
+              {activePageTab === 'about' && (
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    updateAboutContent(draftAbout);
+                  }}
+                  className="space-y-6 text-xs"
+                >
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm">Header & Pengenalan Halaman Tentang Kami</h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Badge Halaman</label>
+                        <input
+                          type="text"
+                          value={draftAbout.badge}
+                          onChange={(e) => setDraftAbout({ ...draftAbout, badge: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Judul Utama Halaman</label>
+                        <input
+                          type="text"
+                          value={draftAbout.title}
+                          onChange={(e) => setDraftAbout({ ...draftAbout, title: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-bold"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Subjudul / Ringkasan Header</label>
+                      <textarea
+                        rows={2}
+                        value={draftAbout.subtitle}
+                        onChange={(e) => setDraftAbout({ ...draftAbout, subtitle: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl leading-relaxed"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm">Cerita & Filosofi Toko</h4>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Judul Seksi Cerita</label>
+                      <input
+                        type="text"
+                        value={draftAbout.storyTitle}
+                        onChange={(e) => setDraftAbout({ ...draftAbout, storyTitle: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-semibold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Paragraf 1 (Latar Belakang)</label>
+                      <textarea
+                        rows={3}
+                        value={draftAbout.storyParagraph1}
+                        onChange={(e) => setDraftAbout({ ...draftAbout, storyParagraph1: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl leading-relaxed"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Paragraf 2 (Tantangan Keluarga & Kualitas)</label>
+                      <textarea
+                        rows={3}
+                        value={draftAbout.storyParagraph2}
+                        onChange={(e) => setDraftAbout({ ...draftAbout, storyParagraph2: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl leading-relaxed"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Paragraf 3 (Solusi Manna Shop & Kemitraan Tani)</label>
+                      <textarea
+                        rows={3}
+                        value={draftAbout.storyParagraph3}
+                        onChange={(e) => setDraftAbout({ ...draftAbout, storyParagraph3: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl leading-relaxed"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-3 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
+                    >
+                      <Save className="w-4 h-4 text-amber-300" />
+                      <span>Simpan Perubahan Tentang Kami</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* ------------------------------------------------------------- */}
+              {/* SUB-TAB C: EDIT KONTAK & CS (/contact)                        */}
+              {/* ------------------------------------------------------------- */}
+              {activePageTab === 'contact' && (
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    updateContactContent(draftContact);
+                    updateSiteSettings(draftSettings);
+                  }}
+                  className="space-y-6 text-xs"
+                >
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm">Saluran Kontak Resmi & WhatsApp</h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Nomor WhatsApp Resmi (Format Angka Tanpa +, e.g. 6287881110807)</label>
+                        <input
+                          type="text"
+                          value={draftSettings.whatsappNumber}
+                          onChange={(e) => setDraftSettings({ ...draftSettings, whatsappNumber: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-mono font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Format Tampilan WhatsApp di Layar</label>
+                        <input
+                          type="text"
+                          value={draftSettings.whatsappDisplay}
+                          onChange={(e) => setDraftSettings({ ...draftSettings, whatsappDisplay: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-medium"
+                          placeholder="e.g. +62 878-8111-0807"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Alamat Email Toko</label>
+                        <input
+                          type="email"
+                          value={draftSettings.email}
+                          onChange={(e) => setDraftSettings({ ...draftSettings, email: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Jam Operasional</label>
+                        <input
+                          type="text"
+                          value={draftSettings.operatingHoursWeekday}
+                          onChange={(e) => setDraftSettings({ ...draftSettings, operatingHoursWeekday: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Alamat Lengkap Pusat Logistik & Gudang Pengiriman</label>
+                      <textarea
+                        rows={2}
+                        value={draftContact.warehouseAddress}
+                        onChange={(e) => setDraftContact({ ...draftContact, warehouseAddress: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl leading-relaxed"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-3 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
+                    >
+                      <Save className="w-4 h-4 text-amber-300" />
+                      <span>Simpan Perubahan Kontak & CS</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* ------------------------------------------------------------- */}
+              {/* SUB-TAB D: EDIT KEBIJAKAN PENGIRIMAN (/shipping-policy)       */}
+              {/* ------------------------------------------------------------- */}
+              {activePageTab === 'shipping' && (
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    updateShippingPolicyContent(draftShipping);
+                  }}
+                  className="space-y-6 text-xs"
+                >
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm">Kebijakan Pengiriman Domestik & ASEAN</h4>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Judul Halaman Pengiriman</label>
+                      <input
+                        type="text"
+                        value={draftShipping.title}
+                        onChange={(e) => setDraftShipping({ ...draftShipping, title: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-bold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Subjudul Halaman</label>
+                      <input
+                        type="text"
+                        value={draftShipping.subtitle}
+                        onChange={(e) => setDraftShipping({ ...draftShipping, subtitle: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Waktu Pemrosesan Pesanan (Batas Jam Pengiriman)</label>
+                      <input
+                        type="text"
+                        value={draftShipping.domesticHandlingTime}
+                        onChange={(e) => setDraftShipping({ ...draftShipping, domesticHandlingTime: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Standar Kemasan Vakum Makanan & Benih</label>
+                      <textarea
+                        rows={3}
+                        value={draftShipping.packagingDescription}
+                        onChange={(e) => setDraftShipping({ ...draftShipping, packagingDescription: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl leading-relaxed"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-3 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
+                    >
+                      <Save className="w-4 h-4 text-amber-300" />
+                      <span>Simpan Kebijakan Pengiriman</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* ------------------------------------------------------------- */}
+              {/* SUB-TAB E: EDIT KEBIJAKAN RETUR & GARANSI (/return-policy)   */}
+              {/* ------------------------------------------------------------- */}
+              {activePageTab === 'return' && (
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    updateReturnPolicyContent(draftReturn);
+                  }}
+                  className="space-y-6 text-xs"
+                >
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm">Ketentuan Garansi & Retur Produk</h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Garansi Daya Tumbuh Benih (Jumlah Hari)</label>
+                        <input
+                          type="number"
+                          value={draftReturn.seedGuaranteeDays}
+                          onChange={(e) => setDraftReturn({ ...draftReturn, seedGuaranteeDays: Number(e.target.value) })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Garansi Tukar Ukuran Pakaian (Jumlah Hari)</label>
+                        <input
+                          type="number"
+                          value={draftReturn.clothingExchangeDays}
+                          onChange={(e) => setDraftReturn({ ...draftReturn, clothingExchangeDays: Number(e.target.value) })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-bold"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Keterangan Garansi Kerusakan Transit 100%</label>
+                      <textarea
+                        rows={2}
+                        value={draftReturn.transitGuaranteeDesc}
+                        onChange={(e) => setDraftReturn({ ...draftReturn, transitGuaranteeDesc: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl leading-relaxed"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-3 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
+                    >
+                      <Save className="w-4 h-4 text-amber-300" />
+                      <span>Simpan Kebijakan Retur & Garansi</span>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* ------------------------------------------------------------- */}
+              {/* SUB-TAB F: EDIT PENGATURAN GLOBAL & RUNNING TEXT              */}
+              {/* ------------------------------------------------------------- */}
+              {activePageTab === 'global' && (
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    updateSiteSettings(draftSettings);
+                  }}
+                  className="space-y-6 text-xs"
+                >
+                  <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-stone-200 space-y-4">
+                    <div className="flex items-center justify-between border-b border-stone-200/60 pb-2">
+                      <h4 className="font-bold text-slate-900 text-sm">Running Text Pengumuman & Nama Toko</h4>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Teks Running Banner / Bar Pengumuman Atas</label>
+                      <textarea
+                        rows={2}
+                        value={draftSettings.announcementBarText}
+                        onChange={(e) => setDraftSettings({ ...draftSettings, announcementBarText: e.target.value })}
+                        className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-medium"
+                        placeholder="e.g. 🇸🇬 🇲🇾 🇮🇩 Pengiriman Resmi ke Seluruh Indonesia, Singapura, Malaysia, & ASEAN! Diskon 10% dengan Kode: HEMAT10"
+                      />
+                      <span className="text-[11px] text-slate-400 mt-1 block">
+                        Teks ini langsung muncul di bagian paling atas website pada semua halaman.
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Nama Toko Online</label>
+                        <input
+                          type="text"
+                          value={draftSettings.storeName}
+                          onChange={(e) => setDraftSettings({ ...draftSettings, storeName: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl font-bold"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-slate-700 mb-1">Slogan / Tagline Toko</label>
+                        <input
+                          type="text"
+                          value={draftSettings.tagline}
+                          onChange={(e) => setDraftSettings({ ...draftSettings, tagline: e.target.value })}
+                          className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="submit"
+                      className="px-6 py-3 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
+                    >
+                      <Save className="w-4 h-4 text-amber-300" />
+                      <span>Simpan Pengaturan Global</span>
+                    </button>
+                  </div>
+                </form>
+              )}
 
             </div>
           )}
 
-          {/* TAB B: PRODUCTS & STOCK MANAGEMENT */}
+          {/* ========================================================================= */}
+          {/* TAB 2: OVERVIEW DASHBOARD                                                 */}
+          {/* ========================================================================= */}
+          {activeTab === 'overview' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-white p-5 rounded-3xl border border-stone-200/80 shadow-xs space-y-2">
+                  <div className="flex items-center justify-between text-slate-400">
+                    <span className="text-xs font-medium">Total Omset</span>
+                    <BarChart3 className="w-4 h-4 text-amber-600" />
+                  </div>
+                  <span className="text-2xl font-bold text-slate-900 block">
+                    Rp {totalRevenueIdr.toLocaleString('id-ID')}
+                  </span>
+                  <span className="text-[11px] text-emerald-600 font-semibold">
+                    ↑ 18.4% dari bulan lalu
+                  </span>
+                </div>
+
+                <div className="bg-white p-5 rounded-3xl border border-stone-200/80 shadow-xs space-y-2">
+                  <div className="flex items-center justify-between text-slate-400">
+                    <span className="text-xs font-medium">Total Pesanan</span>
+                    <ShoppingCart className="w-4 h-4 text-amber-600" />
+                  </div>
+                  <span className="text-2xl font-bold text-slate-900 block">
+                    {ordersList.length} Pesanan
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-light">
+                    Wilayah: ID, MY, SG
+                  </span>
+                </div>
+
+                <div className="bg-white p-5 rounded-3xl border border-stone-200/80 shadow-xs space-y-2">
+                  <div className="flex items-center justify-between text-slate-400">
+                    <span className="text-xs font-medium">Katalog Aktif</span>
+                    <Package className="w-4 h-4 text-amber-600" />
+                  </div>
+                  <span className="text-2xl font-bold text-slate-900 block">
+                    {products.length} Produk
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-light">
+                    5 Kategori Pokok
+                  </span>
+                </div>
+
+                <div className="bg-white p-5 rounded-3xl border border-stone-200/80 shadow-xs space-y-2">
+                  <div className="flex items-center justify-between text-slate-400">
+                    <span className="text-xs font-medium">Peringatan Stok</span>
+                    <AlertTriangle className="w-4 h-4 text-rose-500" />
+                  </div>
+                  <span className="text-2xl font-bold text-rose-600 block">
+                    {lowStockCount} Item
+                  </span>
+                  <span className="text-[11px] text-rose-600 font-semibold">
+                    Stok di bawah 30 unit
+                  </span>
+                </div>
+              </div>
+
+              {/* Quick Actions to Page CMS */}
+              <div className="p-6 rounded-3xl bg-linear-to-r from-slate-900 to-slate-800 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+                <div className="space-y-1 text-center sm:text-left">
+                  <span className="text-[11px] uppercase tracking-wider text-amber-400 font-bold block">
+                    CMS Terpadu
+                  </span>
+                  <h4 className="text-lg font-bold">Ingin Mengubah Teks & Banner Halaman Toko?</h4>
+                  <p className="text-xs text-slate-300 font-light">
+                    Buka modul Kelola Halaman Website untuk mengganti teks promo, WhatsApp, dan isi halaman secara langsung.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveTab('pages')}
+                  className="px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-md shrink-0"
+                >
+                  Buka Pengelola Halaman →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* TAB 3: KATALOG PRODUK & STOK                                             */}
+          {/* ========================================================================= */}
           {activeTab === 'products' && (
             <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900">Manajemen Produk & Stok</h3>
+                  <h3 className="text-xl font-bold text-slate-900">Katalog Produk & Persediaan Stok</h3>
                   <p className="text-xs text-slate-500 font-light">
-                    Karyawan dapat memperbarui harga, jumlah stok gudang, dan status ketersediaan barang.
+                    Total {products.length} produk terdaftar dalam basis data toko.
                   </p>
                 </div>
 
-                <button
-                  onClick={() => setIsAddProductOpen(true)}
-                  className="bg-slate-900 hover:bg-amber-600 text-white px-4 py-2 rounded-full text-xs font-semibold transition flex items-center gap-1.5 shadow-sm"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Tambah Produk Baru</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      placeholder="Cari produk..."
+                      value={productSearch}
+                      onChange={(e) => setProductSearch(e.target.value)}
+                      className="pl-8 pr-3 py-1.5 rounded-full border border-stone-200 text-xs w-40 sm:w-48 bg-stone-50"
+                    />
+                  </div>
+
+                  <button
+                    onClick={() => setIsAddProductOpen(true)}
+                    className="px-4 py-2 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm shrink-0"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>+ Tambah Produk</span>
+                  </button>
+                </div>
               </div>
 
               {/* Products Table */}
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto border border-stone-200 rounded-2xl">
                 <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-stone-200 text-slate-400 uppercase text-[10px]">
-                      <th className="py-2.5 font-bold">SKU</th>
-                      <th className="py-2.5 font-bold">Nama Produk</th>
-                      <th className="py-2.5 font-bold">Kategori</th>
-                      <th className="py-2.5 font-bold">Harga</th>
-                      <th className="py-2.5 font-bold">Stok</th>
-                      <th className="py-2.5 font-bold">Kirim ASEAN</th>
-                      <th className="py-2.5 font-bold text-right">Aksi</th>
+                  <thead className="bg-[#FAF9F5] border-b border-stone-200 text-slate-500 uppercase text-[10px] tracking-wider">
+                    <tr>
+                      <th className="py-3 px-4">Produk</th>
+                      <th className="py-3 px-4">Kategori</th>
+                      <th className="py-3 px-4">Harga (IDR)</th>
+                      <th className="py-3 px-4">Stok</th>
+                      <th className="py-3 px-4">ASEAN</th>
+                      <th className="py-3 px-4 text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-stone-100">
-                    {productsList.map((p) => (
-                      <tr key={p.id} className="hover:bg-stone-50">
-                        <td className="py-3 font-mono font-bold text-slate-900">{p.id.toUpperCase()}</td>
-                        <td className="py-3 font-medium text-slate-800">
-                          <div className="flex items-center gap-2">
-                            <img src={p.image} alt={p.name} className="w-8 h-8 rounded-lg object-cover shrink-0" />
-                            <span className="line-clamp-1">{p.name}</span>
+                    {displayProducts.map((p) => (
+                      <tr key={p.id} className="hover:bg-amber-50/30 transition">
+                        <td className="py-3 px-4 flex items-center gap-3">
+                          <img src={p.image} alt={p.name} className="w-10 h-10 rounded-xl object-cover border border-stone-200 shrink-0" />
+                          <div>
+                            <span className="font-bold text-slate-900 block">{p.name}</span>
+                            <span className="text-[10px] text-slate-400">SKU: {p.slug}</span>
                           </div>
                         </td>
-                        <td className="py-3 text-amber-700 font-semibold">{p.categoryLabelId}</td>
-                        <td className="py-3 font-bold text-slate-900">Rp {p.priceIdr.toLocaleString('id-ID')}</td>
-                        <td className="py-3">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${p.stock < 30 ? 'bg-rose-100 text-rose-800' : 'bg-stone-100 text-slate-700'}`}>
+                        <td className="py-3 px-4">
+                          <span className="px-2 py-0.5 rounded-full bg-stone-100 text-slate-700 text-[10px] font-semibold">
+                            {p.category}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 font-bold text-slate-900">
+                          Rp {p.priceIdr.toLocaleString('id-ID')}
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className={`font-bold px-2 py-0.5 rounded-md text-[11px] ${
+                            p.stock < 25 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-800'
+                          }`}>
                             {p.stock} unit
                           </span>
                         </td>
-                        <td className="py-3 text-center">
-                          {p.isAseanReady ? <span className="text-emerald-600 font-bold">✓ Ya</span> : <span className="text-slate-400">-</span>}
+                        <td className="py-3 px-4">
+                          {p.isAseanReady ? (
+                            <span className="text-emerald-700 font-bold text-[11px]">✓ Siap</span>
+                          ) : (
+                            <span className="text-slate-400 text-[11px]">-</span>
+                          )}
                         </td>
-                        <td className="py-3 text-right">
+                        <td className="py-3 px-4 text-right space-x-1.5">
                           <button
                             onClick={() => setEditingProduct(p)}
-                            className="p-1.5 rounded-lg text-slate-600 hover:text-amber-600 hover:bg-stone-100 transition mr-1"
+                            className="p-1.5 rounded-lg border border-stone-200 text-slate-600 hover:text-amber-700 hover:bg-amber-50"
                             title="Edit Produk"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (window.confirm(`Hapus produk "${p.name}"?`)) {
+                                deleteProduct(p.id);
+                              }
+                            }}
+                            className="p-1.5 rounded-lg border border-stone-200 text-slate-400 hover:text-rose-700 hover:bg-rose-50"
+                            title="Hapus Produk"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         </td>
                       </tr>
@@ -620,133 +1429,162 @@ export const ShopAdminDashboard: React.FC = () => {
             </div>
           )}
 
-          {/* TAB C: ORDER MANAGEMENT */}
+          {/* ========================================================================= */}
+          {/* TAB 4: PESANAN & RESI PENGIRIMAN                                          */}
+          {/* ========================================================================= */}
           {activeTab === 'orders' && (
             <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900">Manajemen Pesanan Masuk</h3>
+                  <h3 className="text-xl font-bold text-slate-900">Daftar Pesanan & Resi Pengiriman</h3>
                   <p className="text-xs text-slate-500 font-light">
-                    Kelola status pengiriman, masukkan nomor resi ekspedisi, dan pantau status pesanan.
+                    Kelola status pesanan masuk dan input nomor resi ekspedisi untuk pelacakan pelanggan.
                   </p>
                 </div>
 
                 <button
                   onClick={handleExportCSV}
-                  className="border border-stone-200 hover:bg-stone-50 text-slate-700 px-4 py-2 rounded-full text-xs font-semibold transition flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-full border border-stone-200 text-xs font-semibold text-slate-700 hover:bg-stone-50 flex items-center gap-1.5 shrink-0"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Export CSV Logistik</span>
+                  <Download className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Ekspor CSV</span>
                 </button>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-stone-200 text-slate-400 uppercase text-[10px]">
-                      <th className="py-2.5 font-bold">No. Order</th>
-                      <th className="py-2.5 font-bold">Pelanggan</th>
-                      <th className="py-2.5 font-bold">Tujuan</th>
-                      <th className="py-2.5 font-bold">Total</th>
-                      <th className="py-2.5 font-bold">Pembayaran</th>
-                      <th className="py-2.5 font-bold">Status</th>
-                      <th className="py-2.5 font-bold">No. Resi</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-stone-100">
-                    {ordersList.map((order) => (
-                      <tr key={order.orderId} className="hover:bg-stone-50">
-                        <td className="py-3 font-mono font-bold text-slate-900">{order.orderId}</td>
-                        <td className="py-3">
-                          <span className="font-bold text-slate-900 block">{order.customerName}</span>
-                          <span className="text-[10px] text-slate-400 font-light">{order.customerPhone}</span>
-                        </td>
-                        <td className="py-3 text-slate-600">{order.country}</td>
-                        <td className="py-3 font-bold text-slate-900">Rp {order.grandTotal.toLocaleString('id-ID')}</td>
-                        <td className="py-3">
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-stone-100 text-slate-700 uppercase">
-                            {order.paymentMethod}
-                          </span>
-                        </td>
-                        <td className="py-3">
-                          <select
-                            value={order.status}
-                            onChange={(e) => handleUpdateOrderStatus(order.orderId, e.target.value)}
-                            className="bg-amber-50 border border-amber-200 text-amber-900 font-semibold text-[11px] rounded-lg px-2 py-1 outline-hidden"
-                          >
-                            <option value="Menunggu Konfirmasi">Menunggu Konfirmasi</option>
-                            <option value="Diproses">Diproses Gudang</option>
-                            <option value="Sedang Dikirim">Sedang Dikirim</option>
-                            <option value="Selesai">Selesai Diterima</option>
-                          </select>
-                        </td>
-                        <td className="py-3">
-                          <input
-                            type="text"
-                            placeholder="Input No Resi..."
-                            defaultValue={order.trackingNumber}
-                            onBlur={(e) => handleUpdateTracking(order.orderId, e.target.value)}
-                            className="px-2 py-1 bg-stone-50 border border-stone-200 rounded-lg text-xs w-36 font-mono"
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="space-y-4">
+                {ordersList.map((order) => (
+                  <div key={order.orderId} className="p-5 rounded-2xl border border-stone-200/90 bg-[#FAF9F5]/40 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200/60 pb-3">
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono font-bold text-slate-900 text-sm bg-white px-2.5 py-1 rounded-xl border border-stone-200 shadow-2xs">
+                          {order.orderId}
+                        </span>
+                        <span className="text-xs text-slate-400">
+                          {new Date(order.createdAt).toLocaleDateString('id-ID', { dateStyle: 'medium' })}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Status:</span>
+                        <select
+                          value={order.status}
+                          onChange={(e) => handleUpdateOrderStatus(order.orderId, e.target.value)}
+                          className="text-xs font-bold px-3 py-1 rounded-full bg-white border border-stone-300 text-slate-800"
+                        >
+                          <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+                          <option value="Diproses">Diproses</option>
+                          <option value="Sedang Dikirim">Sedang Dikirim</option>
+                          <option value="Selesai">Selesai</option>
+                          <option value="Dibatalkan">Dibatalkan</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                      <div>
+                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Pelanggan</span>
+                        <span className="font-bold text-slate-900 block">{order.customerName}</span>
+                        <span className="text-slate-500 font-light">{order.customerPhone} ({order.country})</span>
+                      </div>
+
+                      <div>
+                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Alamat Kirim</span>
+                        <p className="text-slate-600 font-light line-clamp-2">{order.address}</p>
+                      </div>
+
+                      <div>
+                        <span className="text-slate-400 block text-[10px] uppercase font-bold">Total Transaksi</span>
+                        <span className="font-bold text-emerald-800 text-sm block">
+                          Rp {(order.grandTotal || 0).toLocaleString('id-ID')}
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-mono">Metode: {order.paymentMethod}</span>
+                      </div>
+                    </div>
+
+                    {/* Tracking Number Input */}
+                    <div className="pt-2 border-t border-stone-200/50 flex flex-wrap items-center gap-2">
+                      <Truck className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <span className="text-xs font-bold text-slate-700">No. Resi Kurir:</span>
+                      <input
+                        type="text"
+                        defaultValue={order.trackingNumber || ''}
+                        placeholder="e.g. JNE-CGK-1092819"
+                        onBlur={(e) => handleUpdateTracking(order.orderId, e.target.value)}
+                        className="px-3 py-1 bg-white border border-stone-200 rounded-lg text-xs font-mono text-slate-900 w-52"
+                      />
+                      <span className="text-[10px] text-slate-400 font-light">(Ketik & klik luar kolom untuk simpan)</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
-          {/* TAB D: CUSTOMERS */}
-          {activeTab === 'customers' && (
+          {/* ========================================================================= */}
+          {/* TAB 5: ARTIKEL EDUKASI & BLOG                                             */}
+          {/* ========================================================================= */}
+          {activeTab === 'content' && (
             <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-6">
-              <div>
-                <h3 className="text-xl font-bold text-slate-900">Database Pelanggan Toko</h3>
-                <p className="text-xs text-slate-500 font-light">
-                  Daftar kontak pembeli yang pernah melakukan transaksi di Mannazentrum Shop.
-                </p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-xl font-bold text-slate-900">Manajemen Artikel Edukasi & Blog</h3>
+                  <p className="text-xs text-slate-500 font-light">
+                    Kelola konten panduan gaya hidup sehat, nutrisi pangan, dan tips kebun untuk SEO & AI search.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setIsAddBlogOpen(true)}
+                  className="px-4 py-2 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm shrink-0"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>+ Tambah Artikel</span>
+                </button>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-stone-200 text-slate-400 uppercase text-[10px]">
-                      <th className="py-2.5 font-bold">Nama Pembeli</th>
-                      <th className="py-2.5 font-bold">Kontak WhatsApp</th>
-                      <th className="py-2.5 font-bold">Negara</th>
-                      <th className="py-2.5 font-bold text-right">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-stone-100">
-                    {ordersList.map((o, idx) => (
-                      <tr key={idx} className="hover:bg-stone-50">
-                        <td className="py-3 font-bold text-slate-900">{o.customerName}</td>
-                        <td className="py-3 text-slate-600">{o.customerPhone}</td>
-                        <td className="py-3 text-slate-600">{o.country}</td>
-                        <td className="py-3 text-right">
-                          <a
-                            href={`https://wa.me/${o.customerPhone.replace(/[^0-9]/g, '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-full font-semibold text-[11px]"
-                          >
-                            <MessageCircle className="w-3 h-3" />
-                            <span>Hubungi WA</span>
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="space-y-3">
+                {blogPosts.map((post) => (
+                  <div key={post.slug} className="p-4 rounded-2xl border border-stone-200 hover:border-amber-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <img src={post.image} alt={post.titleId} className="w-12 h-12 rounded-xl object-cover shrink-0 border border-stone-200" />
+                      <div>
+                        <span className="text-[10px] font-bold text-amber-700 uppercase">{post.category}</span>
+                        <h4 className="font-bold text-slate-900 text-sm leading-snug">{post.titleId}</h4>
+                        <span className="text-xs text-slate-400 font-light">{post.date} • {post.readTime}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 self-end sm:self-auto">
+                      <Link
+                        to={`/blog/${post.slug}`}
+                        target="_blank"
+                        className="px-3 py-1.5 rounded-full border border-stone-200 text-xs font-semibold text-slate-700 hover:bg-stone-50 shrink-0"
+                      >
+                        Lihat Live →
+                      </Link>
+                      <button
+                        onClick={() => {
+                          if (window.confirm(`Hapus artikel "${post.titleId}"?`)) {
+                            deleteBlogPost(post.slug);
+                          }
+                        }}
+                        className="p-1.5 rounded-lg border border-stone-200 text-slate-400 hover:text-rose-700 hover:bg-rose-50"
+                        title="Hapus Artikel"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
-          {/* TAB E: MARKETING & COUPONS */}
+          {/* ========================================================================= */}
+          {/* TAB 6: KUPON & PROMOSI                                                    */}
+          {/* ========================================================================= */}
           {activeTab === 'marketing' && (
             <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-slate-900">Manajemen Kupon & Diskon Promosi</h3>
+                <h3 className="text-xl font-bold text-slate-900">Kupon Diskon & Promosi</h3>
                 <p className="text-xs text-slate-500 font-light">
                   Kelola voucher potongan harga untuk keluarga di Indonesia dan Asia Tenggara.
                 </p>
@@ -767,38 +1605,9 @@ export const ShopAdminDashboard: React.FC = () => {
             </div>
           )}
 
-          {/* TAB F: CONTENT MANAGEMENT (BLOG) */}
-          {activeTab === 'content' && (
-            <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-6">
-              <div>
-                <h3 className="text-xl font-bold text-slate-900">Manajemen Artikel Edukasi & Blog</h3>
-                <p className="text-xs text-slate-500 font-light">
-                  Kelola konten panduan gaya hidup sehat, nutrisi pangan, dan tips kebun untuk SEO & AI search.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {blogList.map((post) => (
-                  <div key={post.slug} className="p-4 rounded-2xl border border-stone-200 hover:border-amber-300 transition flex items-center justify-between gap-4">
-                    <div>
-                      <span className="text-[10px] font-bold text-amber-700 uppercase">{post.category}</span>
-                      <h4 className="font-bold text-slate-900 text-sm">{post.titleId}</h4>
-                      <span className="text-xs text-slate-400 font-light">{post.date} • {post.readTime}</span>
-                    </div>
-                    <Link
-                      to={`/blog/${post.slug}`}
-                      target="_blank"
-                      className="px-3 py-1.5 rounded-full border border-stone-200 text-xs font-semibold text-slate-700 hover:bg-stone-50 shrink-0"
-                    >
-                      Lihat Artikel →
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* TAB G: SEO & META SEARCH */}
+          {/* ========================================================================= */}
+          {/* TAB 7: SEO & AI SEARCH                                                    */}
+          {/* ========================================================================= */}
           {activeTab === 'seo' && (
             <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-6">
               <div>
@@ -814,7 +1623,7 @@ export const ShopAdminDashboard: React.FC = () => {
                   <input
                     type="text"
                     readOnly
-                    defaultValue="Mannazentrum Shop - Toko Online Terpadu Kebutuhan Harian Keluarga (Indonesia & Asia Tenggara)"
+                    defaultValue="Manna Shop - Toko Online Terpadu Kebutuhan Harian Keluarga (Indonesia & Asia Tenggara)"
                     className="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl font-mono text-xs"
                   />
                 </div>
@@ -842,7 +1651,9 @@ export const ShopAdminDashboard: React.FC = () => {
             </div>
           )}
 
-          {/* TAB H: REPORTS & PERFORMANCE */}
+          {/* ========================================================================= */}
+          {/* TAB 8: LAPORAN PENJUALAN                                                  */}
+          {/* ========================================================================= */}
           {activeTab === 'reports' && (
             <div className="bg-white p-6 rounded-3xl border border-stone-200/80 shadow-xs space-y-6">
               <div>
@@ -857,7 +1668,7 @@ export const ShopAdminDashboard: React.FC = () => {
                   <h4 className="font-bold text-slate-900 text-sm">Distribusi Kategori Produk</h4>
                   <div className="space-y-2 text-xs">
                     {SHOP_CATEGORIES.map(c => {
-                      const count = productsList.filter(p => p.category === c.slug).length;
+                      const count = products.filter(p => p.category === c.slug).length;
                       return (
                         <div key={c.slug} className="flex justify-between items-center py-1 border-b border-stone-200/50">
                           <span className="text-slate-600">{c.nameId}</span>
@@ -890,13 +1701,12 @@ export const ShopAdminDashboard: React.FC = () => {
           )}
 
         </main>
-
       </div>
 
       {/* EDIT PRODUCT MODAL */}
       {editingProduct && (
         <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-stone-200">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-stone-200 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-stone-100 pb-3">
               <h4 className="font-bold text-base text-slate-900">Edit Produk: {editingProduct.name}</h4>
               <button onClick={() => setEditingProduct(null)} className="p-1 rounded-full text-slate-400 hover:text-slate-700">
@@ -909,7 +1719,7 @@ export const ShopAdminDashboard: React.FC = () => {
                 <label className="block font-medium text-slate-700 mb-1">Nama Produk</label>
                 <input
                   type="text"
-                  defaultValue={editingProduct.name}
+                  value={editingProduct.name}
                   onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
                   className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl"
                 />
@@ -920,7 +1730,7 @@ export const ShopAdminDashboard: React.FC = () => {
                   <label className="block font-medium text-slate-700 mb-1">Harga (IDR)</label>
                   <input
                     type="number"
-                    defaultValue={editingProduct.priceIdr}
+                    value={editingProduct.priceIdr}
                     onChange={(e) => setEditingProduct({ ...editingProduct, priceIdr: Number(e.target.value) })}
                     className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl"
                   />
@@ -929,7 +1739,7 @@ export const ShopAdminDashboard: React.FC = () => {
                   <label className="block font-medium text-slate-700 mb-1">Stok Gudang (Unit)</label>
                   <input
                     type="number"
-                    defaultValue={editingProduct.stock}
+                    value={editingProduct.stock}
                     onChange={(e) => setEditingProduct({ ...editingProduct, stock: Number(e.target.value) })}
                     className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl"
                   />
@@ -937,10 +1747,20 @@ export const ShopAdminDashboard: React.FC = () => {
               </div>
 
               <div>
+                <label className="block font-medium text-slate-700 mb-1">URL Gambar Produk</label>
+                <input
+                  type="url"
+                  value={editingProduct.image}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
+                  className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl"
+                />
+              </div>
+
+              <div>
                 <label className="block font-medium text-slate-700 mb-1">Deskripsi Singkat</label>
                 <textarea
                   rows={2}
-                  defaultValue={editingProduct.shortDescId}
+                  value={editingProduct.shortDescId}
                   onChange={(e) => setEditingProduct({ ...editingProduct, shortDescId: e.target.value })}
                   className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl"
                 />
@@ -956,7 +1776,7 @@ export const ShopAdminDashboard: React.FC = () => {
               </button>
               <button
                 onClick={() => {
-                  setProductsList(prev => prev.map(p => p.id === editingProduct.id ? editingProduct : p));
+                  updateProduct(editingProduct);
                   setEditingProduct(null);
                 }}
                 className="px-5 py-2 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm"
@@ -971,7 +1791,7 @@ export const ShopAdminDashboard: React.FC = () => {
       {/* ADD PRODUCT MODAL */}
       {isAddProductOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-stone-200">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-stone-200 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-stone-100 pb-3">
               <h4 className="font-bold text-base text-slate-900">Tambah Produk Baru ke Toko</h4>
               <button onClick={() => setIsAddProductOpen(false)} className="p-1 rounded-full text-slate-400 hover:text-slate-700">
@@ -985,17 +1805,17 @@ export const ShopAdminDashboard: React.FC = () => {
                 const target = e.target as any;
                 const newProd: ShopProduct = {
                   id: `cust-${Date.now().toString().slice(-4)}`,
-                  slug: target.name.value.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+                  slug: target.name.value.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-'),
                   name: target.name.value,
                   nameEn: target.name.value,
                   category: target.category.value,
-                  categoryLabelId: target.category.value === 'pakaian' ? 'Pakaian Keluarga' : target.category.value === 'makanan' ? 'Bahan Makanan Sehat' : 'Tanaman & Bibit',
+                  categoryLabelId: target.category.value === 'pakaian' ? 'Pakaian Keluarga' : target.category.value === 'makanan' ? 'Bahan Makanan Sehat' : target.category.value === 'tanaman' ? 'Tanaman & Bibit' : 'Kebutuhan Harian',
                   categoryLabelEn: 'Family Product',
                   priceIdr: Number(target.price.value),
-                  weightGrams: Number(target.weight.value),
+                  weightGrams: Number(target.weight.value || 500),
                   rating: 5.0,
                   reviewCount: 1,
-                  stock: Number(target.stock.value),
+                  stock: Number(target.stock.value || 50),
                   image: target.image.value || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
                   badges: ['Produk Baru'],
                   isBestSeller: false,
@@ -1006,7 +1826,7 @@ export const ShopAdminDashboard: React.FC = () => {
                   descriptionEn: target.desc.value,
                   specs: [{ labelId: 'Kondisi', labelEn: 'Condition', value: 'Baru & Segel' }]
                 };
-                setProductsList([newProd, ...productsList]);
+                addProduct(newProd);
                 setIsAddProductOpen(false);
               }}
               className="space-y-3 text-xs"
@@ -1036,11 +1856,11 @@ export const ShopAdminDashboard: React.FC = () => {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block font-medium text-slate-700 mb-1">Stok Awal (Unit) *</label>
-                  <input required name="stock" type="number" placeholder="50" className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+                  <input required name="stock" type="number" defaultValue="50" className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
                 </div>
                 <div>
-                  <label className="block font-medium text-slate-700 mb-1">Berat (Gram) *</label>
-                  <input required name="weight" type="number" placeholder="500" className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+                  <label className="block font-medium text-slate-700 mb-1">Berat (Gram)</label>
+                  <input name="weight" type="number" defaultValue="500" className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
                 </div>
               </div>
 
@@ -1051,7 +1871,7 @@ export const ShopAdminDashboard: React.FC = () => {
 
               <div>
                 <label className="block font-medium text-slate-700 mb-1">Deskripsi Produk *</label>
-                <textarea required name="desc" rows={2} placeholder="Penjelasan manfaat dan keunggulan bahan alami..." className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+                <textarea required name="desc" rows={3} placeholder="Jelaskan keunggulan dan kegunaan produk..." className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
               </div>
 
               <div className="pt-2 flex justify-end gap-2">
@@ -1066,7 +1886,97 @@ export const ShopAdminDashboard: React.FC = () => {
                   type="submit"
                   className="px-5 py-2 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm"
                 >
-                  Tambahkan Produk
+                  Tambah ke Toko
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ADD BLOG POST MODAL */}
+      {isAddBlogOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-stone-200 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b border-stone-100 pb-3">
+              <h4 className="font-bold text-base text-slate-900">Tulis Artikel Edukasi Baru</h4>
+              <button onClick={() => setIsAddBlogOpen(false)} className="p-1 rounded-full text-slate-400 hover:text-slate-700">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const target = e.target as any;
+                const newPost: ShopBlogPost = {
+                  slug: target.title.value.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-'),
+                  titleId: target.title.value,
+                  titleEn: target.title.value,
+                  category: target.category.value,
+                  date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
+                  readTime: `${target.readTime.value || '4'} min baca`,
+                  image: target.image.value || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
+                  excerptId: target.excerpt.value,
+                  excerptEn: target.excerpt.value,
+                  contentId: [target.content.value],
+                  contentEn: [target.content.value],
+                  relatedProductSlug: 'beras-organik-pandan-wangi'
+                };
+                addBlogPost(newPost);
+                setIsAddBlogOpen(false);
+              }}
+              className="space-y-3 text-xs"
+            >
+              <div>
+                <label className="block font-medium text-slate-700 mb-1">Judul Artikel *</label>
+                <input required name="title" type="text" placeholder="e.g. 5 Rahasia Memilih Sayur Bebas Kimia" className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">Kategori *</label>
+                  <select name="category" className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl">
+                    <option value="Gaya Hidup & Nutrisi">Gaya Hidup & Nutrisi</option>
+                    <option value="Tips Kebun & Bibit">Tips Kebun & Bibit</option>
+                    <option value="Pakaian & Alergi Anak">Pakaian & Alergi Anak</option>
+                    <option value="Perawatan Ramah Lingkungan">Perawatan Ramah Lingkungan</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">Estimasi Waktu Baca (Menit)</label>
+                  <input name="readTime" type="number" defaultValue="4" className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-medium text-slate-700 mb-1">URL Gambar Sampul (Unsplash / CDN)</label>
+                <input name="image" type="url" placeholder="https://images.unsplash.com/..." className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+              </div>
+
+              <div>
+                <label className="block font-medium text-slate-700 mb-1">Ringkasan Singkat (Excerpt)</label>
+                <textarea required name="excerpt" rows={2} placeholder="Ringkasan 1-2 kalimat untuk kartu artikel..." className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+              </div>
+
+              <div>
+                <label className="block font-medium text-slate-700 mb-1">Konten Lengkap Artikel</label>
+                <textarea required name="content" rows={5} placeholder="Tulis isi panduan atau artikel di sini..." className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl" />
+              </div>
+
+              <div className="pt-2 flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsAddBlogOpen(false)}
+                  className="px-4 py-2 rounded-full border border-stone-200 text-xs font-semibold text-slate-700"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm"
+                >
+                  Terbitkan Artikel
                 </button>
               </div>
             </form>
