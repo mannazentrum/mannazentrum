@@ -3,12 +3,8 @@ import {
   X, 
   Star, 
   ShoppingBag, 
-  ShieldCheck, 
-  Truck, 
-  Package, 
   Check, 
   Share2, 
-  Sparkles,
   Info
 } from 'lucide-react';
 import { ShopProduct, CurrencyKey } from '../../data/shopData';
@@ -45,15 +41,15 @@ export const ShopProductModal: React.FC<ShopProductModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200 font-sans">
       <div 
-        className="relative bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100 animate-in zoom-in-95 duration-200"
+        className="relative bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-stone-200/80 animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-slate-100 text-slate-700 flex items-center justify-center shadow-md transition"
+          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-stone-100 text-slate-700 flex items-center justify-center shadow-md transition"
           aria-label="Tutup"
         >
           <X className="w-5 h-5" />
@@ -62,7 +58,7 @@ export const ShopProductModal: React.FC<ShopProductModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2">
           
           {/* Product Image Area */}
-          <div className="relative bg-slate-100 aspect-square md:aspect-auto overflow-hidden">
+          <div className="relative bg-stone-100 aspect-square md:aspect-auto overflow-hidden">
             <img
               src={product.image}
               alt={language === 'id' ? product.name : product.nameEn}
@@ -74,13 +70,13 @@ export const ShopProductModal: React.FC<ShopProductModalProps> = ({
               {product.badges.map((b, i) => (
                 <span 
                   key={i} 
-                  className="bg-emerald-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm uppercase tracking-wider"
+                  className="bg-amber-500 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-sm uppercase tracking-wider"
                 >
                   {b}
                 </span>
               ))}
               {product.isAseanReady && (
-                <span className="bg-amber-400 text-slate-900 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                <span className="bg-slate-900 text-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
                   <span>🌏</span> {language === 'id' ? 'Siap Kirim ASEAN' : 'ASEAN Shipping Ready'}
                 </span>
               )}
@@ -93,7 +89,7 @@ export const ShopProductModal: React.FC<ShopProductModalProps> = ({
             <div className="space-y-3">
               {/* Category & Rating */}
               <div className="flex items-center justify-between text-xs text-slate-500">
-                <span className="font-semibold text-emerald-700 uppercase tracking-wider text-[11px]">
+                <span className="font-semibold text-amber-600 uppercase tracking-wider text-[11px]">
                   {language === 'id' ? product.categoryLabelId : product.categoryLabelEn}
                 </span>
                 <div className="flex items-center gap-1 text-amber-500 font-bold">
@@ -119,8 +115,8 @@ export const ShopProductModal: React.FC<ShopProductModalProps> = ({
               </div>
 
               {/* Stock Notice */}
-              <div className="flex items-center gap-2 text-xs font-medium text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100">
-                <Check className="w-4 h-4" />
+              <div className="flex items-center gap-2 text-xs font-medium text-amber-900 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200/60">
+                <Check className="w-4 h-4 text-amber-700" />
                 <span>
                   {language === 'id' 
                     ? `Stok Tersedia: ${product.stock} unit (Siap dikirim hari ini)` 
@@ -130,17 +126,17 @@ export const ShopProductModal: React.FC<ShopProductModalProps> = ({
               </div>
 
               {/* Full Description */}
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-2">
+              <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed pt-2">
                 {language === 'id' ? product.descriptionId : product.descriptionEn}
               </p>
 
               {/* Specifications Table */}
-              <div className="bg-slate-50 rounded-2xl p-3.5 space-y-2 border border-slate-100 text-xs">
+              <div className="bg-[#FAF9F5] rounded-2xl p-3.5 space-y-2 border border-stone-200/60 text-xs">
                 <span className="font-bold text-slate-800 text-[11px] block uppercase tracking-wider">
                   {language === 'id' ? 'Spesifikasi Produk' : 'Product Specifications'}
                 </span>
                 {product.specs.map((s, idx) => (
-                  <div key={idx} className="flex justify-between py-1 border-b border-slate-200/50 last:border-none">
+                  <div key={idx} className="flex justify-between py-1 border-b border-stone-200/50 last:border-none">
                     <span className="text-slate-500">{language === 'id' ? s.labelId : s.labelEn}</span>
                     <span className="font-semibold text-slate-800 text-right">{s.value}</span>
                   </div>
@@ -206,9 +202,9 @@ export const ShopProductModal: React.FC<ShopProductModalProps> = ({
                     onAddToCart(product, quantity);
                     onClose();
                   }}
-                  className="w-full py-3 px-4 rounded-full border border-slate-900 text-slate-900 hover:bg-slate-50 font-semibold text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-xs"
+                  className="w-full py-3 px-4 rounded-full border border-slate-900 text-slate-900 hover:bg-amber-50 font-semibold text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-xs"
                 >
-                  <ShoppingBag className="w-4 h-4 text-emerald-700" />
+                  <ShoppingBag className="w-4 h-4 text-amber-600" />
                   <span>{language === 'id' ? '+ Keranjang' : '+ Add to Cart'}</span>
                 </button>
 
@@ -217,7 +213,7 @@ export const ShopProductModal: React.FC<ShopProductModalProps> = ({
                     onDirectCheckout(product, quantity);
                     onClose();
                   }}
-                  className="w-full py-3 px-4 rounded-full bg-slate-900 hover:bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-md"
+                  className="w-full py-3 px-4 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-semibold text-xs flex items-center justify-center gap-2 transition active:scale-95 shadow-md"
                 >
                   <span>{language === 'id' ? 'Beli Sekarang' : 'Buy Now'}</span>
                 </button>

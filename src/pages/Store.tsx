@@ -19,21 +19,15 @@ import {
   Sparkles, 
   Star, 
   Truck, 
-  ShieldCheck, 
   Package, 
-  ArrowRight, 
-  Heart, 
   Check, 
   Filter, 
   Flame,
-  Globe2,
   Tag,
   Leaf,
   Shirt,
   Apple,
-  Home as HomeIcon,
-  HelpCircle,
-  MessageCircle
+  Home as HomeIcon
 } from 'lucide-react';
 
 const CART_STORAGE_KEY = 'manna_shop_cart_items_v1';
@@ -220,10 +214,10 @@ const Store: React.FC = () => {
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-white font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-slate-900">
       
       <SEO 
-        title="Manna Shop - Toko Online Terpadu Kebutuhan Harian Keluarga (Indonesia & Asia Tenggara)"
+        title="Mannazentrum Shop - Toko Online Terpadu Kebutuhan Harian Keluarga (Indonesia & Asia Tenggara)"
         description="Pusat belanja online keluarga harian: pakaian katun organik, sembako sehat beras & madu mentah, benih tanaman pekarangan & perlengkapan ramah lingkungan untuk pengiriman Indonesia, Singapura, Malaysia, dan Asia Tenggara."
         canonicalPath="/shop"
       />
@@ -243,82 +237,83 @@ const Store: React.FC = () => {
         onOpenShippingInfo={() => setShippingInfoModalOpen(true)}
       />
 
-      {/* HERO BANNER: PUSAT BELANJA KELUARGA NUSANTARA & ASEAN */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-emerald-950 via-slate-900 to-slate-950 text-white py-12 md:py-20 px-4 sm:px-6 lg:px-8 border-b border-emerald-900/50">
+      {/* HERO BANNER: PUSAT BELANJA KELUARGA (Mannazentrum's Slate-900 & Warm Amber Palette) */}
+      <section className="relative overflow-hidden bg-slate-900 text-white py-14 md:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
         
-        {/* Subtle Background Glow & Pattern */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Subtle Warm Amber Glows matching Mannazentrum */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-800/60 border border-emerald-600/40 text-emerald-200 text-xs font-semibold backdrop-blur-xs">
-              <Sparkles className="w-4 h-4 text-amber-300" />
+          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+            <span className="text-amber-400 font-semibold uppercase tracking-[0.2em] text-xs inline-flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               <span>
                 {language === 'id' 
-                  ? 'Toko Online Kebutuhan Harian Terpadu' 
+                  ? 'Toko Online Kebutuhan Harian Keluarga' 
                   : 'Integrated Family Daily Living Store'
                 }
               </span>
-            </div>
+            </span>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            {/* Primary Heading with Mannazentrum's typography style */}
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-light text-white tracking-tight leading-tight">
               {language === 'id' ? (
                 <>
-                  Penuhi Keperluan Keluarga:{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-amber-200">
-                    Pakaian, Sembako Sehat, Hingga Bibit Tanaman
+                  Keperluan Keluarga Harian: <br />
+                  <span className="font-semibold text-amber-300">
+                    Pakaian, Sembako Sehat & Bibit Tanaman
                   </span>
                 </>
               ) : (
                 <>
-                  Wholesome Daily Family Living:{' '}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-amber-200">
+                  Wholesome Family Living: <br />
+                  <span className="font-semibold text-amber-300">
                     Apparel, Organic Groceries & Seeds
                   </span>
                 </>
               )}
             </h1>
 
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0 font-normal">
+            <p className="text-slate-300 font-light text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
               {language === 'id'
-                ? 'Koleksi pilihan ramah lingkungan dan alami yang dirancang untuk mendukung gaya hidup sehat keluarga. Melayani pemesanan cepat dengan proteksi kemasan vakum ke seluruh pelosok Indonesia dan negara tetangga (Singapura, Malaysia, Brunei, Thailand).'
-                : 'Curated eco-friendly essentials for conscious family living. Vacuum-sealed and safely shipped across Indonesia and ASEAN neighbor countries.'}
+                ? 'Koleksi pilihan berbahan alam yang dirancang untuk mendukung gaya hidup sehat keluarga. Melayani pemesanan cepat dengan proteksi kemasan vakum ke seluruh pelosok Indonesia dan negara tetangga (Singapura, Malaysia, Brunei, Thailand).'
+                : 'Curated natural essentials for conscious family living. Vacuum-sealed and safely shipped across Indonesia and ASEAN neighbor countries.'}
             </p>
 
             {/* Quick Actions */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
               <a
                 href="#katalog-produk"
-                className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-7 py-3 rounded-full text-xs sm:text-sm transition shadow-lg shadow-emerald-500/25 active:scale-95 flex items-center gap-2"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-7 py-3 rounded-full text-xs sm:text-sm transition shadow-lg shadow-amber-500/20 active:scale-95 flex items-center gap-2"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>{language === 'id' ? 'Belanja Sekarang' : 'Shop Essentials'}</span>
+                <span>{language === 'id' ? 'Lihat Katalog Produk' : 'Shop Essentials'}</span>
               </a>
 
               <button
                 onClick={() => setShippingInfoModalOpen(true)}
-                className="bg-slate-800/80 hover:bg-slate-700 text-white font-semibold px-6 py-3 rounded-full text-xs sm:text-sm transition border border-slate-700 flex items-center gap-2 active:scale-95"
+                className="bg-slate-800 hover:bg-slate-700 text-white font-medium px-6 py-3 rounded-full text-xs sm:text-sm transition border border-slate-700 flex items-center gap-2 active:scale-95"
               >
-                <Truck className="w-4 h-4 text-emerald-400" />
+                <Truck className="w-4 h-4 text-amber-400" />
                 <span>{language === 'id' ? 'Jalur Pengiriman ASEAN' : 'ASEAN Shipping Details'}</span>
               </button>
             </div>
 
             {/* Micro Highlights */}
-            <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-slate-400">
+            <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-slate-400">
               <div className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-emerald-400" />
-                <span>Bebas Bahan Kimia Berbahaya</span>
+                <Check className="w-4 h-4 text-amber-400" />
+                <span>Bahan Pilihan Alami & Bebas Kimia</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-emerald-400" />
-                <span>Kemasan Vakum Tahan Lama</span>
+                <Check className="w-4 h-4 text-amber-400" />
+                <span>Kemasan Vakum Kedap Udara</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-emerald-400" />
-                <span>Garansi Tiba Dalam Kondisi Segar</span>
+                <Check className="w-4 h-4 text-amber-400" />
+                <span>Garansi Penggantian Kerusakan 100%</span>
               </div>
             </div>
 
@@ -326,7 +321,7 @@ const Store: React.FC = () => {
 
           {/* Hero Featured Collage */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden border border-emerald-800/60 bg-slate-800/50 shadow-2xl p-4 sm:p-5 backdrop-blur-xs">
+            <div className="relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-800/60 shadow-2xl p-4 sm:p-5 backdrop-blur-xs">
               
               <div className="grid grid-cols-2 gap-3">
                 <div className="relative rounded-2xl overflow-hidden aspect-4/3 group">
@@ -374,13 +369,13 @@ const Store: React.FC = () => {
                 </div>
               </div>
 
-              {/* Promo Floating Tag */}
-              <div className="mt-4 p-3 rounded-2xl bg-gradient-to-r from-emerald-800/80 to-teal-800/80 border border-emerald-600/50 flex items-center justify-between text-xs">
+              {/* Promo Floating Tag in Mannazentrum Warm Style */}
+              <div className="mt-4 p-3.5 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <Tag className="w-4 h-4 text-amber-300 shrink-0" />
+                  <Tag className="w-4 h-4 text-amber-400 shrink-0" />
                   <div>
-                    <span className="font-bold text-white block">Kode Kupon: ASEANFAM</span>
-                    <span className="text-[11px] text-emerald-200">Diskon 15% untuk kiriman domestik & Asia Tenggara</span>
+                    <span className="font-bold text-amber-300 block">Kupon Hemat: ASEANFAM</span>
+                    <span className="text-[11px] text-slate-300">Diskon 15% kiriman Indonesia & Asia Tenggara</span>
                   </div>
                 </div>
                 <button
@@ -388,7 +383,7 @@ const Store: React.FC = () => {
                     handleApplyCoupon('ASEANFAM');
                     setCartDrawerOpen(true);
                   }}
-                  className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-[10px] uppercase tracking-wider shrink-0 transition"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-1.5 rounded-xl text-[10px] uppercase tracking-wider shrink-0 transition"
                 >
                   Klaim Kupon
                 </button>
@@ -401,7 +396,7 @@ const Store: React.FC = () => {
 
       </section>
 
-      {/* QUICK CATEGORY HIGHLIGHT CARDS */}
+      {/* QUICK CATEGORY HIGHLIGHT CARDS (Warm Ivory / Mannazentrum Accent) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           
@@ -409,16 +404,16 @@ const Store: React.FC = () => {
             onClick={() => setSelectedCategory('pakaian')}
             className={`p-4 rounded-2xl border transition shadow-sm flex items-center gap-3 text-left ${
               selectedCategory === 'pakaian'
-                ? 'bg-emerald-800 text-white border-emerald-700'
-                : 'bg-white hover:bg-emerald-50/50 text-slate-800 border-slate-200/80'
+                ? 'bg-slate-900 text-white border-slate-900 shadow-md'
+                : 'bg-white hover:bg-amber-50/60 text-slate-800 border-slate-200/80 hover:border-amber-300'
             }`}
           >
-            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/50">
               <Shirt className="w-5 h-5" />
             </div>
             <div>
               <span className="font-bold text-xs sm:text-sm block">Pakaian Keluarga</span>
-              <span className={`text-[10px] block ${selectedCategory === 'pakaian' ? 'text-emerald-200' : 'text-slate-400'}`}>Katun & Serat Bambu</span>
+              <span className={`text-[10px] block ${selectedCategory === 'pakaian' ? 'text-amber-200' : 'text-slate-400'}`}>Katun & Serat Bambu</span>
             </div>
           </button>
 
@@ -426,16 +421,16 @@ const Store: React.FC = () => {
             onClick={() => setSelectedCategory('makanan')}
             className={`p-4 rounded-2xl border transition shadow-sm flex items-center gap-3 text-left ${
               selectedCategory === 'makanan'
-                ? 'bg-emerald-800 text-white border-emerald-700'
-                : 'bg-white hover:bg-emerald-50/50 text-slate-800 border-slate-200/80'
+                ? 'bg-slate-900 text-white border-slate-900 shadow-md'
+                : 'bg-white hover:bg-amber-50/60 text-slate-800 border-slate-200/80 hover:border-amber-300'
             }`}
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/50">
               <Apple className="w-5 h-5" />
             </div>
             <div>
               <span className="font-bold text-xs sm:text-sm block">Bahan Makanan Sehat</span>
-              <span className={`text-[10px] block ${selectedCategory === 'makanan' ? 'text-emerald-200' : 'text-slate-400'}`}>Beras Organik & Madu</span>
+              <span className={`text-[10px] block ${selectedCategory === 'makanan' ? 'text-amber-200' : 'text-slate-400'}`}>Beras Organik & Madu</span>
             </div>
           </button>
 
@@ -443,16 +438,16 @@ const Store: React.FC = () => {
             onClick={() => setSelectedCategory('tanaman')}
             className={`p-4 rounded-2xl border transition shadow-sm flex items-center gap-3 text-left ${
               selectedCategory === 'tanaman'
-                ? 'bg-emerald-800 text-white border-emerald-700'
-                : 'bg-white hover:bg-emerald-50/50 text-slate-800 border-slate-200/80'
+                ? 'bg-slate-900 text-white border-slate-900 shadow-md'
+                : 'bg-white hover:bg-amber-50/60 text-slate-800 border-slate-200/80 hover:border-amber-300'
             }`}
           >
-            <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/50">
               <Leaf className="w-5 h-5" />
             </div>
             <div>
               <span className="font-bold text-xs sm:text-sm block">Tanaman & Bibit</span>
-              <span className={`text-[10px] block ${selectedCategory === 'tanaman' ? 'text-emerald-200' : 'text-slate-400'}`}>Benih Cepat Panen & Pupuk</span>
+              <span className={`text-[10px] block ${selectedCategory === 'tanaman' ? 'text-amber-200' : 'text-slate-400'}`}>Benih Panen & Pupuk</span>
             </div>
           </button>
 
@@ -460,16 +455,16 @@ const Store: React.FC = () => {
             onClick={() => setSelectedCategory('harian')}
             className={`p-4 rounded-2xl border transition shadow-sm flex items-center gap-3 text-left ${
               selectedCategory === 'harian'
-                ? 'bg-emerald-800 text-white border-emerald-700'
-                : 'bg-white hover:bg-emerald-50/50 text-slate-800 border-slate-200/80'
+                ? 'bg-slate-900 text-white border-slate-900 shadow-md'
+                : 'bg-white hover:bg-amber-50/60 text-slate-800 border-slate-200/80 hover:border-amber-300'
             }`}
           >
-            <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/50">
               <HomeIcon className="w-5 h-5" />
             </div>
             <div>
               <span className="font-bold text-xs sm:text-sm block">Kebutuhan Harian</span>
-              <span className={`text-[10px] block ${selectedCategory === 'harian' ? 'text-emerald-200' : 'text-slate-400'}`}>Sabun Alami & Pembersih</span>
+              <span className={`text-[10px] block ${selectedCategory === 'harian' ? 'text-amber-200' : 'text-slate-400'}`}>Sabun & Perawatan</span>
             </div>
           </button>
 
@@ -480,25 +475,25 @@ const Store: React.FC = () => {
       <section id="katalog-produk" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         
         {/* Controls Bar: Search, Category Active, Sort, and ASEAN Ready toggle */}
-        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-xs mb-8 space-y-4">
+        <div className="bg-[#FAF9F5] rounded-3xl p-5 sm:p-7 border border-stone-200/70 shadow-xs mb-8 space-y-4">
           
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-700 block mb-1">
-                {language === 'id' ? 'Katalog Lengkap & Terverifikasi' : 'Certified Product Catalog'}
+              <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-[11px] block mb-2">
+                {language === 'id' ? 'Katalog Pilihan Terbaik' : 'Curated Store Catalog'}
               </span>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-                {selectedCategory === 'semua' && (language === 'id' ? 'Seluruh Produk Pilihan Keluarga' : 'All Curated Family Products')}
-                {selectedCategory === 'pakaian' && (language === 'id' ? 'Pakaian & Busana Katun Alami' : 'Family Natural Cotton Apparel')}
-                {selectedCategory === 'makanan' && (language === 'id' ? 'Sembako, Beras & Bahan Makanan Sehat' : 'Healthy Pantry, Organic Rice & Raw Honey')}
-                {selectedCategory === 'tanaman' && (language === 'id' ? 'Tanaman Hidup, Benih Unggul & Media Tanam' : 'Live Plants, Certified Seeds & Gardening')}
-                {selectedCategory === 'harian' && (language === 'id' ? 'Perawatan Diri Alami & Perlengkapan Rumah' : 'Natural Body Care & Home Essentials')}
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light text-slate-900 tracking-tight">
+                {selectedCategory === 'semua' && (language === 'id' ? 'Seluruh Produk Keperluan Harian' : 'All Curated Family Products')}
+                {selectedCategory === 'pakaian' && (language === 'id' ? 'Koleksi Pakaian Katun Alami' : 'Family Natural Cotton Apparel')}
+                {selectedCategory === 'makanan' && (language === 'id' ? 'Sembako, Beras & Madu Sehat' : 'Healthy Pantry, Organic Rice & Raw Honey')}
+                {selectedCategory === 'tanaman' && (language === 'id' ? 'Tanaman Hidup, Benih & Pupuk' : 'Live Plants, Certified Seeds & Gardening')}
+                {selectedCategory === 'harian' && (language === 'id' ? 'Perawatan Diri & Kebutuhan Rumah' : 'Natural Body Care & Home Essentials')}
                 {selectedCategory === 'paket' && (language === 'id' ? 'Paket Bundling Keluarga Hemat' : 'Value Family Bundles')}
               </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-500 font-light mt-1">
                 {language === 'id' 
-                  ? `Menampilkan ${filteredProducts.length} produk siap kirim dengan standar kualitas tinggi`
-                  : `Showing ${filteredProducts.length} high-quality products ready for dispatch`
+                  ? `Tersedia ${filteredProducts.length} produk siap kirim ke seluruh Indonesia dan Asia Tenggara.`
+                  : `Showing ${filteredProducts.length} high-quality products ready for dispatch across ASEAN.`
                 }
               </p>
             </div>
@@ -511,16 +506,16 @@ const Store: React.FC = () => {
                 onClick={() => setFilterAseanOnly(!filterAseanOnly)}
                 className={`px-3.5 py-2 rounded-full text-xs font-semibold transition flex items-center gap-1.5 border ${
                   filterAseanOnly
-                    ? 'bg-amber-400 text-slate-950 border-amber-500 shadow-xs'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                    ? 'bg-amber-500 text-slate-950 border-amber-600 shadow-xs'
+                    : 'bg-white text-slate-700 border-stone-200/80 hover:bg-stone-50'
                 }`}
               >
                 <span>🌏</span>
-                <span>{language === 'id' ? 'Khusus Siap Kirim ASEAN' : 'ASEAN Export Ready'}</span>
+                <span>{language === 'id' ? 'Siap Kirim ASEAN' : 'ASEAN Ready'}</span>
               </button>
 
               {/* Sorting Dropdown */}
-              <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5 text-xs text-slate-700">
+              <div className="flex items-center gap-1.5 bg-white border border-stone-200/80 rounded-full px-3.5 py-2 text-xs text-slate-700 shadow-2xs">
                 <Filter className="w-3.5 h-3.5 text-slate-400" />
                 <select
                   value={sortBy}
@@ -559,7 +554,7 @@ const Store: React.FC = () => {
                 setSearchQuery('');
                 setFilterAseanOnly(false);
               }}
-              className="px-5 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs hover:bg-emerald-700 transition"
+              className="px-5 py-2.5 rounded-full bg-slate-900 text-white font-semibold text-xs hover:bg-amber-600 transition"
             >
               {language === 'id' ? 'Reset Filter' : 'Reset Filters'}
             </button>
@@ -569,7 +564,7 @@ const Store: React.FC = () => {
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col group"
+                className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col group"
               >
                 {/* Image Container with Badges */}
                 <div 
@@ -586,19 +581,18 @@ const Store: React.FC = () => {
                   {/* Badges Overlay */}
                   <div className="absolute top-3 left-3 flex flex-col gap-1 items-start">
                     {product.isBestSeller && (
-                      <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm uppercase tracking-wider flex items-center gap-1">
-                        <Flame className="w-3 h-3 text-amber-900" />
-                        <span>Best Seller</span>
+                      <span className="bg-amber-500 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                        <Flame className="w-3 h-3 inline mr-0.5" /> Best Seller
                       </span>
                     )}
                     {product.isAseanReady && (
-                      <span className="bg-emerald-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                      <span className="bg-slate-900/90 text-amber-300 text-[9px] font-bold px-2 py-0.5 rounded-full shadow-sm">
                         🌏 Siap Kirim ASEAN
                       </span>
                     )}
                   </div>
 
-                  <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-xs text-slate-800 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-xs">
+                  <span className="absolute top-3 right-3 bg-white/95 backdrop-blur-xs text-slate-800 text-[10px] font-medium px-2.5 py-1 rounded-full shadow-xs">
                     {language === 'id' ? product.categoryLabelId : product.categoryLabelEn}
                   </span>
                 </div>
@@ -621,13 +615,13 @@ const Store: React.FC = () => {
                     {/* Name */}
                     <h3 
                       onClick={() => setSelectedProduct(product)}
-                      className="font-bold text-slate-900 text-sm leading-snug group-hover:text-emerald-700 transition cursor-pointer line-clamp-2"
+                      className="font-bold text-slate-900 text-sm leading-snug group-hover:text-amber-600 transition cursor-pointer line-clamp-2"
                     >
                       {language === 'id' ? product.name : product.nameEn}
                     </h3>
 
                     {/* Short Description */}
-                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-slate-500 font-light line-clamp-2 leading-relaxed">
                       {language === 'id' ? product.shortDescId : product.shortDescEn}
                     </p>
                   </div>
@@ -638,7 +632,7 @@ const Store: React.FC = () => {
                       <span className="text-[10px] uppercase tracking-wider text-slate-400 block font-medium">
                         {language === 'id' ? 'Harga' : 'Price'}
                       </span>
-                      <span className="font-black text-slate-900 text-base sm:text-lg leading-none">
+                      <span className="font-bold text-slate-900 text-base leading-none">
                         {formatPrice(product.priceIdr, currency)}
                       </span>
                     </div>
@@ -647,7 +641,7 @@ const Store: React.FC = () => {
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => setSelectedProduct(product)}
-                        className="px-3 py-2 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-semibold transition"
+                        className="px-3 py-2 rounded-full border border-stone-200 text-slate-700 hover:bg-stone-50 text-xs font-medium transition"
                         title="Lihat Rincian"
                       >
                         {language === 'id' ? 'Detail' : 'View'}
@@ -655,11 +649,11 @@ const Store: React.FC = () => {
 
                       <button
                         onClick={() => handleAddToCart(product, 1)}
-                        className="bg-slate-900 hover:bg-emerald-700 text-white p-2 sm:px-3 sm:py-2 rounded-full text-xs font-bold transition flex items-center gap-1 shadow-sm active:scale-95"
+                        className="bg-slate-900 hover:bg-amber-600 text-white p-2 sm:px-3.5 sm:py-2 rounded-full text-xs font-medium transition flex items-center gap-1 shadow-sm active:scale-95"
                         aria-label="Tambah ke Keranjang"
                       >
                         <ShoppingBag className="w-3.5 h-3.5 text-amber-300" />
-                        <span className="hidden sm:inline">+ Beli</span>
+                        <span className="hidden sm:inline">+ Pesan</span>
                       </button>
                     </div>
 
@@ -674,20 +668,20 @@ const Store: React.FC = () => {
 
       </section>
 
-      {/* WHY SHOP WITH US (STANDAR MUTU & EKSPOR NUSANTARA) */}
-      <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 border-y border-slate-200/80">
+      {/* WHY SHOP WITH US (Mannazentrum's Warm Cream Section Style) */}
+      <section className="bg-[#FAF9F5] py-16 px-4 sm:px-6 lg:px-8 border-y border-stone-200/60">
         <div className="max-w-7xl mx-auto space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-2">
-            <span className="text-emerald-700 font-bold uppercase tracking-widest text-xs">
+            <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs">
               {language === 'id' ? 'Jaminan Mutu & Keamanan' : 'Quality & Safety Assurance'}
             </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-light text-slate-900 tracking-tight">
               {language === 'id' 
                 ? 'Standar Kualitas Tertinggi untuk Keluarga Indonesia & Asia Tenggara' 
                 : 'High-Standard Living for Southeast Asian Families'}
             </h3>
-            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
               {language === 'id'
                 ? 'Setiap produk dipilih dan dikurasi dengan ketat: tanpa pengawet sintetik berbahaya pada makanan, serat alami aman alergi pada pakaian anak, dan benih segar berdaya tumbuh tinggi.'
                 : 'Every single item is strictly curated: chemical-free organic groceries, allergy-friendly natural clothing fibers, and tested high-germination home garden seeds.'}
@@ -696,42 +690,42 @@ const Store: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200/60 space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/70 shadow-xs space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 🌾
               </div>
               <h4 className="font-bold text-slate-900 text-base">
                 {language === 'id' ? 'Bahan Pangan Organik & Vakum' : 'Airtight Vacuum Food Protection'}
               </h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-500 font-light leading-relaxed">
                 {language === 'id'
                   ? 'Beras dan madu dikemas dengan standar kedap udara food-grade, menjaga aroma, nutrisi, dan kebersihan prima hingga berminggu-minggu selama perjalanan.'
                   : 'Grains, honey, and whole spices are vacuum-sealed for pristine freshness and long shelf stability.'}
               </p>
             </div>
 
-            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200/60 space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/70 shadow-xs space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 🌱
               </div>
               <h4 className="font-bold text-slate-900 text-base">
                 {language === 'id' ? 'Benih Cepat Panen & Lolos Uji' : 'Tested High Germination Seeds'}
               </h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-500 font-light leading-relaxed">
                 {language === 'id'
                   ? 'Tingkat keberhasilan tumbuh di atas 85%, cocok untuk pekarangan rumah, pot, atau hidroponik sederhana di perkotaan Asia Tenggara.'
                   : 'Over 85% germination rate, ideal for urban container planting, balconies, and backyard edible gardens.'}
               </p>
             </div>
 
-            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200/60 space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-teal-100 text-teal-800 flex items-center justify-center font-bold">
+            <div className="bg-white p-7 rounded-3xl border border-stone-200/70 shadow-xs space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-xl border border-amber-200/50">
                 ✈️
               </div>
               <h4 className="font-bold text-slate-900 text-base">
                 {language === 'id' ? 'Jaringan Ekspedisi Kilat ASEAN' : 'Express ASEAN Courier Network'}
               </h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-500 font-light leading-relaxed">
                 {language === 'id'
                   ? 'Bekerja sama dengan kurir kargo udara terpercaya (Pos Indonesia EMS, DHL, RaySpeed) dengan pelacakan nomor resi otomatis secara real-time.'
                   : 'Partnered with premier international air couriers ensuring rapid 3-5 business day transit with live tracking.'}
@@ -744,42 +738,42 @@ const Store: React.FC = () => {
       </section>
 
       {/* VERIFIED CUSTOMER REVIEWS (CROSS-BORDER ASEAN) */}
-      <section className="bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
+      <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-10">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="text-emerald-700 font-bold uppercase tracking-widest text-xs block mb-1">
+              <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-1">
                 {language === 'id' ? 'Ulasan Nyata Pelanggan' : 'Real Customer Experiences'}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-light text-slate-900 tracking-tight">
                 {language === 'id' ? 'Dipercaya Keluarga di Indonesia & Luar Negeri' : 'Trusted by Families Across Indonesia & ASEAN'}
               </h3>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-slate-600">
               <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
               <span className="font-bold text-slate-900">4.9 / 5.0</span>
-              <span>dari 1.200+ pesanan terkirim</span>
+              <span className="text-slate-400">dari 1.200+ pesanan terkirim</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {SHOP_REVIEWS.map((rev) => (
-              <div key={rev.id} className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-3">
+              <div key={rev.id} className="bg-[#FAF9F5] p-5 rounded-3xl border border-stone-200/60 shadow-xs flex flex-col justify-between space-y-3">
                 <div className="space-y-2">
                   <div className="flex items-center gap-1 text-amber-400">
                     {[...Array(rev.rating)].map((_, i) => (
                       <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
                     ))}
                   </div>
-                  <p className="text-xs text-slate-700 italic leading-relaxed">
+                  <p className="text-xs text-slate-700 italic font-light leading-relaxed">
                     "{rev.comment}"
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100">
+                <div className="pt-3 border-t border-stone-200/60">
                   <span className="font-bold text-xs text-slate-900 block">{rev.author}</span>
-                  <span className="text-[11px] text-emerald-700 font-medium block">{rev.location}</span>
+                  <span className="text-[11px] text-amber-700 font-medium block">{rev.location}</span>
                   <span className="text-[10px] text-slate-400 block mt-0.5">Produk: {rev.productName}</span>
                 </div>
               </div>
@@ -794,19 +788,19 @@ const Store: React.FC = () => {
         <div className="fixed bottom-6 right-6 z-40 animate-in fade-in slide-in-from-bottom duration-300">
           <button
             onClick={() => setCartDrawerOpen(true)}
-            className="flex items-center gap-3 bg-slate-950 hover:bg-emerald-800 text-white px-5 py-3.5 rounded-full shadow-2xl border border-emerald-500/30 transition-transform active:scale-95"
+            className="flex items-center gap-3 bg-slate-900 hover:bg-amber-600 text-white px-5 py-3.5 rounded-full shadow-2xl border border-slate-700 transition-transform active:scale-95"
           >
             <div className="relative">
               <ShoppingBag className="w-5 h-5 text-amber-300" />
-              <span className="absolute -top-2 -right-2 bg-emerald-500 text-slate-950 font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-amber-400 text-slate-950 font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
                 {totalCartCount}
               </span>
             </div>
             <div className="text-left pr-2">
-              <span className="text-[10px] text-slate-400 block uppercase font-bold tracking-wider leading-none">
-                {language === 'id' ? 'Keranjang Anda' : 'Your Cart'}
+              <span className="text-[10px] text-slate-300 block uppercase font-bold tracking-wider leading-none">
+                {language === 'id' ? 'Keranjang Belanja' : 'Your Cart'}
               </span>
-              <span className="font-extrabold text-xs text-emerald-300">
+              <span className="font-bold text-xs text-amber-300">
                 {formatPrice(
                   cart.reduce((sum, item) => sum + (item.product.priceIdr * item.quantity), 0),
                   currency

@@ -8,10 +8,9 @@ import {
   MessageCircle, 
   Building, 
   QrCode, 
-  ArrowRight,
-  Package,
-  Copy,
-  Check
+  ArrowRight, 
+  Copy, 
+  Check 
 } from 'lucide-react';
 import { CartItem } from './ShopCartDrawer';
 import { CurrencyKey, SHIPPING_DESTINATIONS } from '../../data/shopData';
@@ -117,7 +116,7 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
 
   const copyInvoiceDetails = () => {
     if (!orderCompleted) return;
-    const text = `Invoice Manna Shop: ${orderCompleted.orderId}\nTotal: Rp ${orderCompleted.totalAmountIdr.toLocaleString('id-ID')}\nPembeli: ${customerName}`;
+    const text = `Invoice Mannazentrum Shop: ${orderCompleted.orderId}\nTotal: Rp ${orderCompleted.totalAmountIdr.toLocaleString('id-ID')}\nPembeli: ${customerName}`;
     navigator.clipboard.writeText(text);
     setCopiedInvoice(true);
     setTimeout(() => setCopiedInvoice(false), 2000);
@@ -126,7 +125,7 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 font-sans animate-in fade-in duration-200">
       <div 
-        className="relative bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-100"
+        className="relative bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-stone-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -141,27 +140,27 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
         {/* ORDER SUCCESS SCREEN */}
         {orderCompleted ? (
           <div className="p-6 sm:p-10 text-center space-y-6 animate-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
+            <div className="w-16 h-16 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto shadow-sm">
               <CheckCircle2 className="w-10 h-10" />
             </div>
 
             <div className="space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200/60">
                 {language === 'id' ? 'Pesanan Berhasil Dibuat!' : 'Order Placed Successfully!'}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              <h3 className="text-2xl sm:text-3xl font-light text-slate-900">
                 {language === 'id' ? 'Terima Kasih atas Pesanan Anda' : 'Thank You for Your Order'}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+              <p className="text-xs sm:text-sm text-slate-500 font-light max-w-md mx-auto">
                 {language === 'id' 
-                  ? 'Invoice pesanan telah dibuat. Tim Manna Shop akan segera memproses pengiriman ke alamat tujuan Anda.'
-                  : 'Your invoice is generated. Manna Shop team will process your order for shipping.'}
+                  ? 'Invoice pesanan telah dibuat. Tim Mannazentrum Shop akan segera memproses pengiriman ke alamat tujuan Anda.'
+                  : 'Your invoice is generated. Mannazentrum Shop team will process your order for shipping.'}
               </p>
             </div>
 
             {/* Invoice Summary Box */}
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 text-left space-y-3 text-xs max-w-md mx-auto">
-              <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+            <div className="bg-[#FAF9F5] border border-stone-200 rounded-2xl p-5 text-left space-y-3 text-xs max-w-md mx-auto">
+              <div className="flex justify-between items-center border-b border-stone-200 pb-2">
                 <span className="text-slate-500">{language === 'id' ? 'Nomor Pesanan' : 'Order ID'}:</span>
                 <span className="font-mono font-bold text-slate-900 text-sm">{orderCompleted.orderId}</span>
               </div>
@@ -171,11 +170,11 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-500">{language === 'id' ? 'Total Tagihan' : 'Grand Total'}:</span>
-                <span className="font-extrabold text-emerald-800 text-base">
+                <span className="font-extrabold text-amber-900 text-base">
                   {formatPrice(orderCompleted.totalAmountIdr, currency)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-[11px] text-slate-500 pt-1 border-t border-slate-200">
+              <div className="flex justify-between items-center text-[11px] text-slate-500 pt-1 border-t border-stone-200">
                 <span>{language === 'id' ? 'Metode Pembayaran' : 'Payment Method'}:</span>
                 <span className="font-semibold text-slate-700 uppercase">{paymentMethod}</span>
               </div>
@@ -184,20 +183,20 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
             {/* Quick Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto pt-2">
               <a
-                href={`https://wa.me/6287881110807?text=Halo%20Admin%20Manna%20Shop,%20saya%20sudah%20membuat%20pesanan%20dengan%20No%20${orderCompleted.orderId}%20senilai%20Rp%20${orderCompleted.totalAmountIdr.toLocaleString('id-ID')}.%20Mohon%20instruksi%20pembayaran.`}
+                href={`https://wa.me/6287881110807?text=Halo%20Admin%20Mannazentrum%20Shop,%20saya%20sudah%20membuat%20pesanan%20dengan%20No%20${orderCompleted.orderId}%20senilai%20Rp%20${orderCompleted.totalAmountIdr.toLocaleString('id-ID')}.%20Mohon%20instruksi%20pembayaran.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-3 px-5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition"
+                className="flex-1 py-3 px-5 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition"
               >
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4 text-amber-300" />
                 <span>{language === 'id' ? 'Konfirmasi ke CS WhatsApp' : 'Confirm via WhatsApp'}</span>
               </a>
 
               <button
                 onClick={copyInvoiceDetails}
-                className="py-3 px-4 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold text-xs flex items-center justify-center gap-1.5 transition"
+                className="py-3 px-4 rounded-full border border-stone-300 text-slate-700 hover:bg-stone-50 font-semibold text-xs flex items-center justify-center gap-1.5 transition"
               >
-                {copiedInvoice ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                {copiedInvoice ? <Check className="w-4 h-4 text-amber-600" /> : <Copy className="w-4 h-4" />}
                 <span>{copiedInvoice ? (language === 'id' ? 'Tersalin!' : 'Copied!') : (language === 'id' ? 'Salin Invoice' : 'Copy Invoice')}</span>
               </button>
             </div>
@@ -213,11 +212,11 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
           /* CHECKOUT FORM */
           <form onSubmit={handleSubmitOrder} className="p-6 sm:p-8 space-y-6">
             
-            <div className="border-b border-slate-100 pb-4">
+            <div className="border-b border-stone-200 pb-4">
               <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight">
-                {language === 'id' ? 'Checkout Terpadu Manna Shop' : 'Integrated Manna Shop Checkout'}
+                {language === 'id' ? 'Checkout Terpadu Mannazentrum Shop' : 'Integrated Store Checkout'}
               </h3>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-slate-500 font-light mt-1">
                 {language === 'id' 
                   ? 'Layanan pengiriman cepat & aman untuk keluarga di Indonesia dan Asia Tenggara.' 
                   : 'Reliable daily supplies delivery for families in Indonesia and Southeast Asia.'}
@@ -237,8 +236,8 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                     onClick={() => setSelectedCountryCode(dest.code)}
                     className={`p-2.5 rounded-xl border text-left transition flex items-center gap-2 ${
                       selectedCountryCode === dest.code
-                        ? 'border-emerald-600 bg-emerald-50/70 text-slate-900 ring-2 ring-emerald-500/20'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-600'
+                        ? 'border-amber-500 bg-amber-50/70 text-slate-900 ring-2 ring-amber-500/20'
+                        : 'border-stone-200 hover:bg-stone-50 text-slate-600'
                     }`}
                   >
                     <span className="text-lg">{dest.flag}</span>
@@ -268,7 +267,7 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder="e.g. Siti Nurhaliza"
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white outline-hidden"
+                    className="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 focus:bg-white outline-hidden"
                   />
                 </div>
 
@@ -282,7 +281,7 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     placeholder="e.g. +62 812 3456 7890"
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white outline-hidden"
+                    className="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 focus:bg-white outline-hidden"
                   />
                 </div>
               </div>
@@ -296,7 +295,7 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
                   placeholder="keluarga@email.com"
-                  className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white outline-hidden"
+                  className="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 focus:bg-white outline-hidden"
                 />
               </div>
 
@@ -310,7 +309,7 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                   value={customerAddress}
                   onChange={(e) => setCustomerAddress(e.target.value)}
                   placeholder={language === 'id' ? 'Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan' : 'Street name, unit/house number, district'}
-                  className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white outline-hidden"
+                  className="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 focus:bg-white outline-hidden"
                 />
               </div>
 
@@ -324,7 +323,7 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                     value={customerCity}
                     onChange={(e) => setCustomerCity(e.target.value)}
                     placeholder="e.g. Tangerang / KL / Singapore"
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white outline-hidden"
+                    className="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 focus:bg-white outline-hidden"
                   />
                 </div>
                 <div>
@@ -336,7 +335,7 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                     value={customerPostal}
                     onChange={(e) => setCustomerPostal(e.target.value)}
                     placeholder="e.g. 15345"
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white outline-hidden"
+                    className="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 focus:bg-white outline-hidden"
                   />
                 </div>
               </div>
@@ -350,24 +349,24 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                   value={orderNotes}
                   onChange={(e) => setOrderNotes(e.target.value)}
                   placeholder={language === 'id' ? 'e.g. Titip di pos sekuriti / hubungi sebelum antar' : 'e.g. Leave at door if away'}
-                  className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:border-emerald-500 focus:bg-white outline-hidden"
+                  className="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 focus:bg-white outline-hidden"
                 />
               </div>
             </div>
 
             {/* Shipping Details */}
-            <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 space-y-2 text-xs">
-              <div className="flex items-center gap-2 font-bold text-emerald-900">
-                <Truck className="w-4 h-4 text-emerald-700" />
+            <div className="bg-[#FAF9F5] border border-stone-200/80 rounded-2xl p-4 space-y-2 text-xs">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <Truck className="w-4 h-4 text-amber-600" />
                 <span>{language === 'id' ? 'Jalur Pengiriman:' : 'Shipping Courier:'} {selectedCountry.courier}</span>
               </div>
-              <div className="flex justify-between text-emerald-800">
+              <div className="flex justify-between text-slate-600">
                 <span>{language === 'id' ? 'Total Berat Barang' : 'Total Package Weight'}:</span>
                 <span className="font-semibold">{weightKg} kg ({totalWeightGrams} g)</span>
               </div>
-              <div className="flex justify-between text-emerald-800">
+              <div className="flex justify-between text-slate-600">
                 <span>{language === 'id' ? 'Ongkos Kirim' : 'Shipping Fee'}:</span>
-                <span className="font-bold">{formatPrice(shippingCostIdr, currency)}</span>
+                <span className="font-bold text-amber-800">{formatPrice(shippingCostIdr, currency)}</span>
               </div>
             </div>
 
@@ -383,11 +382,11 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                   onClick={() => setPaymentMethod('qris')}
                   className={`p-3 rounded-2xl border text-center transition flex flex-col items-center gap-1.5 ${
                     paymentMethod === 'qris'
-                      ? 'border-emerald-600 bg-emerald-50/80 font-bold text-slate-900 ring-2 ring-emerald-500/20'
-                      : 'border-slate-200 hover:bg-slate-50 text-slate-600'
+                      ? 'border-amber-500 bg-amber-50/80 font-bold text-slate-900 ring-2 ring-amber-500/20'
+                      : 'border-stone-200 hover:bg-stone-50 text-slate-600'
                   }`}
                 >
-                  <QrCode className="w-5 h-5 text-emerald-700" />
+                  <QrCode className="w-5 h-5 text-amber-700" />
                   <span className="text-[11px]">QRIS / e-Wallet</span>
                 </button>
 
@@ -396,11 +395,11 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                   onClick={() => setPaymentMethod('va')}
                   className={`p-3 rounded-2xl border text-center transition flex flex-col items-center gap-1.5 ${
                     paymentMethod === 'va'
-                      ? 'border-emerald-600 bg-emerald-50/80 font-bold text-slate-900 ring-2 ring-emerald-500/20'
-                      : 'border-slate-200 hover:bg-slate-50 text-slate-600'
+                      ? 'border-amber-500 bg-amber-50/80 font-bold text-slate-900 ring-2 ring-amber-500/20'
+                      : 'border-stone-200 hover:bg-stone-50 text-slate-600'
                   }`}
                 >
-                  <Building className="w-5 h-5 text-emerald-700" />
+                  <Building className="w-5 h-5 text-amber-700" />
                   <span className="text-[11px]">Virtual Account</span>
                 </button>
 
@@ -409,11 +408,11 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                   onClick={() => setPaymentMethod('card')}
                   className={`p-3 rounded-2xl border text-center transition flex flex-col items-center gap-1.5 ${
                     paymentMethod === 'card'
-                      ? 'border-emerald-600 bg-emerald-50/80 font-bold text-slate-900 ring-2 ring-emerald-500/20'
-                      : 'border-slate-200 hover:bg-slate-50 text-slate-600'
+                      ? 'border-amber-500 bg-amber-50/80 font-bold text-slate-900 ring-2 ring-amber-500/20'
+                      : 'border-stone-200 hover:bg-stone-50 text-slate-600'
                   }`}
                 >
-                  <CreditCard className="w-5 h-5 text-emerald-700" />
+                  <CreditCard className="w-5 h-5 text-amber-700" />
                   <span className="text-[11px]">Visa / Master</span>
                 </button>
 
@@ -422,11 +421,11 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                   onClick={() => setPaymentMethod('wa')}
                   className={`p-3 rounded-2xl border text-center transition flex flex-col items-center gap-1.5 ${
                     paymentMethod === 'wa'
-                      ? 'border-emerald-600 bg-emerald-50/80 font-bold text-slate-900 ring-2 ring-emerald-500/20'
-                      : 'border-slate-200 hover:bg-slate-50 text-slate-600'
+                      ? 'border-amber-500 bg-amber-50/80 font-bold text-slate-900 ring-2 ring-amber-500/20'
+                      : 'border-stone-200 hover:bg-stone-50 text-slate-600'
                   }`}
                 >
-                  <MessageCircle className="w-5 h-5 text-emerald-700" />
+                  <MessageCircle className="w-5 h-5 text-amber-700" />
                   <span className="text-[11px]">WhatsApp Direct</span>
                 </button>
 
@@ -434,13 +433,13 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
             </div>
 
             {/* Price Summary Breakdown */}
-            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-1.5 text-xs text-slate-600">
+            <div className="bg-[#FAF9F5] rounded-2xl p-4 border border-stone-200 space-y-1.5 text-xs text-slate-600">
               <div className="flex justify-between">
                 <span>{language === 'id' ? 'Subtotal Produk' : 'Subtotal'}:</span>
                 <span className="font-semibold text-slate-800">{formatPrice(subtotalIdr, currency)}</span>
               </div>
               {discountPercent > 0 && (
-                <div className="flex justify-between text-emerald-700 font-medium">
+                <div className="flex justify-between text-amber-700 font-medium">
                   <span>{language === 'id' ? `Diskon Kupon (${discountPercent}%)` : `Coupon Discount`}:</span>
                   <span>-{formatPrice(discountAmountIdr, currency)}</span>
                 </div>
@@ -449,9 +448,9 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
                 <span>{language === 'id' ? `Ongkos Kirim (${selectedCountry.nameEn})` : `Shipping`}:</span>
                 <span className="font-semibold text-slate-800">{formatPrice(shippingCostIdr, currency)}</span>
               </div>
-              <div className="pt-2 border-t border-slate-200 flex justify-between items-baseline">
-                <span className="font-extrabold text-slate-900 text-sm">{language === 'id' ? 'Total Akhir' : 'Grand Total'}:</span>
-                <span className="font-black text-emerald-800 text-xl">{formatPrice(grandTotalIdr, currency)}</span>
+              <div className="pt-2 border-t border-stone-200 flex justify-between items-baseline">
+                <span className="font-bold text-slate-900 text-sm">{language === 'id' ? 'Total Akhir' : 'Grand Total'}:</span>
+                <span className="font-black text-amber-900 text-xl">{formatPrice(grandTotalIdr, currency)}</span>
               </div>
             </div>
 
@@ -460,14 +459,14 @@ export const ShopCheckoutModal: React.FC<ShopCheckoutModalProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 px-6 bg-slate-900 hover:bg-emerald-700 text-white rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xl transition active:scale-95 disabled:opacity-50"
+                className="w-full py-4 px-6 bg-slate-900 hover:bg-amber-600 text-white rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xl transition active:scale-95 disabled:opacity-50"
               >
                 <span>{isSubmitting ? (language === 'id' ? 'Memproses Pesanan...' : 'Processing...') : (language === 'id' ? 'Konfirmasi Pesanan & Bayar' : 'Confirm Order & Pay')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <div className="flex items-center justify-center gap-1.5 text-[10px] text-slate-400">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
                 <span>{language === 'id' ? 'Data transaksi dilindungi enkripsi SSL 256-bit dan garansi toko resmi.' : 'Protected by 256-bit SSL encryption & official warranty.'}</span>
               </div>
             </div>

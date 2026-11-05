@@ -5,10 +5,8 @@ import {
   Globe, 
   Truck, 
   MessageCircle, 
-  ShieldCheck, 
   X, 
   Menu,
-  HeartHandshake,
   ChevronDown
 } from 'lucide-react';
 import { CurrencyKey, CURRENCY_RATES } from '../../data/shopData';
@@ -58,19 +56,20 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white shadow-xs font-sans">
-      {/* Top Banner: Regional ASEAN Scope & Quick Controls */}
-      <div className="bg-emerald-950 text-emerald-100 text-[11px] sm:text-xs py-2 px-4 sm:px-6 border-b border-emerald-900/60">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-xs font-sans border-b border-slate-100 transition-all">
+      {/* Top Banner: Regional ASEAN Scope & Quick Controls (Matching Mannazentrum Slate-900 / Amber Bar) */}
+      <div className="bg-slate-900 text-white text-[11px] sm:text-xs py-2 px-4 sm:px-6 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1 bg-emerald-800/80 text-emerald-200 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1 bg-slate-800 text-amber-300 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider border border-slate-700">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <span>🇮🇩</span><span>🇸🇬</span><span>🇲🇾</span> ASEAN Delivery
             </span>
-            <span className="hidden sm:inline text-emerald-200">
+            <span className="hidden sm:inline text-slate-300">
               {language === 'id' 
-                ? 'Melayani pengiriman harian ke seluruh Indonesia & Asia Tenggara (Singapura, Malaysia, dll).'
-                : 'Delivering daily essentials across Indonesia & Southeast Asia (Singapore, Malaysia, etc).'
+                ? 'Melayani pengiriman keperluan keluarga ke seluruh Indonesia & Asia Tenggara.'
+                : 'Delivering daily family essentials across Indonesia & Southeast Asia.'
               }
             </span>
           </div>
@@ -79,25 +78,25 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
             {/* Shipping Info Trigger */}
             <button 
               onClick={onOpenShippingInfo}
-              className="hidden md:flex items-center gap-1 hover:text-white transition text-[11px] text-emerald-200 underline decoration-dotted"
+              className="hidden md:flex items-center gap-1 hover:text-amber-300 transition text-[11px] text-slate-300 underline decoration-dotted"
             >
-              <Truck className="w-3.5 h-3.5" />
+              <Truck className="w-3.5 h-3.5 text-amber-400" />
               <span>{language === 'id' ? 'Info Ongkir & Ekspor' : 'Shipping & Customs'}</span>
             </button>
 
             {/* Language Selector */}
-            <div className="flex items-center gap-1 bg-emerald-900/80 px-2 py-0.5 rounded-md border border-emerald-800">
-              <Globe className="w-3 h-3 text-emerald-300" />
+            <div className="flex items-center gap-1 bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">
+              <Globe className="w-3 h-3 text-slate-400" />
               <button 
                 onClick={() => onChangeLanguage('id')} 
-                className={`px-1 font-semibold rounded text-[10px] transition ${language === 'id' ? 'text-amber-300 font-bold' : 'text-emerald-300 hover:text-white'}`}
+                className={`px-1 font-semibold rounded text-[10px] transition ${language === 'id' ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white'}`}
               >
                 ID
               </button>
-              <span className="text-emerald-600 text-[10px]">|</span>
+              <span className="text-slate-600 text-[10px]">|</span>
               <button 
                 onClick={() => onChangeLanguage('en')} 
-                className={`px-1 font-semibold rounded text-[10px] transition ${language === 'en' ? 'text-amber-300 font-bold' : 'text-emerald-300 hover:text-white'}`}
+                className={`px-1 font-semibold rounded text-[10px] transition ${language === 'en' ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white'}`}
               >
                 EN
               </button>
@@ -107,10 +106,10 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
             <div className="relative">
               <button
                 onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
-                className="flex items-center gap-1 bg-emerald-900/80 hover:bg-emerald-800 text-emerald-200 px-2 py-0.5 rounded-md border border-emerald-800 text-[11px] font-medium transition"
+                className="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-0.5 rounded-md border border-slate-700 text-[11px] font-medium transition"
               >
                 <span>{CURRENCY_RATES[currency].label}</span>
-                <ChevronDown className="w-3 h-3 text-emerald-400" />
+                <ChevronDown className="w-3 h-3 text-amber-400" />
               </button>
 
               {currencyDropdownOpen && (
@@ -122,10 +121,10 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
                         onChangeCurrency(cur);
                         setCurrencyDropdownOpen(false);
                       }}
-                      className={`w-full text-left px-3 py-1.5 text-xs font-medium hover:bg-emerald-50 transition flex items-center justify-between ${currency === cur ? 'text-emerald-700 bg-emerald-50/60 font-semibold' : 'text-slate-600'}`}
+                      className={`w-full text-left px-3 py-1.5 text-xs font-medium hover:bg-amber-50 transition flex items-center justify-between ${currency === cur ? 'text-amber-900 bg-amber-50 font-semibold' : 'text-slate-600'}`}
                     >
                       <span>{CURRENCY_RATES[cur].label}</span>
-                      {currency === cur && <span className="text-emerald-600">✓</span>}
+                      {currency === cur && <span className="text-amber-600 font-bold">✓</span>}
                     </button>
                   ))}
                 </div>
@@ -140,26 +139,26 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
       {/* Main Bar: Logo, Search, CS, Cart Button */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
         
-        {/* Brand Logo for shop.mannazentrum.com */}
+        {/* Brand Logo for shop.mannazentrum.com (Matching Mannazentrum's Slate-900 / Amber Emblem Style) */}
         <div className="flex items-center gap-3">
           <button 
             onClick={() => handleCategoryClick('semua')}
             className="flex items-center gap-3 text-left group"
           >
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-800 flex items-center justify-center text-white shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform">
-              <ShoppingBag className="w-6 h-6 text-amber-300" />
+            <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:bg-amber-600 transition-colors">
+              M
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg sm:text-xl text-slate-900 tracking-tight leading-none group-hover:text-emerald-700 transition">
-                  MANNA<span className="text-emerald-600 font-light">SHOP</span>
+                <span className="font-semibold text-base sm:text-lg text-slate-900 leading-none tracking-tight block group-hover:text-amber-600 transition">
+                  Mannazentrum <span className="text-amber-600 font-bold">Shop</span>
                 </span>
-                <span className="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
+                <span className="bg-amber-100 text-amber-900 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
                   Store
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-normal leading-tight mt-0.5 hidden xs:block">
-                {language === 'id' ? 'Keperluan Harian Keluarga & Gaya Hidup Sehat' : 'Daily Family Essentials & Healthy Living'}
+              <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 mt-0.5 hidden xs:block">
+                {language === 'id' ? 'Keperluan Harian Keluarga Nusantara & ASEAN' : 'Daily Family Essentials & Natural Goods'}
               </p>
             </div>
           </button>
@@ -177,7 +176,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
                   ? 'Cari pakaian, beras, madu, bibit sayur, sabun...' 
                   : 'Search clothes, rice, honey, seeds, organic soap...'
               }
-              className="w-full pl-10 pr-10 py-2.5 bg-slate-50 hover:bg-slate-100/80 focus:bg-white text-xs text-slate-800 rounded-full border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition outline-hidden"
+              className="w-full pl-10 pr-10 py-2.5 bg-slate-50 hover:bg-slate-100/80 focus:bg-white text-xs text-slate-800 rounded-full border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition outline-hidden"
             />
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             {searchQuery && (
@@ -196,12 +195,12 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
           
           {/* WhatsApp CS Toko */}
           <a
-            href="https://wa.me/6287881110807?text=Halo%20Admin%20Manna%20Shop,%20saya%20ingin%20konsultasi%20produk%20dan%20pemesanan%20keluarga."
+            href="https://wa.me/6287881110807?text=Halo%20Admin%20Mannazentrum%20Shop,%20saya%20ingin%20konsultasi%20produk%20dan%20pemesanan%20keluarga."
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-full border border-emerald-200 text-emerald-700 bg-emerald-50/60 hover:bg-emerald-100 transition text-xs font-semibold"
+            className="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-full border border-amber-200 text-amber-900 bg-amber-50/70 hover:bg-amber-100 transition text-xs font-semibold"
           >
-            <MessageCircle className="w-4 h-4 text-emerald-600" />
+            <MessageCircle className="w-4 h-4 text-amber-600" />
             <span>{language === 'id' ? 'CS WhatsApp Toko' : 'Store WhatsApp CS'}</span>
           </a>
 
@@ -209,7 +208,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
           <button
             onClick={onOpenCart}
             aria-label="Buka Keranjang Belanja"
-            className="relative flex items-center gap-2 bg-slate-900 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-full text-xs font-semibold transition shadow-sm active:scale-95"
+            className="relative flex items-center gap-2 bg-slate-900 hover:bg-amber-600 text-white px-4 py-2.5 rounded-full text-xs font-semibold transition shadow-sm active:scale-95"
           >
             <ShoppingBag className="w-4 h-4 text-amber-300" />
             <span className="hidden sm:inline">{language === 'id' ? 'Keranjang' : 'Cart'}</span>
@@ -243,7 +242,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
                 ? 'Cari pakaian, beras, bibit tanaman...' 
                 : 'Search apparel, groceries, seeds...'
             }
-            className="w-full pl-9 pr-9 py-2 bg-slate-50 text-xs text-slate-800 rounded-full border border-slate-200 focus:outline-hidden focus:border-emerald-500"
+            className="w-full pl-9 pr-9 py-2 bg-slate-50 text-xs text-slate-800 rounded-full border border-slate-200 focus:outline-hidden focus:border-amber-500"
           />
           <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           {searchQuery && (
@@ -257,8 +256,8 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
         </div>
       </div>
 
-      {/* Dedicated E-Commerce Navigation Tabs (INDEPENDENT from domain utama) */}
-      <div className="border-t border-slate-100 bg-white/95 backdrop-blur-sm overflow-x-auto scrollbar-none">
+      {/* Dedicated E-Commerce Navigation Tabs (INDEPENDENT from domain utama, styled with Mannazentrum's warm aesthetics) */}
+      <div className="border-t border-slate-100 bg-[#FAF9F5] overflow-x-auto scrollbar-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center space-x-1 sm:space-x-2 py-2">
           {categories.map((cat) => {
             const isActive = currentCategory === cat.id;
@@ -268,8 +267,8 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
                 onClick={() => handleCategoryClick(cat.id)}
                 className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-semibold transition duration-150 flex-shrink-0 ${
                   isActive
-                    ? 'bg-emerald-700 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    ? 'bg-slate-900 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white border border-transparent hover:border-stone-200/60'
                 }`}
               >
                 {language === 'id' ? cat.labelId : cat.labelEn}
@@ -279,10 +278,10 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
 
           <button
             onClick={onOpenShippingInfo}
-            className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium text-emerald-800 bg-emerald-50 hover:bg-emerald-100 transition flex items-center gap-1.5 flex-shrink-0 ml-auto border border-emerald-200/70"
+            className="whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium text-amber-900 bg-amber-100/70 hover:bg-amber-100 transition flex items-center gap-1.5 flex-shrink-0 ml-auto border border-amber-300/60"
           >
-            <Truck className="w-3.5 h-3.5 text-emerald-700" />
-            <span>{language === 'id' ? 'Pengiriman Indonesia & ASEAN' : 'Indonesia & ASEAN Delivery'}</span>
+            <Truck className="w-3.5 h-3.5 text-amber-700" />
+            <span>{language === 'id' ? 'Kirim Se-Indonesia & ASEAN' : 'Indonesia & ASEAN Delivery'}</span>
           </button>
         </div>
       </div>
@@ -299,7 +298,7 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
               onClick={() => handleCategoryClick(cat.id)}
               className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition ${
                 currentCategory === cat.id
-                  ? 'bg-emerald-50 text-emerald-800 font-bold'
+                  ? 'bg-amber-50 text-amber-900 font-bold border border-amber-200/60'
                   : 'text-slate-700 hover:bg-slate-50'
               }`}
             >
@@ -312,16 +311,16 @@ export const ShopHeader: React.FC<ShopHeaderProps> = ({
                 onOpenShippingInfo();
                 setMobileMenuOpen(false);
               }}
-              className="text-xs text-emerald-700 font-semibold flex items-center gap-1.5"
+              className="text-xs text-amber-800 font-semibold flex items-center gap-1.5"
             >
-              <Truck className="w-4 h-4" />
+              <Truck className="w-4 h-4 text-amber-600" />
               <span>{language === 'id' ? 'Informasi Kirim ASEAN' : 'ASEAN Shipping Details'}</span>
             </button>
             <a
               href="https://wa.me/6287881110807"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs bg-emerald-600 text-white px-3 py-1.5 rounded-full font-semibold"
+              className="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-full font-semibold hover:bg-amber-600 transition"
             >
               WA Toko
             </a>

@@ -5,10 +5,7 @@ import {
   ShoppingBag, 
   ArrowRight, 
   Tag, 
-  Check, 
-  Sparkles,
-  ShieldCheck,
-  Truck
+  ShieldCheck
 } from 'lucide-react';
 import { ShopProduct, CurrencyKey, DISCOUNT_COUPONS } from '../../data/shopData';
 import { formatPrice } from '../../utils/shopCurrency';
@@ -83,10 +80,10 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
           
           {/* Header */}
-          <div className="p-5 sm:p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+          <div className="p-5 sm:p-6 border-b border-stone-200/70 flex items-center justify-between bg-[#FAF9F5]">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center">
-                <ShoppingBag className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center font-bold">
+                <ShoppingBag className="w-4 h-4 text-amber-700" />
               </div>
               <div>
                 <h3 className="font-bold text-slate-900 text-base">
@@ -111,14 +108,14 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
           <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4 divide-y divide-slate-100">
             {cart.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-12 px-4 space-y-4">
-                <div className="w-16 h-16 rounded-3xl bg-slate-100 flex items-center justify-center text-slate-400">
-                  <ShoppingBag className="w-8 h-8 text-slate-300" />
+                <div className="w-16 h-16 rounded-3xl bg-stone-100 flex items-center justify-center text-slate-400">
+                  <ShoppingBag className="w-8 h-8 text-stone-300" />
                 </div>
                 <div className="space-y-1">
                   <h4 className="font-bold text-slate-800 text-base">
                     {language === 'id' ? 'Keranjang Anda Masih Kosong' : 'Your Cart is Empty'}
                   </h4>
-                  <p className="text-xs text-slate-500 max-w-xs">
+                  <p className="text-xs text-slate-500 max-w-xs font-light">
                     {language === 'id'
                       ? 'Temukan kebutuhan pakaian keluarga, sembako sehat organik, dan benih tanaman harian di katalog kami.'
                       : 'Explore daily apparel, organic pantry groceries, and fresh seeds in our store catalog.'}
@@ -126,7 +123,7 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
                 </div>
                 <button
                   onClick={onClose}
-                  className="bg-slate-900 text-white text-xs font-semibold px-6 py-2.5 rounded-full hover:bg-emerald-700 transition"
+                  className="bg-slate-900 text-white text-xs font-semibold px-6 py-2.5 rounded-full hover:bg-amber-600 transition"
                 >
                   {language === 'id' ? 'Mulai Belanja' : 'Start Shopping'}
                 </button>
@@ -137,7 +134,7 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
                   <img
                     src={item.product.image}
                     alt={language === 'id' ? item.product.name : item.product.nameEn}
-                    className="w-20 h-20 rounded-2xl object-cover bg-slate-100 shrink-0 border border-slate-100"
+                    className="w-20 h-20 rounded-2xl object-cover bg-slate-100 shrink-0 border border-stone-200/60"
                   />
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
@@ -153,7 +150,7 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
-                      <span className="text-[10px] text-emerald-700 font-semibold block mt-0.5">
+                      <span className="text-[10px] text-amber-700 font-semibold block mt-0.5">
                         {language === 'id' ? item.product.categoryLabelId : item.product.categoryLabelEn}
                       </span>
                     </div>
@@ -190,19 +187,19 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
 
           {/* Footer & Checkout Area (if items exist) */}
           {cart.length > 0 && (
-            <div className="p-5 sm:p-6 border-t border-slate-100 bg-slate-50/70 space-y-4">
+            <div className="p-5 sm:p-6 border-t border-stone-200/70 bg-[#FAF9F5] space-y-4">
               
               {/* Coupon Code Input */}
               <div className="space-y-1.5">
                 {couponCode ? (
-                  <div className="flex items-center justify-between bg-emerald-100/70 border border-emerald-300 text-emerald-900 px-3 py-2 rounded-xl text-xs">
+                  <div className="flex items-center justify-between bg-amber-100/70 border border-amber-300 text-amber-900 px-3 py-2 rounded-xl text-xs">
                     <div className="flex items-center gap-1.5 font-semibold">
-                      <Tag className="w-3.5 h-3.5 text-emerald-700" />
+                      <Tag className="w-3.5 h-3.5 text-amber-700" />
                       <span>{couponCode} (-{discountPercent}%)</span>
                     </div>
                     <button
                       onClick={onRemoveCoupon}
-                      className="text-emerald-700 hover:text-emerald-900 font-bold text-xs underline"
+                      className="text-amber-800 hover:text-amber-950 font-bold text-xs underline"
                     >
                       {language === 'id' ? 'Hapus' : 'Remove'}
                     </button>
@@ -213,12 +210,12 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
                       type="text"
                       value={inputCoupon}
                       onChange={(e) => setInputCoupon(e.target.value)}
-                      placeholder={language === 'id' ? 'Punya kode kupon? (mis: KELUARGABARU)' : 'Promo code? (e.g. ASEANFAM)'}
-                      className="flex-1 px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-hidden"
+                      placeholder={language === 'id' ? 'Kode kupon? (mis: ASEANFAM)' : 'Promo code? (e.g. ASEANFAM)'}
+                      className="flex-1 px-3 py-2 text-xs bg-white border border-stone-200 rounded-xl focus:border-amber-500 focus:outline-hidden"
                     />
                     <button
                       type="submit"
-                      className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 rounded-xl transition"
+                      className="bg-slate-900 hover:bg-amber-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition"
                     >
                       {language === 'id' ? 'Pakai' : 'Apply'}
                     </button>
@@ -237,7 +234,7 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
                 </div>
 
                 {discountPercent > 0 && (
-                  <div className="flex justify-between text-emerald-700 font-medium">
+                  <div className="flex justify-between text-amber-700 font-medium">
                     <span>{language === 'id' ? `Diskon Kupon (${discountPercent}%)` : `Discount (${discountPercent}%)`}</span>
                     <span>-{formatPrice(discountAmountIdr, currency)}</span>
                   </div>
@@ -248,11 +245,11 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
                   <span className="italic">{language === 'id' ? 'Dihitung saat Checkout' : 'Calculated at checkout'}</span>
                 </div>
 
-                <div className="pt-2 border-t border-slate-200 flex justify-between items-baseline">
+                <div className="pt-2 border-t border-stone-200 flex justify-between items-baseline">
                   <span className="font-bold text-slate-900 text-sm">
                     {language === 'id' ? 'Total Sementara' : 'Estimated Total'}
                   </span>
-                  <span className="font-extrabold text-emerald-800 text-lg">
+                  <span className="font-bold text-amber-900 text-lg">
                     {formatPrice(finalTotalIdr, currency)}
                   </span>
                 </div>
@@ -262,7 +259,7 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
               <div className="space-y-2 pt-2">
                 <button
                   onClick={onProceedToCheckout}
-                  className="w-full py-3.5 px-4 bg-slate-900 hover:bg-emerald-700 text-white rounded-full font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition active:scale-95"
+                  className="w-full py-3.5 px-4 bg-slate-900 hover:bg-amber-600 text-white rounded-full font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition active:scale-95"
                 >
                   <span>{language === 'id' ? 'Lanjut ke Pembayaran' : 'Proceed to Checkout'}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -276,8 +273,8 @@ export const ShopCartDrawer: React.FC<ShopCartDrawerProps> = ({
                     {language === 'id' ? 'Kosongkan Keranjang' : 'Clear Cart'}
                   </button>
                   <span className="flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>{language === 'id' ? 'Checkout Aman & Terenkripsi' : 'Safe & Encrypted Checkout'}</span>
+                    <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+                    <span>{language === 'id' ? 'Checkout Aman & Terpercaya' : 'Safe & Encrypted Checkout'}</span>
                   </span>
                 </div>
               </div>
