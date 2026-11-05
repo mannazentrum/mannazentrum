@@ -18,14 +18,14 @@ import { formatPrice } from '../../utils/shopCurrency';
 
 export const ShopBlogPage: React.FC = () => {
   const { postSlug } = useParams<{ postSlug?: string }>();
-  const { currency, addToCart, blogPosts } = useShop();
+  const { currency, addToCart, blogPosts, products } = useShop();
 
   const postsList = blogPosts && blogPosts.length > 0 ? blogPosts : SHOP_BLOG_POSTS;
   const currentPost = postsList.find((p) => p.slug === postSlug);
 
   // If viewing single blog post
   if (postSlug && currentPost) {
-    const recommendedProduct = SHOP_PRODUCTS[0];
+    const recommendedProduct = products && products.length > 0 ? products[0] : null;
 
     return (
       <ShopLayout>
@@ -83,27 +83,29 @@ export const ShopBlogPage: React.FC = () => {
             {currentPost.contentId}
           </div>
 
-          {/* Related Product Callout */}
-          <div className="bg-[#FAF9F5] p-6 rounded-3xl border border-stone-200/70 flex flex-col sm:flex-row items-center justify-between gap-4 mt-10">
-            <div className="flex items-center gap-4">
-              <img
-                src={recommendedProduct.image}
-                alt={recommendedProduct.name}
-                className="w-16 h-16 rounded-2xl object-cover shrink-0 border border-stone-200"
-              />
-              <div>
-                <span className="text-[10px] uppercase font-bold text-amber-700 block tracking-wider">Produk Terkait Artikel Ini</span>
-                <h4 className="font-bold text-slate-900 text-sm">{recommendedProduct.name}</h4>
-                <span className="font-bold text-amber-900 text-xs">{formatPrice(recommendedProduct.priceIdr, currency)}</span>
+          {/* Related Product Callout (If product available) */}
+          {recommendedProduct && (
+            <div className="bg-[#FAF9F5] p-6 rounded-3xl border border-stone-200/70 flex flex-col sm:flex-row items-center justify-between gap-4 mt-10">
+              <div className="flex items-center gap-4">
+                <img
+                  src={recommendedProduct.image}
+                  alt={recommendedProduct.name}
+                  className="w-16 h-16 rounded-2xl object-cover shrink-0 border border-stone-200"
+                />
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-amber-700 block tracking-wider">Produk Terkait Artikel Ini</span>
+                  <h4 className="font-bold text-slate-900 text-sm">{recommendedProduct.name}</h4>
+                  <span className="font-bold text-amber-900 text-xs">{formatPrice(recommendedProduct.priceIdr, currency)}</span>
+                </div>
               </div>
+              <Link
+                to={`/product/${recommendedProduct.slug}`}
+                className="bg-slate-900 hover:bg-amber-600 text-white font-medium text-xs px-5 py-2.5 rounded-full transition shrink-0"
+              >
+                Lihat Detail Produk →
+              </Link>
             </div>
-            <Link
-              to={`/product/${recommendedProduct.slug}`}
-              className="bg-slate-900 hover:bg-amber-600 text-white font-medium text-xs px-5 py-2.5 rounded-full transition shrink-0"
-            >
-              Lihat Detail Produk →
-            </Link>
-          </div>
+          )}
 
           <div className="pt-6 border-t border-stone-200 flex justify-between items-center">
             <Link

@@ -140,10 +140,10 @@ export const ShopCategoryPage: React.FC = () => {
                 : 'text-slate-600 hover:text-slate-900 hover:bg-stone-100 border border-stone-200/70'
             }`}
           >
-            Semua ({SHOP_PRODUCTS.length})
+            Semua ({products.length})
           </Link>
           {SHOP_CATEGORIES.map((cat) => {
-            const count = SHOP_PRODUCTS.filter(p => p.category === cat.slug).length;
+            const count = products.filter(p => p.category === cat.slug).length;
             const isActive = categorySlug === cat.slug;
             return (
               <Link
@@ -208,8 +208,35 @@ export const ShopCategoryPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Products Grid or Empty State */}
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-20 px-4 bg-[#FAF9F5] rounded-3xl border border-stone-200/80 space-y-4">
+            <div className="w-16 h-16 bg-amber-100 text-amber-800 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-xs">
+              📦
+            </div>
+            <div className="space-y-1.5 max-w-md mx-auto">
+              <h3 className="text-lg font-bold text-slate-900">Belum Ada Produk Ditampilkan</h3>
+              <p className="text-xs text-slate-500 font-light leading-relaxed">
+                Produk untuk kategori ini sedang disiapkan oleh tim toko. Anda dapat menambahkan produk baru melalui Admin Panel.
+              </p>
+            </div>
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                to="/admin/shop"
+                className="px-5 py-2.5 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm"
+              >
+                + Tambah Produk di Admin Panel
+              </Link>
+              <Link
+                to="/category"
+                className="px-5 py-2.5 rounded-full border border-stone-200 text-slate-700 hover:bg-stone-50 text-xs font-semibold transition"
+              >
+                Lihat Semua Kategori
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
@@ -299,6 +326,7 @@ export const ShopCategoryPage: React.FC = () => {
             </div>
           ))}
         </div>
+        )}
 
       </div>
     </ShopLayout>

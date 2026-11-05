@@ -367,8 +367,39 @@ const Store: React.FC = () => {
 
         </div>
 
-        {/* PRODUCTS GRID (Direct Links to /product/:slug) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* PRODUCTS GRID OR EMPTY STATE */}
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-20 px-4 bg-[#FAF9F5] rounded-3xl border border-stone-200/80 space-y-4">
+            <div className="w-16 h-16 bg-amber-100 text-amber-800 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-xs">
+              🛍️
+            </div>
+            <div className="space-y-1.5 max-w-md mx-auto">
+              <h3 className="text-lg font-bold text-slate-900">
+                {language === 'id' ? 'Belum Ada Produk Ditampilkan' : 'No Products Available'}
+              </h3>
+              <p className="text-xs text-slate-500 font-light leading-relaxed">
+                {language === 'id' 
+                  ? 'Katalog produk sedang disiapkan oleh tim toko. Anda dapat menambahkan produk baru secara langsung melalui Admin Panel atau hubungi tim customer care kami.'
+                  : 'The product catalog is currently being prepared. You can add new products via the Admin Panel or contact customer care.'}
+              </p>
+            </div>
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                to="/admin/shop"
+                className="px-5 py-2.5 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm"
+              >
+                + Tambah Produk di Admin Panel
+              </Link>
+              <Link
+                to="/contact"
+                className="px-5 py-2.5 rounded-full border border-stone-200 text-slate-700 hover:bg-stone-50 text-xs font-semibold transition"
+              >
+                Hubungi Customer Care
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
@@ -472,6 +503,7 @@ const Store: React.FC = () => {
             </div>
           ))}
         </div>
+        )}
 
       </section>
 
@@ -526,51 +558,53 @@ const Store: React.FC = () => {
         </div>
       </section>
 
-      {/* VERIFIED CUSTOMER REVIEWS */}
-      <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto space-y-10">
-          
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-1">
-                Ulasan Nyata Pelanggan
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-light text-slate-900 tracking-tight">
-                Dipercaya Keluarga di Indonesia & Luar Negeri
-              </h3>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-slate-600">
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-              <span className="font-bold text-slate-900">4.9 / 5.0</span>
-              <span className="text-slate-400">dari 1.200+ pesanan terkirim</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {SHOP_REVIEWS.map((rev) => (
-              <div key={rev.id} className="bg-[#FAF9F5] p-5 rounded-3xl border border-stone-200/60 shadow-xs flex flex-col justify-between space-y-3">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-1 text-amber-400">
-                    {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                    ))}
-                  </div>
-                  <p className="text-xs text-slate-700 italic font-light leading-relaxed">
-                    "{rev.comment}"
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-stone-200/60">
-                  <span className="font-bold text-xs text-slate-900 block">{rev.author}</span>
-                  <span className="text-[11px] text-amber-700 font-medium block">{rev.location}</span>
-                  <span className="text-[10px] text-slate-400 block mt-0.5">Produk: {rev.productName}</span>
-                </div>
+      {/* VERIFIED CUSTOMER REVIEWS (ONLY IF REVIEWS EXIST) */}
+      {SHOP_REVIEWS.length > 0 && (
+        <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto space-y-10">
+            
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <span className="text-amber-600 font-semibold uppercase tracking-[0.2em] text-xs block mb-1">
+                  Ulasan Nyata Pelanggan
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-light text-slate-900 tracking-tight">
+                  Dipercaya Keluarga di Indonesia & Luar Negeri
+                </h3>
               </div>
-            ))}
-          </div>
+              <div className="flex items-center gap-1.5 text-xs text-slate-600">
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <span className="font-bold text-slate-900">4.9 / 5.0</span>
+                <span className="text-slate-400">dari 1.200+ pesanan terkirim</span>
+              </div>
+            </div>
 
-        </div>
-      </section>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {SHOP_REVIEWS.map((rev) => (
+                <div key={rev.id} className="bg-[#FAF9F5] p-5 rounded-3xl border border-stone-200/60 shadow-xs flex flex-col justify-between space-y-3">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1 text-amber-400">
+                      {[...Array(rev.rating)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+                      ))}
+                    </div>
+                    <p className="text-xs text-slate-700 italic font-light leading-relaxed">
+                      "{rev.comment}"
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-stone-200/60">
+                    <span className="font-bold text-xs text-slate-900 block">{rev.author}</span>
+                    <span className="text-[11px] text-amber-700 font-medium block">{rev.location}</span>
+                    <span className="text-[10px] text-slate-400 block mt-0.5">Produk: {rev.productName}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+      )}
 
     </ShopLayout>
   );

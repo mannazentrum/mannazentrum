@@ -63,7 +63,7 @@ export const ShopProductPage: React.FC = () => {
     );
   }
 
-  const relatedProducts = SHOP_PRODUCTS.filter(
+  const relatedProducts = productList.filter(
     (p) => p.category === product.category && p.id !== product.id
   ).slice(0, 4);
 

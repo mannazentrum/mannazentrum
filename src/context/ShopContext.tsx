@@ -123,7 +123,12 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem(CART_STORAGE_KEY);
-        if (saved) return JSON.parse(saved);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          return parsed.filter((item: any) => 
+            item && item.product && !item.product.id?.startsWith('app-') && !item.product.id?.startsWith('food-') && !item.product.id?.startsWith('plant-') && !item.product.id?.startsWith('daily-') && !item.product.id?.startsWith('bun-')
+          );
+        }
       } catch (e) {
         console.error(e);
       }
@@ -207,10 +212,20 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
       if (saved) {
-        try { return JSON.parse(saved); } catch (e) { }
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            // Strip out dummy products
+            const realProds = parsed.filter((p: any) => 
+              p && p.id && !p.id.startsWith('app-') && !p.id.startsWith('food-') && !p.id.startsWith('plant-') && !p.id.startsWith('daily-') && !p.id.startsWith('bun-')
+            );
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(realProds));
+            return realProds;
+          }
+        } catch (e) { }
       }
     }
-    return SHOP_PRODUCTS;
+    return [];
   });
 
   const [blogPosts, setBlogPosts] = useState<ShopBlogPost[]>(() => {
