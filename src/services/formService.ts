@@ -12,12 +12,12 @@ interface FormSubmissionData {
 const getFirebaseConfig = () => {
   const env = (import.meta as any).env || {};
   return {
-    apiKey: env.VITE_FIREBASE_API_KEY,
-    authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: env.VITE_FIREBASE_APP_ID
+    apiKey: env.VITE_FIREBASE_API_KEY || 'AIzaSyBfFN6_qH1YCWFkETy31h3Rg8o_jHfmCQQ',
+    authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || 'mannazentrum-connect.firebaseapp.com',
+    projectId: env.VITE_FIREBASE_PROJECT_ID || 'mannazentrum-connect',
+    storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || 'mannazentrum-connect.firebasestorage.app',
+    messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || '810652390808',
+    appId: env.VITE_FIREBASE_APP_ID || '1:810652390808:web:4a03e0cdb760961e9707ed'
   };
 };
 

@@ -1,5 +1,5 @@
-# Robots.txt for Mannazentrum & Manna Shop Eco-Family
-# https://mannazentrum.com & https://shop.mannazentrum.com
+# Robots.txt for Mannazentrum
+# https://mannazentrum.com
 
 User-agent: *
 Allow: /
@@ -27,4 +27,3 @@ Allow: /
 
 # Sitemaps
 Sitemap: https://mannazentrum.com/sitemap.xml
-Sitemap: https://shop.mannazentrum.com/sitemap.xml

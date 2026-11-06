@@ -48,15 +48,7 @@ const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
               <Link to="/preschool" className="hover:text-amber-400 transition">Preschool & Playgroup</Link>
             </li>
             <li>
-              <a 
-                href="https://shop.mannazentrum.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="hover:text-amber-400 transition inline-flex items-center gap-1"
-              >
-                <span>Toko Manna Maliaki</span>
-                <span className="text-[10px]">↗</span>
-              </a>
+              <Link to="/unit-bisnis" className="hover:text-amber-400 transition">Unit Bisnis & Workshop</Link>
             </li>
             <li>
               <Link to="/berita" className="hover:text-amber-400 transition">News & Tips</Link>

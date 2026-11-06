@@ -6,140 +6,44 @@
   <!-- ================= MAIN DOMAIN (www.mannazentrum.com) ================= -->
   <url>
     <loc>https://mannazentrum.com/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://mannazentrum.com/tentang</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mannazentrum.com/daycare</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://mannazentrum.com/preschool</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://mannazentrum.com/berita</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mannazentrum.com/unit-bisnis</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://mannazentrum.com/contact</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-
-  <!-- ================= SHOP SUBDOMAIN ROOT & CORE (shop.mannazentrum.com) ================= -->
-  <url>
-    <loc>https://shop.mannazentrum.com/</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/category</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/about-us</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/contact</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/shipping-policy</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/return-policy</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/blog</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ================= SHOP CATEGORIES ================= -->
-  <url>
-    <loc>https://shop.mannazentrum.com/category/pakaian</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/category/makanan</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/category/tanaman</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/category/harian</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/category/paket</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- ================= SHOP BLOG ARTICLES ================= -->
-  <url>
-    <loc>https://shop.mannazentrum.com/blog/merawat-kebun-organik-di-lahan-sempit</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/blog/panduan-memilih-pakaian-organik-untuk-anak</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://shop.mannazentrum.com/blog/manfaat-madu-hutan-murni-untuk-daya-tahan-tubuh</loc>
-    <lastmod>2026-11-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
   </url>
 </urlset>

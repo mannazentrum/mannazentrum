@@ -24,21 +24,6 @@
       "source": "/portal-wali-murid",
       "destination": "https://laporan.mannazentrum.com",
       "permanent": false
-    },
-    {
-      "source": "/toko",
-      "destination": "https://shop.mannazentrum.com",
-      "permanent": false
-    },
-    {
-      "source": "/store",
-      "destination": "https://shop.mannazentrum.com",
-      "permanent": false
-    },
-    {
-      "source": "/shop",
-      "destination": "https://shop.mannazentrum.com",
-      "permanent": false
     }
   ],
   "rewrites": [
