@@ -219,18 +219,23 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed)) {
+          if (Array.isArray(parsed) && parsed.length > 0) {
             // Strip out dummy products
             const realProds = parsed.filter((p: any) => 
               p && p.id && !p.id.startsWith('app-') && !p.id.startsWith('food-') && !p.id.startsWith('plant-') && !p.id.startsWith('daily-') && !p.id.startsWith('bun-')
             );
-            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(realProds));
-            return realProds;
+            // Merge with SHOP_PRODUCTS to make sure built-in products are always present
+            const map = new Map<string, ShopProduct>();
+            SHOP_PRODUCTS.forEach(p => map.set(p.id, p));
+            realProds.forEach(p => map.set(p.id, p));
+            const merged = Array.from(map.values());
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(merged));
+            return merged;
           }
         } catch (e) { }
       }
     }
-    return [];
+    return SHOP_PRODUCTS;
   });
 
   const [blogPosts, setBlogPosts] = useState<ShopBlogPost[]>(() => {

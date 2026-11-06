@@ -120,8 +120,40 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
   }
 ];
 
-// DUMMY PRODUCTS REMOVED: Initial catalog is clean and empty. Products are added via Admin Panel.
-export const SHOP_PRODUCTS: ShopProduct[] = [];
+// REAL SHOP PRODUCTS CATALOG
+export const SHOP_PRODUCTS: ShopProduct[] = [
+  {
+    id: "cust-9433",
+    slug: "glow-home-anti-sumbat-wc-saluran-air-wastafel-mampet",
+    name: "Glow Home | Anti Sumbat WC Saluran Air Wastafel Mampet",
+    nameEn: "Glow Home | Anti Clog Drain Cleaner Sink & Toilet",
+    category: "harian",
+    categoryLabelId: "Kebutuhan Harian",
+    categoryLabelEn: "Daily Essentials",
+    priceIdr: 47000,
+    weightGrams: 500,
+    rating: 5.0,
+    reviewCount: 1,
+    stock: 5,
+    image: "/images/products/glow-home-anti-sumbat.jpg",
+    badges: ["Produk Baru", "Bundle Get 2"],
+    isBestSeller: true,
+    isAseanReady: true,
+    shortDescId: "Pembersih dan pelancar saluran pipa mampet ampuh melarutkan kotoran organik, lemak dapur, dan gumpalan rambut dengan busa aktif tanpa merusak pipa.",
+    shortDescEn: "Powerful active foam drain cleaner that dissolves organic waste, kitchen grease, and hair clogs safely and effectively.",
+    descriptionId: "Glow Home Anti Sumbat Saluran adalah formula pembersih konsentrat dengan busa aktif kuat yang dirancang khusus untuk mengatasi masalah saluran air mampet. Ampuh menghancurkan sumbatan sisa lemak, minyak, kotoran makanan berlendir, dan rambut pada wastafel cuci piring, floor drain kamar mandi, maupun kloset secara cepat tanpa perlu membongkar pipa. Dilengkapi formula antibakteri dan aroma segar yang efektif melenyapkan bau tak sedap.",
+    descriptionEn: "Glow Home Anti-Clog Drain Cleaner features a powerful active foam formula engineered to unclog drains swiftly. Effectively dissolves blockages caused by grease, cooking oils, food residue, and hair in kitchen sinks, bathroom floor drains, and toilets without dismantling pipes. Infused with antibacterial agents and fresh scent to eliminate bad odors.",
+    specs: [
+      { labelId: "Kondisi", labelEn: "Condition", value: "Baru & Segel Resmi" },
+      { labelId: "Kemasan", labelEn: "Package", value: "Bundle Get 2 Botol" },
+      { labelId: "Kapasitas Bersih", labelEn: "Net Weight", value: "500 Gram" },
+      { labelId: "Aplikasi", labelEn: "Usage", value: "Wastafel Dapur, Kloset/WC, Saluran Air Kamar Mandi" },
+      { labelId: "Keunggulan", labelEn: "Key Features", value: "Busa Aktif Kuat, Aman untuk Pipa PVC, Aroma Segar Anti Bau" }
+    ],
+    careInstructionsId: "Tuangkan cairan secukupnya ke lubang saluran, diamkan 15-30 menit agar busa aktif melarutkan sumbatan, lalu siram dengan air mengalir.",
+    careInstructionsEn: "Pour an adequate amount into the drain, wait 15-30 minutes for the active foam to dissolve the clog, then flush with running water."
+  }
+];
 
 // DUMMY REVIEWS REMOVED: Initial reviews are empty.
 export const SHOP_REVIEWS: ReviewItem[] = [];
