@@ -45,8 +45,11 @@ import {
   Check,
   Upload,
   Camera,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Copy,
+  Cloud
 } from 'lucide-react';
+import { saveProductToCloud } from '../../services/shopFirestoreService';
 
 export type UserRole = 'SUPER_ADMIN' | 'STORE_MANAGER' | 'CONTENT_EDITOR' | 'CUSTOMER_SERVICE' | 'FINANCE';
 
@@ -185,6 +188,41 @@ export const ShopAdminDashboard: React.FC = () => {
 
   // Search filter in product manager
   const [productSearch, setProductSearch] = useState('');
+
+  // Export & Cloud Sync State
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [isSyncingCloud, setIsSyncingCloud] = useState(false);
+
+  const handleSyncAllToCloud = async () => {
+    setIsSyncingCloud(true);
+    let successCount = 0;
+    for (const p of products) {
+      const ok = await saveProductToCloud(p);
+      if (ok) successCount++;
+    }
+    setIsSyncingCloud(false);
+    showToast(`✓ Berhasil menyinkronkan ${successCount} produk ke Cloud Firestore!`);
+  };
+
+  const handleDownloadProductsJson = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(products, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "shop_products.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+    showToast('✓ File shop_products.json berhasil diunduh!');
+  };
+
+  const handleCopyCode = () => {
+    const code = `export const SHOP_PRODUCTS: ShopProduct[] = ${JSON.stringify(products, null, 2)};`;
+    navigator.clipboard.writeText(code);
+    setCopiedCode(true);
+    showToast('✓ Kode SHOP_PRODUCTS berhasil disalin ke clipboard!');
+    setTimeout(() => setCopiedCode(false), 2500);
+  };
 
   // Direct Photo Processing & Auto-compression (max 900px, Web-optimized JPEG ~50KB)
   const compressAndConvertImage = (file: File, callback: (base64Url: string) => void) => {
@@ -1380,7 +1418,7 @@ export const ShopAdminDashboard: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <div className="relative">
                     <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input
@@ -1388,13 +1426,24 @@ export const ShopAdminDashboard: React.FC = () => {
                       placeholder="Cari produk..."
                       value={productSearch}
                       onChange={(e) => setProductSearch(e.target.value)}
-                      className="pl-8 pr-3 py-1.5 rounded-full border border-stone-200 text-xs w-40 sm:w-48 bg-stone-50"
+                      className="pl-8 pr-3 py-1.5 rounded-full border border-stone-200 text-xs w-36 sm:w-44 bg-stone-50"
                     />
                   </div>
 
                   <button
+                    type="button"
+                    onClick={() => setIsExportModalOpen(true)}
+                    className="px-3.5 py-2 rounded-full border border-stone-200 bg-stone-50 hover:bg-stone-100 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition shrink-0 cursor-pointer shadow-2xs"
+                    title="Ekspor data produk untuk GitHub Desktop & sinkronisasi Cloud Firestore"
+                  >
+                    <Download className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Ekspor untuk GitHub</span>
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={() => setIsAddProductOpen(true)}
-                    className="px-4 py-2 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm shrink-0"
+                    className="px-4 py-2 rounded-full bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm shrink-0 cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>+ Tambah Produk</span>
@@ -2241,6 +2290,96 @@ export const ShopAdminDashboard: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL EKSPOR DATA PRODUK UNTUK GITHUB & CLOUD */}
+      {isExportModalOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-xl w-full p-6 space-y-5 shadow-2xl border border-stone-200 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b border-stone-100 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
+                  📦
+                </div>
+                <div>
+                  <h4 className="font-bold text-base text-slate-900">Ekspor Data Produk untuk GitHub</h4>
+                  <p className="text-[11px] text-slate-500">Simpan produk permanen ke repositori kode atau Cloud</p>
+                </div>
+              </div>
+              <button onClick={() => setIsExportModalOpen(false)} className="p-1 rounded-full text-slate-400 hover:text-slate-700">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="bg-amber-50/60 border border-amber-200/60 p-4 rounded-2xl text-xs text-amber-900 space-y-2 leading-relaxed">
+              <p className="font-bold">ℹ️ Mengapa Perlu Ekspor ke GitHub?</p>
+              <p className="text-[11px] text-slate-700">
+                Produk yang Anda tambah di Admin Panel disimpan di penyimpanan perangkat Anda dan Cloud Firestore. Agar produk ini menjadi <strong>data bawaan permanen di repositori GitHub & GitHub Desktop</strong> (sehingga otomatis tampil di semua browser dan deploy web):
+              </p>
+              <ol className="list-decimal pl-4 text-[11px] space-y-1 text-slate-700">
+                <li>Klik tombol <strong>Salin Kode Produk (SHOP_PRODUCTS)</strong> di bawah.</li>
+                <li>Buka file <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-slate-900">src/data/shopData.ts</code> di editor Anda atau kirimkan ke chat Antigravity.</li>
+                <li>Tempel (paste) kode ke baris <code className="bg-amber-100 px-1 py-0.5 rounded font-mono text-slate-900">export const SHOP_PRODUCTS = [...]</code>, lalu push ke GitHub Desktop!</li>
+              </ol>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-slate-800">Pratinjau Data ({products.length} Produk Siap Ekspor):</span>
+                <span className="text-[11px] text-slate-500">Format: TypeScript Array</span>
+              </div>
+              
+              <div className="relative">
+                <pre className="bg-slate-950 text-amber-300 p-4 rounded-2xl text-[11px] font-mono max-h-48 overflow-y-auto overflow-x-auto border border-slate-800">
+                  {`export const SHOP_PRODUCTS: ShopProduct[] = ${JSON.stringify(products, null, 2)};`}
+                </pre>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={handleCopyCode}
+                  className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-amber-600 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-sm cursor-pointer"
+                >
+                  <Copy className="w-3.5 h-3.5 text-amber-300" />
+                  <span>{copiedCode ? '✓ Berhasil Disalin!' : 'Salin Kode SHOP_PRODUCTS'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleDownloadProductsJson}
+                  className="w-full py-2.5 px-4 rounded-xl border border-stone-200 bg-stone-50 hover:bg-stone-100 text-slate-800 font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Download File JSON</span>
+                </button>
+              </div>
+
+              {/* Cloud Sync Button */}
+              <div className="pt-2 border-t border-stone-100">
+                <button
+                  type="button"
+                  disabled={isSyncingCloud}
+                  onClick={handleSyncAllToCloud}
+                  className="w-full py-2.5 px-4 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-950 font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-50"
+                >
+                  <Cloud className="w-3.5 h-3.5 text-amber-700" />
+                  <span>{isSyncingCloud ? 'Sedang Menyinkronkan...' : '☁️ Sinkronkan Semua Produk ke Cloud Firestore Sekarang'}</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setIsExportModalOpen(false)}
+                className="px-5 py-2 rounded-full border border-stone-200 text-xs font-semibold text-slate-700 hover:bg-stone-50"
+              >
+                Tutup
+              </button>
+            </div>
           </div>
         </div>
       )}

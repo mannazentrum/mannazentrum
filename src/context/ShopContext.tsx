@@ -22,6 +22,11 @@ import {
   DEFAULT_RETURN_POLICY_CONTENT
 } from '../data/shopPageContent';
 import { CartItem } from '../components/shop/ShopCartDrawer';
+import { 
+  fetchProductsFromCloud, 
+  saveProductToCloud, 
+  deleteProductFromCloud 
+} from '../services/shopFirestoreService';
 
 const CART_STORAGE_KEY = 'manna_shop_cart_items_v2';
 const CURRENCY_STORAGE_KEY = 'manna_shop_currency_pref';
@@ -238,6 +243,24 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return SHOP_BLOG_POSTS;
   });
 
+  // Cloud sync: fetch products from Firestore on mount so any visitor on any browser gets live products
+  useEffect(() => {
+    fetchProductsFromCloud().then((cloudProds) => {
+      if (cloudProds && cloudProds.length > 0) {
+        setProducts((prev) => {
+          const map = new Map<string, ShopProduct>();
+          prev.forEach((p) => map.set(p.id, p));
+          cloudProds.forEach((p) => map.set(p.id, p));
+          const merged = Array.from(map.values());
+          localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(merged));
+          return merged;
+        });
+      }
+    }).catch((err) => {
+      console.warn('Could not sync cloud products:', err);
+    });
+  }, []);
+
   // Save Cart
   useEffect(() => {
     try {
@@ -309,6 +332,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
       return updated;
     });
+    saveProductToCloud(newProd).catch(() => {});
     showToast(`✓ Produk "${newProd.name}" berhasil ditambahkan!`);
   };
 
@@ -318,6 +342,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
       return updated;
     });
+    saveProductToCloud(updatedProd).catch(() => {});
     showToast(`✓ Produk "${updatedProd.name}" berhasil diperbarui!`);
   };
 
@@ -327,6 +352,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
       return updated;
     });
+    deleteProductFromCloud(productId).catch(() => {});
     showToast('✓ Produk berhasil dihapus dari katalog.');
   };
 
